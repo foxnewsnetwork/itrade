@@ -4,9 +4,8 @@ describe PagesController do
 
   describe "GET 'home'" do
     it "returns http success" do
-      get 'home'
+      get "home"
       response.should be_success
-    end
-  end
-
-end
+    end # it
+  end # Get Home
+end # PagesController

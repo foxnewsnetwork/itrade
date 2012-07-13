@@ -1,5 +1,8 @@
 Itrade::Application.routes.draw do
-  get "pages/home"
+  
+  resources :items do
+  	resources :bids, :only => [:create, :update, :destroy]
+  end # resources items
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

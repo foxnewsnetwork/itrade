@@ -7,7 +7,7 @@ gem "devise", "~> 2.1.2"
 group :development do
   gem 'rspec-rails' , '~>2.11.0'
   gem 'faker', '~>1.0.1'
-  gem 'annotate', '2.4.0'
+  gem 'annotate', ">=2.5.0.pre1"
 end # development
 
 group :test do
