@@ -11,9 +11,13 @@
 #
 
 class Bid < ActiveRecord::Base
+  # Attributes
   attr_accessible :item_id, :offer, :units
   
+  # Relationships
   belongs_to :item
+  
+  
   
   def price
   	offer
@@ -22,4 +26,6 @@ class Bid < ActiveRecord::Base
   def price=(p)
   	offer = price
   end # price
+  
+  
 end # Bid

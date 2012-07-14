@@ -14,11 +14,20 @@
 class Item < ActiveRecord::Base
   attr_accessible :description, :quantity, :title, :units
   
-  has_many :bids
+  has_many :bids, :dependent => :destroy
+  
+  # Hooks
+  after_save :kill_all_bids
   
   def bid( data = nil )
   	offer = self.bids.new( data )
   	return offer if offer.save
   	return nil
   end # bid
+  
+  private
+  	def kill_all_bids
+  		# TODO : make the batch deletion less resource intensive
+  		self.bids.each { |bid| bid.destroy }
+  	end # kill_all_bids
 end # Item
