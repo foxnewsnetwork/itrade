@@ -3,7 +3,8 @@ require "factories"
 describe ItemsController do
 	describe "GET requests" do
 		before(:each) do
-			@item = create(:item)
+			@user = User.create Factory.next(:user)
+			@item = Factory(:item, :user => @user)
 		end # before each
 		it "should be successful" do
 			get "show", :id => @item
@@ -13,17 +14,58 @@ describe ItemsController do
 			get "index"
 			response.should be_success
 		end # it
-		it "should be successful" do
+		it "should redirect to login" do
 			get "new"
-			response.should be_success
+			response.should redirect_to new_user_session_path
+			flash[:notice].should_not be_nil
 		end # it
+		it "should redirect to login" do
+			get "edit", :id => @item
+			response.should redirect_to new_user_session_path
+			flash[:notice].should_not be_nil
+		end # it
+		describe "logged in" do
+			login_user
+			before(:each)do
+				@myitem = Factory(:item, :user => @current_user)
+			end # before each	
+			it "should be successful" do
+				get "new"
+				response.should be_success
+			end # it
+			it "should be redirect" do
+				get "edit", :id => @item
+				response.should redirect_to item_path @item
+				flash[:notice].should_not be_nil
+			end # it
+			it "should be successful" do
+				get "edit", :id => @myitem
+				response.should be_success
+			end # it
+		end # logged in
 	end # Get requests
 	
 	describe "Post requests" do
 		before(:each) do
-			@item_data = FactoryGirl.generate( :item )
+			@item_data = Factory.next( :item )
 		end # before
+		describe "failure" do
+			it "should redirect to user login" do
+				post :create, :item => @item_data
+				response.should redirect_to new_user_session_path
+				flash[:notice].should_not be_nil
+			end # it
+			it "should not change anything" do
+				lambda do
+					post :create, :item => @item_data
+				end.should_not change(Item, :count)
+			end # it
+		end # failure
 		describe "success" do
+			login_user
+			before(:each) do
+				@bad_data = @item_data.merge( :user_id => rand(20384203) )
+			end # before each
 			it "should create a new item" do
 				lambda do
 					post :create, :item => @item_data
@@ -42,13 +84,18 @@ describe ItemsController do
 				response.should redirect_to item_path( item )
 				flash[:success].should_not be_nil
 			end # it
+			it "should belong to the right person" do
+				post :create, :item => @item_data
+				item = assigns(:item)
+				User.find_by_id(@current_user).items.should include item
+			end # it
 		end # success
 	end # Post requests
 	
 	describe "Put requests" do
 		before(:each) do
-			@item = create(:item)
-			@item_data = FactoryGirl.generate( :item )
+			@item = Factory(:item)
+			@item_data = Factory.next( :item )
 		end # before each
 		describe "success" do
 			it "should allow a successful change" do
@@ -79,7 +126,7 @@ describe ItemsController do
 	describe "delete requests" do
 		describe "success" do
 			before(:each) do
-				@item = create(:item)
+				@item = Factory(:item)
 				@bids = (1..10).map { @item.bid( :offer => rand(50) ) }
 			end # before each
 			it "should kill the item" do

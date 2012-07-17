@@ -9,6 +9,7 @@
 #  title       :string(255)      default("No title")
 #  units       :string(255)      default("kg")
 #  updated_at  :datetime         not null
+#  user_id     :integer
 #
 
 require 'spec_helper'

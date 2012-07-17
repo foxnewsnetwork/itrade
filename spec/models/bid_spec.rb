@@ -8,6 +8,7 @@
 #  offer      :integer          default(0)
 #  units      :string(255)      default("USD")
 #  updated_at :datetime         not null
+#  user_id    :integer
 #
 
 require 'spec_helper'
@@ -15,7 +16,7 @@ require "factories"
 describe Bid do
   describe "creation" do
   	before(:each) do
-  		@item = create(:item)
+  		@item = Factory(:item)
   	end # before each
   	it "should have proper relationship" do
   		bid = @item.bid

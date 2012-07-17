@@ -9,23 +9,41 @@ class ItemsController < ApplicationController
 	end # index
 	
 	def new
-		@item = Item.new
+		if user_signed_in?
+			@item = Item.new
+		else
+			redirect_to new_user_session_path
+			flash[:notice] = t( :fail_item_new )
+		end # if signed in 
 	end # new
 	
 	def edit
-		@item = Item.find_by_id( params[:id] )
+		if user_signed_in?
+			@item = Item.find_by_id( params[:id] )	
+			unless current_user == @item.user
+				flash[:notice] = t( :fail_item_edit )
+				redirect_to item_path @item
+			end # unless correct user
+		else
+			flash[:notice] = t( :fail_item_edit )
+			redirect_to new_user_session_path
+		end # if signed in
 	end # edit
 	
 	def create
-		@item = Item.new( params[:item] )
-		# TODO: i18n this junk!
-		if @item.save
-			flash[:success] = t( :success_item_create )
-			redirect_to item_path(@item)
+		if user_signed_in?
+			@item = current_user.items.new( params[:item] )	
+			if @item.save
+				flash[:success] = t( :success_item_create )
+				redirect_to item_path(@item)
+			else
+				flash[:error] = t( :fail_item_create )
+				redirect_to new_item_path
+			end # if save
 		else
-			flash[:error] = t( :fail_item_create )
-			redirect_to new_item_path
-		end # if save
+			flash[:notice] = t( :fail_item_create )
+			redirect_to new_user_session_path
+		end # if signed in
 	end # create
 	
 	def update

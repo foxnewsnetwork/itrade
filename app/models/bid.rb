@@ -8,6 +8,7 @@
 #  offer      :integer          default(0)
 #  units      :string(255)      default("USD")
 #  updated_at :datetime         not null
+#  user_id    :integer
 #
 
 class Bid < ActiveRecord::Base
@@ -16,7 +17,7 @@ class Bid < ActiveRecord::Base
   
   # Relationships
   belongs_to :item
-  
+  belongs_to :user
   
   
   def price

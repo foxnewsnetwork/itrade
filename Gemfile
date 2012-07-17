@@ -5,15 +5,15 @@ gem "thin", '~> 1.4.1'
 gem "devise", "~> 2.1.2"
 
 group :development do
-  gem 'rspec-rails' , '~>2.11.0'
+  gem 'rspec-rails' , '2.11.0'
   gem 'faker', '~>1.0.1'
   gem 'annotate', ">=2.5.0.pre1"
 end # development
 
 group :test do
-  gem 'rspec', '~> 2.11.0'
+  gem 'rspec', '2.11.0'
   gem 'webrat', '~> 0.7.1'
-  gem "factory_girl", "~> 3.5.0"
+  gem 'factory_girl', '~>2.1.0'
 end # test
 
 

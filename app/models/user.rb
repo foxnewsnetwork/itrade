@@ -32,5 +32,16 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  # attr_accessible :title, :body
-end
+  attr_accessible :address, :city, :company, :country, :state, :zip
+  
+  # Relationships
+  has_many :items, :dependent => :destroy
+  has_many :bids, :dependent => :destroy
+  
+  def bid( bid_data, item_id )
+  	b = self.bids.new( bid_data )
+  	b.item_id = item_id
+  	return b if b.save
+  	return nil
+  end # bid
+end # User
