@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120716234336) do
+ActiveRecord::Schema.define(:version => 20120718000104) do
 
   create_table "bids", :force => true do |t|
     t.integer  "item_id",                                                      :null => false
@@ -23,6 +23,17 @@ ActiveRecord::Schema.define(:version => 20120716234336) do
   end
 
   add_index "bids", ["user_id"], :name => "index_bids_on_user_id"
+
+  create_table "elements", :force => true do |t|
+    t.integer  "item_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.string   "metadata"
+  end
 
   create_table "items", :force => true do |t|
     t.integer  "quantity",    :default => 0

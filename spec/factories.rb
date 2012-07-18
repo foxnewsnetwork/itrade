@@ -75,6 +75,17 @@ Factory.sequence :user do |n|
 	}
 end # user
 
+Factory.define :element do |element|
+  include ActionDispatch::TestProcess
+  element.metadata (0..30).map { |x| ("a".."z").map{ |y| y }[rand(26)] }.join
+  element.picture fixture_file_upload(Rails.root + 'spec/pics/pic0.png', 'image/png')
+  element.association :item
+end # element
 
-
-
+Factory.sequence :element do |n|
+	include ActionDispatch::TestProcess
+	{ 
+	:metadata => (0..30).map { |x| ("a".."z").map{ |y| y }[rand(26)] }.join ,
+	:picture => fixture_file_upload(Rails.root + 'spec/pics/pic0.png', 'image/png')
+	}
+end # element

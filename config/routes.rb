@@ -1,9 +1,12 @@
 Itrade::Application.routes.draw do
 
   devise_for :users
-	resources :users
+	resources :users do
+		
+	end # resources users
   resources :items do
   	resources :bids, :only => [:create, :update, :destroy]
+  	resources :elements, :only => [:create, :destroy]
   end # resources items
 	resources :bids, :only => [:create, :update, :destroy]
 	

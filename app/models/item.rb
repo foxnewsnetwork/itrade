@@ -18,6 +18,7 @@ class Item < ActiveRecord::Base
   
   # Relationships
   has_many :bids, :dependent => :destroy
+  has_many :elements, :dependent => :destroy
   belongs_to :user
   
   # Hooks
