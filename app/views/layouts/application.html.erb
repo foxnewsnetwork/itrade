@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
   <title>Itrade</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
@@ -8,7 +9,9 @@
 </head>
 <body>
 
+<%= render "layouts/header" %>
+<%= render "layouts/flash", :flash => flash %>
 <%= yield %>
-
+<%= render "layouts/footer" %>
 </body>
 </html>

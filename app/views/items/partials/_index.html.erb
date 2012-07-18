@@ -1,0 +1,23 @@
+<!-- Item index partial -->
+<section id="stock-items">
+	<div class="span12-fluid">
+		<div class="page-header">
+			<h4><i class="icon-tags" ></i> <%= t( :new_items ) %></h4>
+		</div>
+	</div>
+	</div class="span12-fluid">
+		<ul class="thumbnails">
+			<% rand(25).times do |n| %>
+				<li class="span3">
+					<div class="thumbnail">
+						<%= image_tag "http://placehold.it/260x180" %>
+						<div class="caption">
+							<h5><i class="icon-tag"></i> <%= t( :item_title ) %></h5>
+							<p><%= t( :item_metadata ) %></p>
+						</div>
+					</div>
+				</li>
+			<% end %>
+		</ul>
+	</div>
+</section>

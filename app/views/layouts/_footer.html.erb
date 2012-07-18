@@ -1,0 +1,22 @@
+<!-- layerout footer -->
+<footer>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12-fluid"><div class="page-header"></div></div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12-fluid">
+				<ul class="breadcrumb">
+					<% ['home','privacy policy','terms','blog'].each do |tag| %>
+						<li>
+							<%= link_to tag, "#" %> <span class="divider">/</span>
+						</li>
+					<% end %>
+					<li class="active">
+						<%= image_tag("http://placehold.it/45x30") %>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</footer>

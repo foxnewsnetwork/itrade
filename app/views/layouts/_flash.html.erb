@@ -1,0 +1,12 @@
+<!-- flash error partial -->
+<% flash.each do |key, val| %>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="alert alert-<%= key == "notice" ? "block" : key %>">
+				<a href="#" data-dismiss="alert" class="close">x</a>
+				<h4 class="alert-heading"><%= key %></h4>
+				<%= val %>
+			</div>
+		</div>
+	</div>
+<% end %>
