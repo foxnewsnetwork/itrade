@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  address                :string(255)      not null
+#  admin                  :boolean          default(FALSE)
 #  city                   :string(255)      not null
 #  company                :string(255)      default(""), not null
 #  country                :string(255)      default(""), not null
