@@ -39,6 +39,12 @@ class User < ActiveRecord::Base
   has_many :items, :dependent => :destroy
   has_many :bids, :dependent => :destroy
   
+  # Validations
+  ['address','city','state','country','phone','company','zip'].each do |field|
+  	validates field, :presence => true
+  end # each field
+  validates :company, :uniqueness => true
+  
   def bid( bid_data, item_id )
   	b = self.bids.new( bid_data )
   	b.item_id = item_id

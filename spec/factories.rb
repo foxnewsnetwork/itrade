@@ -1,3 +1,7 @@
+Factory.sequence :phone do |n|
+	(0..9).map { (0..9).map { |x| x }[rand(10)] }.join
+end # Factory
+
 Factory.sequence :zipcode do |n|
 	(1..5).map { rand(9) }.join
 end # zipcode
@@ -58,6 +62,7 @@ Factory.define :user do |user|
 	user.country Factory.next( :country )
 	user.zip Factory.next( :zipcode )
 	user.email Factory.next( :email )
+	user.phone Factory.next( :phone )
 	user.company Factory.next( :name )
 	user.password Factory.next( :random_string )
 end # user
@@ -70,6 +75,7 @@ Factory.sequence :user do |n|
 	:country => Factory.next( :country ) ,
 	:zip => Factory.next( :zipcode ) ,
 	:email => Factory.next( :email ) ,
+	:phone => Factory.next( :phone ) ,
 	:company => Factory.next( :name ) ,
 	:password => Factory.next( :random_string )
 	}

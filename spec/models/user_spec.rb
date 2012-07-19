@@ -27,6 +27,19 @@
 require 'spec_helper'
 require "factories"
 describe User do
+	describe "validations" do
+		before(:each) do 
+			@errors = [:email, :password, :address, :city, :company, :country, :phone, :state, :zip]
+		end # before each
+		it "should not be valid and have all the appropriate errors" do
+			user = User.new
+			user.should_not be_valid
+			@errors.each do |error|
+				user.errors[error].should_not be_nil
+				(user.errors[error].length > 0).should be_true
+			end # each error
+		end # it
+	end # validations
 	describe "Factories" do
 		before(:each) do
 			@user = Factory(:user)
