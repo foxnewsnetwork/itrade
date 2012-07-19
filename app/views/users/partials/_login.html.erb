@@ -1,0 +1,15 @@
+<!-- User login form -->
+<%= form_tag user_session_path, :method => "post", :remote => true do %>
+  <fieldset>
+  	<legend><%= t(:summary_login_user) %></legend>
+  	<div class="control-group">
+			<%= label_tag "user_email", t(:email), :class => "control-label" %>
+			<%= email_field_tag "user[email]", "" %>
+			<%= label_tag "user_password", t(:password), :class => "control-label" %>
+			<%= password_field_tag "user[password]", "" %>
+			<%= label_tag "user_remember_me", t(:remember_me), :class => "control-label" %>
+			<%= check_box_tag "user[remember_me]" %>
+		</div>
+		<%= content_tag(:button, t(:submit), :class => "btn btn-primary" ) %>
+  </fieldset>
+<% end %>  

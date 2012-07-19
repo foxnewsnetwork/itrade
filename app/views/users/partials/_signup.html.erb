@@ -1,0 +1,26 @@
+<!-- User signup form -->
+<%= form_tag users_path, :method => "post", :class => "well" do %>
+  <fieldset>
+  	<legend><%= t(:summary_new_user) %></legend>
+  	<% ['email','password','phone','company','address','city','state','zip','country'].map { |x| { :name => x, :placeholder => t(x) } }.each do |field| %>
+			<div class="control-group">
+				<%= label_tag "user_#{field[:name]}", field[:name].capitalize, :class => "control-label" %>
+				<% case field[:name] %>
+					<% when 'email' %>
+						<%= email_field_tag( "user[#{field[:name]}]", "", :placeholder => "#{field[:placeholder]}", :class => "input-xlarge" )  %>
+					<% when 'phone' %>
+						<%= phone_field_tag( "user[#{field[:name]}]", "", :placeholder => "#{field[:placeholder]}", :class => "input-xlarge" )  %>
+					<% when 'password' %>
+						<%= password_field_tag( "user[#{field[:name]}]", "", :placeholder => "#{field[:placeholder]}", :class => "input-xlarge" )  %>
+					<% else %>
+						<%= text_field_tag( "user[#{field[:name]}]", "", :placeholder => "#{field[:placeholder]}", :class => "input-xlarge" )  %>
+				<% end %>
+				<%= content_tag(:p, "TODO: context help", :class => "help-block") %>
+			</div>
+		<% end %>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary"><%= t(:submit) %></button>
+			<button class="btn"><%= t(:cancel) %></button>
+		</div>
+  </fieldset>
+<% end %>  

@@ -1,18 +1,46 @@
+<script type="text/javascript">
+	$.fx.speeds._defaults = 750;
+	$(document).ready( function() { 
+		$("#user-login-dialog").dialog( { 
+			autoOpen: false,
+			show: "explode",
+			hide: "explode"
+		} ); // dialog setup
+		$("#nav-user-login").click( function() { 
+			$("#user-login-dialog").dialog( "open" );
+			return false;
+		} ); // click cb
+	} );	// jq ready
+</script>
+
 <header>
 	<div class="navbar navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="subnav">		
 				<ul class="nav nav-pills">
 					<li>
-						<%= link_to( image_tag("http://placehold.it/150x30") , "#") %>
+						<%= link_to( image_tag("http://placehold.it/150x30") , root_path) %>
 					</li>
-					<% { "user" => t(:me) ,"shopping-cart" => t(:buy), "gift" => t(:sell) }.each do |icon, tab| %>
+					<li>
+						<% if user_signed_in? %>
+							<%= link_to content_tag(:i, "", :class => "icon-user") + current_user.company %>
+						<% else %>
+							<% { "plus" => t(:signup), "user" => t(:signin) }.each do |icon, tab| %>
+								<li>
+									<%= link_to content_tag(:i, "", :class => "icon-#{icon}") + tab, icon == "user" ? "#login" : new_user_path, :id => "nav-#{icon}-login" %>
+								</li>
+							<% end %>
+						<% end %>
+					</li>
+					<% { "shopping-cart" => t(:buy), "gift" => t(:sell) }.each do |icon, tab| %>
 						<li>
-							<a href="#"><i class="<%= "icon-#{icon}" %>"></i> <%= tab %></a>
+							<a href='<%= icon=="gift" ? new_item_path : items_path %>'>
+								<i class="<%= "icon-#{icon}" %>"></i> <%= tab %>
+							</a>
 						</li>
 					<% end %>
 					<li>
-						<%= form_tag "#", :class => "subnav-search pull-left" do %>
+						<%= form_tag "#", :class => "form-search" do %>
 							<%= text_field_tag :navbarsearch, "", :class => "search-query", :placeholder => "Search" %>
 						<% end %>
 					</li>
@@ -21,3 +49,6 @@
 		</div>
 	</div>
 </header>
+<div id="user-login-dialog" class="ui-dialog-content ui-widget-content">
+	<%= render "users/partials/login" %>
+</div>
