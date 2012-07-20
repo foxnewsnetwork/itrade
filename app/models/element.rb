@@ -21,7 +21,7 @@ class Element < ActiveRecord::Base
   belongs_to :item
   
   # Attachments (be sure to change these for S3 environment in production)
-  has_attached_file :picture, :styles => { :small => "50x50>" } ,
+  has_attached_file :picture, :styles => { :small => "50x50>", :thumb => "260x180" } ,
     :url => "/images/elements/:id/:style/:basename.:extension" ,
     :path => ":rails_root/public/images/elements/:id/:style/:basename.:extension"
     

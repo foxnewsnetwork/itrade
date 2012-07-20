@@ -1,0 +1,30 @@
+<!-- Item show page -->
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12 well">
+				<div class="page-header">
+					<h4>
+						<i class="icon-user"></i> <%= link_to @item.user.company.capitalize, user_path( @item.user ) %> &raquo;
+						<i class="icon-tag" ></i> <%= @item.title.capitalize %>
+					</h4>
+				</div>		
+		</div>
+		<div class="row-fluid">
+			<div class="span8 well">
+				<% if user_signed_in? %>
+					<%= render "elements/partials/new", :remote => false if current_user == @item.user %>
+				<% else %>
+					<%= render "bids/partials/new", :remote => true %>
+				<% end %>
+				<%= render "elements/partials/index" unless @elements.nil? %>
+			</div>
+			<div class="span4 well">
+				<div class="page-header">
+					<h2><%= t(:description) %></h2>
+					<p><%= @item.description %></p>
+				</div>
+			</div>
+			
+		</div>	
+	</div>
+</div>

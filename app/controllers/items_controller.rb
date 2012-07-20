@@ -1,6 +1,9 @@
 class ItemsController < ApplicationController
 	def show
 		@item = Item.find_by_id( params[:id] )
+		
+		render "public/404" if @item.nil?
+		@elements = @item.elements
 	end # show
 	
 	def index
@@ -20,6 +23,7 @@ class ItemsController < ApplicationController
 	def edit
 		if user_signed_in?
 			@item = Item.find_by_id( params[:id] )	
+			render "public/404" if @item.nil?
 			unless current_user == @item.user
 				flash[:notice] = t( :fail_item_edit )
 				redirect_to item_path @item

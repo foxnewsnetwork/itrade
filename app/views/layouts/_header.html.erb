@@ -23,7 +23,7 @@
 					</li>
 					<li>
 						<% if user_signed_in? %>
-							<%= link_to content_tag(:i, "", :class => "icon-user") + current_user.company %>
+							<%= link_to content_tag(:i, "", :class => "icon-user") + current_user.company, user_path( current_user ) %>
 						<% else %>
 							<% { "plus" => t(:signup), "user" => t(:signin) }.each do |icon, tab| %>
 								<li>
@@ -34,7 +34,7 @@
 					</li>
 					<% { "shopping-cart" => t(:buy), "gift" => t(:sell) }.each do |icon, tab| %>
 						<li>
-							<a href='<%= icon=="gift" ? new_item_path : items_path %>'>
+							<a href='<%= icon=="gift" ? new_item_path : root_path + "#stock-items" %>'>
 								<i class="<%= "icon-#{icon}" %>"></i> <%= tab %>
 							</a>
 						</li>
@@ -50,5 +50,5 @@
 	</div>
 </header>
 <div id="user-login-dialog" class="ui-dialog-content ui-widget-content">
-	<%= render "users/partials/login" %>
+	<%= render "users/partials/login", :remote => false %>
 </div>

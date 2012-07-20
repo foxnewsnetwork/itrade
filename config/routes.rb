@@ -1,14 +1,11 @@
 Itrade::Application.routes.draw do
 
   devise_for :users
-	resources :users do
-		
-	end # resources users
+	resources :users 
   resources :items do
   	resources :bids, :only => [:create, :update, :destroy]
   	resources :elements, :only => [:create, :destroy]
   end # resources items
-	resources :bids, :only => [:create, :update, :destroy]
 	
   # The priority is based upon order of creation:
   # first created -> highest priority.

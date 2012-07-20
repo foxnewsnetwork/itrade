@@ -1,0 +1,14 @@
+<!-- Error Messages -->
+<% if model.errors.any? %>
+	<div id="error_explanation">
+		<div class="alert alert-error">
+    	<a href="#" data-dismiss="alert" class="close">x</a>
+    	<h4 class="alert-heading"><%= model.errors.count %> <i class="icon-exclamation-sign"> </i></h4>  
+    	<ul>
+				<% model.errors.full_messages.each do |msg| %>
+			  	<li><i class="icon-exclamation-sign"> </i> <%= msg %></li>
+				<% end %>
+			</ul>
+	  </div>
+	</div>
+<% end %>

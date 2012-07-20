@@ -1,0 +1,15 @@
+<!-- Upload new element -->
+<%= form_for [@item, @item.elements.new], :html => {:multipart => true}, :remote => remote do |f| %>
+	<fieldset>
+		<legend><%= t(:new_element_form) %></legend>
+		<div class="control-group">
+			<%= f.label :picture, t(:picture), :class => "control-label" %>
+			<%= f.file_field :picture, :accept => "image/gif,image/png, image/jpg, image/jpeg" %>
+			<%= f.label :metadata, t(:metadata), :class => "control-label" %>
+			<%= f.text_field :metadata %>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary"><%= t(:submit) %></button>
+		</div>
+	</fieldset>
+<% end %>

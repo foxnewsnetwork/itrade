@@ -1,0 +1,19 @@
+<!-- element index partial -->
+<ul class="thumbnails">
+	<% @elements.each do |element| %>
+		<% next if element.id.nil? %>
+		<li class="span3">
+			<div class="thumbnail">
+				<%= link_to image_tag( element.picture.url(:thumb) ), element.picture.url %>
+				<div class="caption">
+					<% if user_signed_in? && current_user == @item.user %>
+						<p>
+							<%= link_to content_tag(:i, "", :class => "icon-remove"), [@item, element], :method => :delete, :remote => true %>
+							<%= element.metadata %>
+						</p>
+					<% end %>
+				</div>
+			</div>
+		</li>
+	<% end %>
+</ul>

@@ -1,3 +1,9 @@
 // Place all the styles related to the items controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.itempicture { 
+	background-clip : content-box;
+	background-size : 100% 100%;
+	background-repeat : no-repeat;
+} // itempicture

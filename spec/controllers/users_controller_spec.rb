@@ -10,6 +10,10 @@ describe UsersController do
 			get "show", :id => @user
 			response.should be_success
 		end # it
+		it "should show a 404 page" do
+			get "show", :id => 23042034230492
+			response.should render_template "public/404"
+		end # it
 		it "should be success" do
 			get "index"
 			response.should be_success

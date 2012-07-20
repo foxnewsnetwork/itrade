@@ -7,13 +7,17 @@
 	</div>
 	</div class="span12-fluid">
 		<ul class="thumbnails">
-			<% rand(25).times do |n| %>
+			<% @items.each do |item| %>
 				<li class="span3">
 					<div class="thumbnail">
-						<%= image_tag "http://placehold.it/260x180" %>
+						<% if item.elements.empty? %>
+							<%= link_to image_tag( "http://placehold.it/260x180", :class => "itempicture" ), item %>
+						<% else %>
+							<%= link_to image_tag( item.elements.first.picture.url(:thumb), :class => "itempicture" ), item %>
+						<% end %>
 						<div class="caption">
-							<h5><i class="icon-tag"></i> <%= t( :item_title ) %></h5>
-							<p><%= t( :item_metadata ) %></p>
+							<h5><i class="icon-tag"></i> <%= item.title %></h5>
+							<p><%= item.description %></p>
 						</div>
 					</div>
 				</li>
