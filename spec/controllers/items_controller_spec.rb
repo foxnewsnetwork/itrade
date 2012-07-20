@@ -10,6 +10,10 @@ describe ItemsController do
 			get "show", :id => @item
 			response.should be_success
 		end # it
+		it "should show a 404" do
+			get "show", :id => 12380420937842937
+			response.should render_template "layouts/application"
+		end # it
 		it "should be successful" do
 			get "index"
 			response.should be_success

@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   def show
   	@user = User.find_by_id( params[:id] )
+  	if @user.nil?
+  		render "public/404"
+  		return
+  	end # if nil
   end # show
 
   def index

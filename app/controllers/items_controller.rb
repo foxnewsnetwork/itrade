@@ -1,8 +1,10 @@
 class ItemsController < ApplicationController
 	def show
 		@item = Item.find_by_id( params[:id] )
-		
-		render "public/404" if @item.nil?
+		if @item.nil?
+			render "public/404"
+			return
+		end # if nil
 		@elements = @item.elements
 	end # show
 	
