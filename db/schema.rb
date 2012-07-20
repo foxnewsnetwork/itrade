@@ -11,15 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120719175306) do
+ActiveRecord::Schema.define(:version => 20120720075742) do
 
   create_table "bids", :force => true do |t|
-    t.integer  "item_id",                                                      :null => false
-    t.decimal  "offer",      :precision => 10, :scale => 0, :default => 0
-    t.string   "units",                                     :default => "USD"
-    t.datetime "created_at",                                                   :null => false
-    t.datetime "updated_at",                                                   :null => false
+    t.integer  "item_id",                                                       :null => false
+    t.decimal  "offer",       :precision => 10, :scale => 0, :default => 0
+    t.string   "units",                                      :default => "USD"
+    t.datetime "created_at",                                                    :null => false
+    t.datetime "updated_at",                                                    :null => false
     t.integer  "user_id"
+    t.string   "paytype"
+    t.datetime "paydate"
+    t.integer  "location_id"
   end
 
   add_index "bids", ["user_id"], :name => "index_bids_on_user_id"
@@ -43,10 +46,26 @@ ActiveRecord::Schema.define(:version => 20120719175306) do
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
     t.integer  "user_id"
+    t.string   "type"
+    t.string   "category",    :default => "plastic",  :null => false
+    t.integer  "location_id"
   end
 
   add_index "items", ["user_id", "id"], :name => "index_items_on_user_id_and_id", :unique => true
   add_index "items", ["user_id"], :name => "index_items_on_user_id"
+
+  create_table "locations", :force => true do |t|
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "name"
+    t.string   "country"
+    t.string   "zip"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "locations", ["name"], :name => "index_locations_on_name", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "company",                :default => "",    :null => false
@@ -71,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20120719175306) do
     t.boolean  "admin",                  :default => false
   end
 
+  add_index "users", ["company"], :name => "index_users_on_company"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 

@@ -28,6 +28,16 @@
 require 'spec_helper'
 require "factories"
 describe User do
+	describe "before saves" do
+		before(:each) do
+			@user_data = Factory.next(:user)
+			@user_data[:company] = "   cLuSterf02  fuck  \r\n"
+			@user = User.create @user_data
+			@expected = @user_data[:company].strip.downcase.squeeze(" ").gsub( /[^a-zA-Z0-9 ]/, "" )
+		end # before each
+		subject { @user }
+		its(:company) { should == @expected }
+	end # before save
 	describe "validations" do
 		before(:each) do 
 			@errors = [:email, :password, :address, :city, :company, :country, :phone, :state, :zip]

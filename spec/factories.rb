@@ -95,3 +95,23 @@ Factory.sequence :element do |n|
 	:picture => fixture_file_upload(Rails.root + 'spec/pics/pic0.png', 'image/png')
 	}
 end # element
+
+Factory.define :location do |location|
+	location.address Factory.next(:address)
+	location.city Factory.next(:city)
+	location.state Factory.next(:state)
+	location.zip Factory.next(:zipcode)
+	location.name Factory.next(:random_string)
+	location.country Factory.next(:country)
+end # location
+
+Factory.sequence :location do |n|
+{ 
+	:address =>  Factory.next(:address) ,
+	:city => Factory.next(:city),
+	:state => Factory.next(:state) ,
+	:zip => Factory.next(:zipcode),
+	:name => Factory.next(:random_string) ,
+	:country => Factory.next(:country)
+}
+end # location

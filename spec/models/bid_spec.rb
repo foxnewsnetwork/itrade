@@ -2,22 +2,43 @@
 #
 # Table name: bids
 #
-#  created_at :datetime         not null
-#  id         :integer          not null, primary key
-#  item_id    :integer          not null
-#  offer      :integer          default(0)
-#  units      :string(255)      default("USD")
-#  updated_at :datetime         not null
-#  user_id    :integer
+#  created_at  :datetime         not null
+#  id          :integer          not null, primary key
+#  item_id     :integer          not null
+#  location_id :integer
+#  offer       :integer          default(0)
+#  paydate     :datetime
+#  paytype     :string(255)
+#  units       :string(255)      default("USD")
+#  updated_at  :datetime         not null
+#  user_id     :integer
 #
 
 require 'spec_helper'
 require "factories"
 describe Bid do
+	before(:each) do
+		@item = Factory(:item)
+	end # before each
+	describe "location relation" do
+		before(:each) do		
+			@bid = @item.bid
+			@location = Factory(:location)
+			@test = lambda do 
+				Bid.find_by_id(@bid).location.should == @location
+				Location.find_by_id(@location).bids.should include @bid
+			end # test
+		end # before each
+		it "should be properly related" do
+			@bid.at @location
+			@test.call
+		end # it
+		it "should be properly related reverse" do
+			@location.has @bid
+			@test.call
+		end # it
+	end # location relation	
   describe "creation" do
-  	before(:each) do
-  		@item = Factory(:item)
-  	end # before each
   	it "should have proper relationship" do
   		bid = @item.bid
   		bid.should_not be_nil

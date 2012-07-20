@@ -46,6 +46,9 @@ class User < ActiveRecord::Base
   end # each field
   validates :company, :uniqueness => true
   
+  # Callbacks
+  before_save { |user| user.company = user.company.strip.downcase.squeeze(" ").gsub( /[^a-zA-Z0-9 ]/, "" ) }
+  
   def bid( bid_data, item_id )
   	b = self.bids.new( bid_data )
   	b.item_id = item_id
