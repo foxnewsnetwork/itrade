@@ -2,29 +2,46 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12 well">
-				<div class="page-header">
-					<h4>
-						<i class="icon-user"></i> <%= link_to @item.user.company.capitalize, user_path( @item.user ) %> &raquo;
-						<i class="icon-tag" ></i> <%= @item.title.capitalize %>
-					</h4>
-				</div>		
+			<div class="page-header">
+				<h4>
+					<i class="icon-user"></i> <%= link_to @item.user.company.capitalize, user_path( @item.user ) %> &raquo;
+					<i class="icon-tag" ></i> <%= @item.title.capitalize %>
+				</h4>
+			</div>	
+			<% if user_signed_in? %>
+				<% if current_user == @item.user %>
+					<%= content_tag(:button, content_tag(:i, "", :class => "icon-picture icon-white") + t(:new_element_form), :class => "btn btn-info", :id => "new-element-button" ) %>
+				<% else %>
+					<%= content_tag(:button, content_tag(:i, "", :class => "icon-flag icon-white") + t(:bid), :class => "btn btn-success", :id => "new-bid-button" ) %>
+				<% end %>
+			<% end %>	
 		</div>
 		<div class="row-fluid">
 			<div class="span8 well">
-				<% if user_signed_in? %>
-					<%= render "elements/partials/new", :remote => false if current_user == @item.user %>
-				<% else %>
-					<%= render "bids/partials/new", :remote => true %>
-				<% end %>
 				<%= render "elements/partials/index" unless @elements.nil? %>
 			</div>
 			<div class="span4 well">
-				<div class="page-header">
-					<h2><%= t(:description) %></h2>
-					<p><%= @item.description %></p>
+				<div class="span12-fluid">
+					<div class="page-header">
+						<h2><%= t(:bid_data) %></h2>
+						<p><%= content_tag(:i, "", :class => "icon-flag" )%> <%= @item.bids.count %></p>
+					</div>
+				</div>
+				<div class="span12-fluid">
+					<div class="page-header">
+						<h2><%= t(:description) %></h2>
+						<p><%= @item.description %></p>
+					</div>
 				</div>
 			</div>
-			
 		</div>	
 	</div>
 </div>
+
+<% { 'element' => user_signed_in? && current_user == @item.user ,'bid' => user_signed_in? }.each do |type, show| %>
+	<div id="new-<%= type %>-dialog" class="ui-dialog-content ui-widget-content">
+		<%= render "#{type.pluralize}/partials/new", :remote => false if show %>
+	</div>
+<% end %>
+
+
