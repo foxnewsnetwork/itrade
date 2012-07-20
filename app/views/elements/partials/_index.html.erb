@@ -2,7 +2,7 @@
 <ul class="thumbnails">
 	<% @elements.each do |element| %>
 		<% next if element.id.nil? %>
-		<li class="span3">
+		<li class="span3" id="<%= "element#{element.id}" %>">
 			<div class="thumbnail">
 				<%= link_to image_tag( element.picture.url(:thumb) ), element.picture.url %>
 				<div class="caption">

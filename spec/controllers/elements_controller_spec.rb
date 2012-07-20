@@ -52,6 +52,60 @@ describe ElementsController do
 			end # it
 		end # anonymous
 	end # create
+	describe "delete-xhr" do
+		before(:each) do
+			@user = User.create Factory.next(:user)
+			@item = Factory(:item, :user => @user )
+			@element = Factory( :element, :item => @item )
+		end # before each
+		describe "logged in" do
+			login_user
+			before(:each) do
+				@item2 = Factory(:item, :user => @current_user )
+				@element2 = Factory( :element, :item => @item2 )
+			end # before each
+			it "should successfully delete" do
+				lambda do
+					xhr :delete, :destroy, :item_id => @item2, :id => @element2
+				end.should change(Element, :count).by(-1)
+			end # it
+			it "should have deleted the correct guy" do
+				@item2.elements.should include @element2
+				xhr :delete, :destroy, :item_id => @item2, :id => @element2
+				Item.find_by_id(@item2).elements.should_not include @element2
+				Element.find_by_id( @item2.id ).should be_nil
+			end # it
+			it "should display flash and redirect to item" do
+				xhr :delete, :destroy, :item_id => @item2, :id => @element2
+				flash[:success].should_not be_nil
+			end # it
+			it "should not delete other people's stuff" do
+				lambda do
+					xhr :delete,  :destroy, :item_id => @item, :id => @element
+				end.should_not change( Element, :count )
+			end # it
+			it "should redirect and show flash" do
+				xhr :delete, :destroy, :item_id => @item, :id => @element
+				flash[:error].should_not be_nil
+			end # it
+			it "should not delete what is not there" do
+				lambda do
+					xhr :delete, :destroy, :item_id => @item, :id => @element2
+				end.should_not change(Element, :count)
+			end # it
+		end # logged in
+		describe "anonymous" do
+			it "should not change anything" do
+				lambda do
+					xhr :delete, :destroy, :item_id => @item, :id => @element
+				end.should_not change(Element, :count)
+			end # it	
+			it "should redirect and show flash" do
+				xhr :delete, :destroy, :item_id => @item, :id => @element
+				flash[:notice].should_not be_nil
+			end # it
+		end # anonymous
+	end # delete-xhr
 	describe "delete" do
 		before(:each) do
 			@user = User.create Factory.next(:user)
