@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120721053553) do
+ActiveRecord::Schema.define(:version => 20120721181024) do
 
   create_table "bids", :force => true do |t|
     t.integer  "item_id",                                                       :null => false
@@ -69,11 +69,6 @@ ActiveRecord::Schema.define(:version => 20120721053553) do
 
   create_table "users", :force => true do |t|
     t.string   "company",                :default => "",    :null => false
-    t.string   "address",                                   :null => false
-    t.string   "city",                                      :null => false
-    t.string   "zip",                    :default => "",    :null => false
-    t.string   "state",                  :default => "",    :null => false
-    t.string   "country",                :default => "",    :null => false
     t.string   "email",                  :default => "",    :null => false
     t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
@@ -86,8 +81,10 @@ ActiveRecord::Schema.define(:version => 20120721053553) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
-    t.string   "phone"
     t.boolean  "admin",                  :default => false
+    t.integer  "location_id"
+    t.string   "phone",                  :default => "",    :null => false
+    t.string   "extention"
   end
 
   add_index "users", ["company"], :name => "index_users_on_company"

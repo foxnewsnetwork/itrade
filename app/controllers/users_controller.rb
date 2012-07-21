@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_filter :filter_anonymous_users, :only => [:destroy, :update, :edit]
+  
   def show
   	@user = User.find_by_id( params[:id] )
   	if @user.nil?
@@ -21,17 +23,11 @@ class UsersController < ApplicationController
   end # new
 
   def edit
-  	if user_signed_in?
-  		@user = User.find_by_id( params[:id] )
-  		unless current_user.id == @user.id
-  			flash[:notice] = t( :failed_user_edit )
-  			redirect_to user_path @user
-  		end # unless correct user
-  	else
-  		flash[:notice] = t( :failed_user_edit )
-  		redirect_to new_user_session_path
-  	end # if exists user
-  	
+		@user = User.find_by_id( params[:id] )
+		unless current_user.id == @user.id
+			flash[:notice] = t( :failed_user_edit )
+			redirect_to user_path @user
+		end # unless correct user
   end # edit
   
   def create
@@ -46,19 +42,28 @@ class UsersController < ApplicationController
   end # create
   
   def destroy
-  	if user_signed_in?
-  		@user = User.find_by_id params[:id]
-  		if @user == current_user
-  			@user.destroy
-  			flash[:success] = t( :success_user_destroy )
-  			redirect_to root_path
-  		else
-  			flash[:error] = t( :fail_user_destroy )
-  			redirect_to user_path @user
-  		end # if correct user
-  	else
-  		flash[:error] = t( :fail_user_destroy )
-  		redirect_to new_user_session_path
-  	end # if exist user
+		@user = User.find_by_id params[:id]
+		if @user == current_user
+			@user.destroy
+			flash[:success] = t( :success_user_destroy )
+			redirect_to root_path
+		else
+			flash[:error] = t( :fail_user_destroy )
+			redirect_to user_path @user
+		end # if correct user
   end # destory	
+  
+  def update
+  	@user = User.find_by_id params[:id]
+  	if @user == current_user
+  		if @user.update_attributes params[:user]
+  			flash[:success] = t(:success_user_update)
+  		else # else fail update
+  			flash[:error] = t(:fail_user_update)
+  		end # else success update
+  	else # if right user
+  		flash[:error] = t(:fail_user_update)
+  	end # else wrong user
+  	redirect_to @user
+  end # update
 end # UsersController

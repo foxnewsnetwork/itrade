@@ -1,3 +1,13 @@
+require 'faker'
+
+Factory.sequence :company do |n|
+	Faker::Company.name
+end # company
+
+Factory.sequence :password do |n|
+	(0..64).map { |x| ("a".."z").map { |y| y }[rand(26)] }.join
+end # password
+
 Factory.sequence :phone do |n|
 	(0..9).map { (0..9).map { |x| x }[rand(10)] }.join
 end # Factory
@@ -56,11 +66,6 @@ Factory.sequence :item do |n|
 end # item
 
 Factory.define :user do |user|
-	user.address Factory.next( :address )
-	user.city Factory.next( :city )
-	user.state Factory.next( :state )
-	user.country Factory.next( :country )
-	user.zip Factory.next( :zipcode )
 	user.email Factory.next( :email )
 	user.phone Factory.next( :phone )
 	user.company Factory.next( :name )
@@ -69,11 +74,6 @@ end # user
 
 Factory.sequence :user do |n|
 	{ 
-	:address => Factory.next( :address ) ,
-	:city => Factory.next( :city ) ,
-	:state => Factory.next( :state ) ,
-	:country => Factory.next( :country ) ,
-	:zip => Factory.next( :zipcode ) ,
 	:email => Factory.next( :email ) ,
 	:phone => Factory.next( :phone ) ,
 	:company => Factory.next( :name ) ,

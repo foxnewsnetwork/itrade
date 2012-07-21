@@ -2,32 +2,47 @@
 #
 # Table name: users
 #
-#  address                :string(255)      not null
 #  admin                  :boolean          default(FALSE)
-#  city                   :string(255)      not null
 #  company                :string(255)      default(""), not null
-#  country                :string(255)      default(""), not null
 #  created_at             :datetime         not null
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :string(255)
 #  email                  :string(255)      default(""), not null
 #  encrypted_password     :string(255)      default(""), not null
+#  extention              :string(255)
 #  id                     :integer          not null, primary key
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string(255)
-#  phone                  :string(255)
+#  location_id            :integer
+#  phone                  :string(255)      default(""), not null
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string(255)
 #  sign_in_count          :integer          default(0)
-#  state                  :string(255)      default(""), not null
 #  updated_at             :datetime         not null
-#  zip                    :string(255)      default(""), not null
 #
 
 require 'spec_helper'
 require "factories"
 describe User do
+	describe "locations" do
+		before(:each) do
+			@user = User.create Factory.next(:user)
+			@location = Factory(:location)
+			@spec = lambda do
+				@user.at.should eq @location
+				@location.users.should include @user
+			end # spec
+		end # before each
+		it "should give proper locations" do
+			@user.at @location
+			@spec.call
+		end # it
+		it "should go the other way also" do
+			@location.has @user
+			@spec.call
+		end # it
+	end # locations
 	describe "before saves" do
 		before(:each) do
 			@user_data = Factory.next(:user)
@@ -40,14 +55,14 @@ describe User do
 	end # before save
 	describe "validations" do
 		before(:each) do 
-			@errors = [:email, :password, :address, :city, :company, :country, :phone, :state, :zip]
+			@errors = [:email, :password, :company, :phone]
 		end # before each
 		it "should not be valid and have all the appropriate errors" do
 			user = User.new
 			user.should_not be_valid
 			@errors.each do |error|
 				user.errors[error].should_not be_nil
-				(user.errors[error].length > 0).should be_true
+				user.errors[error].should_not be_empty
 			end # each error
 		end # it
 	end # validations

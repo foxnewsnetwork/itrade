@@ -20,6 +20,7 @@ class Location < ActiveRecord::Base
   # Relationships
   has_many :items
   has_many :bids
+  has_many :users
   
   # Validations
   {
