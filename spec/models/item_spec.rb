@@ -7,9 +7,9 @@
 #  description :text
 #  id          :integer          not null, primary key
 #  location_id :integer
+#  material    :string(255)
 #  quantity    :integer          default(0)
 #  title       :string(255)      default("No title")
-#  type        :string(255)
 #  units       :string(255)      default("kg")
 #  updated_at  :datetime         not null
 #  user_id     :integer

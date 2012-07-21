@@ -26,21 +26,23 @@ class Location < ActiveRecord::Base
   	:address => /^\d+\s+.+$/,
   	:city => /^[\D\s-]+$/,
   	:country => /^[\D\s-]+$/,
-  	:name => /^.+$/,
   	:state => /^[\D\s-]+$/,
-  	:zip => /^\d{5}$/
+  	:zip => /^(\d){5}(-(\d){4})*$/
 	}.each do |field, regex|
 	  validates field, :presence => true, :format => { :with => regex }
 	end # presence validation
-	validates :name, :uniqueness => { :case_sensitive => false }
 	
 	# Callbacks
 	before_save :p_process_name
-	
+		
 	# Duck-typing yay!
-	def has(item)
-		item.location_id = self.id
-		item.save
+	def has( item = nil )
+		if item.nil?
+			self.items
+		else
+			item.location_id = self.id
+			self.items if item.save
+		end
 	end # has
 	
 	private
@@ -48,10 +50,15 @@ class Location < ActiveRecord::Base
 			self.name = self.name.strip.downcase.squeeze(" ").gsub( /(\W|\s|\d|_)/, "" )
 		end # p_process_name
 	
-	module Locateable
-		def at( location )
-			self.location_id = location.id
-			self.save
+	module Locateable 
+		def at( place = nil )
+			self.location_id = place.id unless place.nil?
+			self.location if self.save
 		end # at
+		def at!( place = nil )
+			self.location_id = place.id unless place.nil?
+			self.save!
+			self.location
+		end # at!
 	end # Locateable
 end # Location

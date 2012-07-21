@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120720075742) do
+ActiveRecord::Schema.define(:version => 20120721053553) do
 
   create_table "bids", :force => true do |t|
     t.integer  "item_id",                                                       :null => false
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(:version => 20120720075742) do
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
     t.integer  "user_id"
-    t.string   "type"
+    t.string   "material"
     t.string   "category",    :default => "plastic",  :null => false
     t.integer  "location_id"
   end

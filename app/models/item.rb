@@ -7,9 +7,9 @@
 #  description :text
 #  id          :integer          not null, primary key
 #  location_id :integer
+#  material    :string(255)
 #  quantity    :integer          default(0)
 #  title       :string(255)      default("No title")
-#  type        :string(255)
 #  units       :string(255)      default("kg")
 #  updated_at  :datetime         not null
 #  user_id     :integer
@@ -17,7 +17,7 @@
 
 class Item < ActiveRecord::Base
   # attributes
-  attr_accessible :description, :quantity, :title, :units, :location_id
+  attr_accessible :description, :quantity, :title, :units, :location_id, :type, :category
   
   # Relationships
   has_many :bids, :dependent => :destroy

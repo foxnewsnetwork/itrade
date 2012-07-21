@@ -2,9 +2,16 @@ Itrade::Application.routes.draw do
 
   devise_for :users
 	resources :users 
+	resources :locations do
+		resources :items, :only => [:index]
+		resources :bids, :only => [:index]
+	end # locations
   resources :items do
-  	resources :bids, :only => [:create, :update, :destroy]
+  	resources :bids, :only => [:create, :update, :destroy] do
+  		resources :locations, :only => [:create, :destroy]
+  	end # bids
   	resources :elements, :only => [:create, :destroy]
+  	resources :locations, :only => [:create, :destroy]
   end # resources items
 	
   # The priority is based upon order of creation:
