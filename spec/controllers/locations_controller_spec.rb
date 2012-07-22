@@ -8,6 +8,65 @@ describe LocationsController do
 	before(:each) do
 		@user = User.create Factory.next(:user)
 	end # before each
+	
+	it "Note to future programmer, put the user and bid items in here for testing also"
+	[[Item, :item, :item_id]].each do |thing|
+		describe "creation" do
+			before(:each) do
+				@location = Factory.next(:location)
+				@call = lambda { |obj, location| post :create, thing[2] => obj, :location => location }
+			end # before each
+		
+			describe "logged in" do
+				login_user
+				describe "correct user" do
+					before(:each) do
+						@item = Factory(thing[1], :user => @current_user)
+					end # before each
+					it "should create a new location" do
+						lambda do
+							@call.call @item, @location
+						end.should change(Location, :count).by(1)
+					end # it
+					it "should be linked to the new location" do
+						@call.call @item, @location
+						thing[0].find(@item).location.should_not be_nil
+					end # it
+					it "should redirect correctly and have a flash" do
+						@call.call @item, @location
+						response.should redirect_to @item
+						flash[:success].should_not be_nil
+					end # it
+				end # correct
+			
+				describe "incorrect user" do
+					before(:each) do
+						@item = Factory(thing[1], :user => @user )
+					end # before each
+					it "should not change anything" do
+						lambda { @call.call @item, @location }.should_not change(Location, :count)
+					end # it
+					it "should not change items either" do
+						lambda { @call.call @item, @location }.should_not change(@item, :location)
+					end # it
+					it "should have proper flash and redirect" do
+						@call.call @item, @location
+						response.should redirect_to @item
+						flash[:error].should_not be_nil
+					end # it
+				end # incorrect
+			end # logged in
+			describe "anonymous user" do
+				before(:each) { @item = Factory( :item, :user => @user ) }
+				it "should redirect and have flash" do
+					@call.call @item, @location
+					response.should redirect_to new_user_session_path
+					flash[:notice].should_not be_nil
+				end #it
+			end # anonymous user
+		end # creation
+	end # each thing
+	
 	describe "creation" do
 		before(:each) do
 			@location = Factory.next(:location)

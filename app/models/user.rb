@@ -56,4 +56,9 @@ class User < ActiveRecord::Base
   	return b if b.save
   	return nil
   end # bid
+  
+  # here for ducking purposes
+  def user
+  	self
+  end # user
 end # User

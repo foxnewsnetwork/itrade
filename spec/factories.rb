@@ -48,6 +48,12 @@ Factory.sequence :country do |n|
 	["United States","Brazil","Japan","China","South Korea","Italy","France"][rand(7)]
 end # country
 
+Factory.define :bid do |bid|
+	bid.offer rand(18348)
+	bid.association :item
+	bid.association :user
+end # bid
+
 Factory.define :item do |item|
 	item.title Factory.next( :random_string )
 	item.description Factory.next( :random_string )
