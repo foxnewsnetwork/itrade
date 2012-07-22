@@ -1,4 +1,13 @@
 class BidsController < ApplicationController
+	def show
+		@bid = Bid.find_by_id params[:id]
+		if @bid.nil?
+			render "public/404" 
+		else # if bid
+			redirect_to @bid.item 
+		end # else bid
+	end # show
+
 	def create
 		if user_signed_in?
 			current_user.bid params[:bid], params[:item_id]

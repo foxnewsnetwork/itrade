@@ -2,7 +2,7 @@
 <%= form_tag users_path, :method => "post", :class => "well" do %>
   <fieldset>
   	<legend><%= t(:summary_new_user) %></legend>
-  	<% ['email','password','phone','company','address','city','state','zip','country'].map { |x| { :name => x, :placeholder => t(x) } }.each do |field| %>
+  	<% ['email','password','phone','company'].map { |x| { :name => x, :placeholder => t(x) } }.each do |field| %>
 			<div class="control-group">
 				<%= label_tag "user_#{field[:name]}", field[:name].capitalize, :class => "control-label" %>
 				<% case field[:name] %>

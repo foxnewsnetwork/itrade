@@ -3,7 +3,14 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .itempicture { 
-	background-clip : content-box;
-	background-size : 100% 100%;
+	background-size : contain;
 	background-repeat : no-repeat;
+	background-position : center;
+	height : 145px;
+	width : 210px;
 } // itempicture
+
+.caption { 
+	background-color : #ffffff;
+	opacity : 0.65;
+}

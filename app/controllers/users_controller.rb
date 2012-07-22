@@ -7,6 +7,9 @@ class UsersController < ApplicationController
   		render "public/404"
   		return
   	end # if nil
+  	@items = @user.items
+  	@location = @user.location
+  	@location ||= Location.new
   end # show
 
   def index

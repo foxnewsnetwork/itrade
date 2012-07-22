@@ -7,8 +7,9 @@ class LocationsController < ApplicationController
 
   def create
   	if current_user == @item.user
+  		@location = @item.location.destroy unless @item.location.nil?
 			@location = Location.create params[:location]
-			@item.at @location
+			@item.at @location unless @location.nil?
 			if @item.location.nil?
 				flash[:error] = t(:fail_location_create)	
 			else
@@ -23,11 +24,12 @@ class LocationsController < ApplicationController
 
   def destroy
   	if current_user == @item.user
+  		@item.location.destroy unless @item.location.nil?
   		@item.location_id = nil
   		@item.save
   		flash[:success] = t(:success_location_destroy)
   	else # if correct user
-  		flash[:notice] = t(:fail_location_destroy)
+  		flash[:error] = t(:fail_location_destroy)
   	end # else incorrect user
   	redirect_to @item
   end # destroy

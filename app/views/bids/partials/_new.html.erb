@@ -6,6 +6,8 @@
 			<%= f.label :offer, :class => "control-label" %>
 			<%= f.number_field :offer, :class => "input-small" %>
 			<%= f.select :units, options_for_select(["USD"]), :class => "input-small" %>
+			<%= f.label :tradeterm, :class => "control-label" %>
+			<%= f.select :tradeterm, :options_for_select(['ExWorks','FOB','FAS','CNF','CIF']), :class => "input-small" %>
 			<%= content_tag(:button, t(:bid), :class => "btn btn-success", :type => "submit" ) %>
 		</div>
 	</fieldset>

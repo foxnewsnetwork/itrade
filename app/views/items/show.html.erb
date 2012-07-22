@@ -19,6 +19,7 @@
 		<div class="row-fluid">
 			<div class="span8 well">
 				<%= render "elements/partials/index" unless @elements.nil? %>
+				<%= t(:nothin_here_yet) if @elements.nil? || @elements.empty? %>
 			</div>
 			<div class="span4 well">
 				<div class="span12-fluid">

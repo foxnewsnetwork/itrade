@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120721181024) do
+ActiveRecord::Schema.define(:version => 20120722163219) do
 
   create_table "bids", :force => true do |t|
     t.integer  "item_id",                                                       :null => false
@@ -64,8 +64,6 @@ ActiveRecord::Schema.define(:version => 20120721181024) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  add_index "locations", ["name"], :name => "index_locations_on_name", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "company",                :default => "",    :null => false

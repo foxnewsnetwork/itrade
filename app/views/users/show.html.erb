@@ -1,2 +1,81 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<!-- user show page -->
+<%= content_tag(:div, :class => "container-fluid") do %>
+	<%= content_tag :div, :class => "row-fluid" do %>
+		<%= content_tag :div, :class => "span12-fluid well" do %>
+			<%= content_tag :div, :class => "page-header" do %>
+				<%= content_tag :h4 do %>
+					<%= content_tag :div, "", :class => "icon-user" %>
+					<%= link_to @user.company, user_path( @user ) %>
+				<% end # h2 %>
+			<% end # page-header %>
+		<% end # span12 well %>
+	<% end # row-fluid %>
+	<%= content_tag :div, :class => "row-fluid" do %>
+		<%= content_tag :div, :class => "span6 well" do %>
+			<%= content_tag :div, :class => "page-header" do %>
+				<%= t(:items) %>
+			<% end # page-header %>
+			<%= content_tag :dl do %>
+				<% @items.each do |item| %>
+					<%= content_tag :dt do %>
+						<%= content_tag :i, "", :class => "icon-tag" %>
+						<%= link_to( item.title, item_path(item) ) %>
+					<% end # dt %>
+					<%= content_tag :dd do %>
+						<%= content_tag :span, :class => "separator" do %>&raquo;<% end %>
+						<%= item.description.length > 75 ? item.description[0..74] + "..." : item.description %>
+					<% end # dd %>
+				<% end # each item %>
+			<% end # dl %>
+		<% end # span6-fluid well %>
+		<%= content_tag :div, :class => "span6 well" do %>
+			<%= content_tag :div, :class => "page-header" do %>
+				<%= t(:contact_info) %>
+				<% if current_user == @user %>
+					<%= content_tag(:button, :class => "btn btn-info", :id => "edit-user-button" ) do %>
+						<%= content_tag(:i, "", :class => "icon-pencil") %>
+						<%= t(:edit_contact_info) %>
+					<% end %>
+				<% end # if correct_user %>
+			<% end # page-header %>
+			<%= render "shared/error_messages", :model => @user %>
+			<%= content_tag :dl do %>
+				<% {:company => "company", :email => "email", :phone => "phone" }.each do |key, val| %>
+					<%= content_tag :dt do %>
+						<%= val.capitalize %>
+					<% end # dt %>
+					<%= content_tag :dd do %>
+						<%= @user[key].blank? ? t(:unknown) : @user[key] %>
+					<% end # dt %>
+				<% end # each key %>
+			<% end # dl %>
+			<%= content_tag :div, :class => "page-header" do %>
+				<%= t(:location_info) %>
+				<% if current_user == @user %>
+					<%= content_tag(:button, :class => "btn btn-info", :id => "edit-location-button" ) do %>
+						<%= content_tag(:i, "", :class => "icon-pencil") %>
+						<%= t(:edit_location_info) %>
+					<% end %>
+				<% end # if correct_user %>
+			<% end # page-header %>
+			<%= content_tag :dl do %>
+				<% {:address => "address", :city => "city", :state => "state", :zip => "zip", :country => "country" }.each do |key, val| %>
+					<%= content_tag :dt do %>
+						<%= val.capitalize %>
+					<% end # dt %>
+					<%= content_tag :dd do %>
+						<%= @location[key].blank? ? t(:unknown) : @user[key] %>
+					<% end # dt %>
+				<% end # each key %>
+			<% end unless @location.nil? # dl %>
+		<% end # span6-fluid well %>
+	<% end # row-fluid %>
+<% end # container %>
+
+<% if current_user == @user %>
+	<% ['user','location'].each do |type| %>
+		<div id="edit-<%= type %>-dialog" class="ui-dialog-content ui-widget-content">
+			<%= render "#{type.pluralize}/partials/edit", :remote => false, :parent => @user, :method => "post" %>
+		</div>
+	<% end # each type %>
+<% end # if correct user %>

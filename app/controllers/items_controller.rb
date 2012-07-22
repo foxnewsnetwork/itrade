@@ -10,7 +10,7 @@ class ItemsController < ApplicationController
 	
 	def index
 		# TODO: show less, paginate, or do something here
-		@items = Item.all
+		@items = Item.limit(25)
 	end # index
 	
 	def new

@@ -9,19 +9,20 @@
 		<ul class="thumbnails">
 			<% @items.each do |item| %>
 				<li class="span3">
-					<div class="thumbnail">
-						<% if item.elements.empty? %>
-							<%= link_to image_tag( "http://placehold.it/260x180", :class => "itempicture" ), item %>
-						<% else %>
-							<%= link_to image_tag( item.elements.first.picture.url(:thumb), :class => "itempicture" ), item %>
-						<% end %>
+					<% if item.elements.empty? %>
+						<% target_image_path = "http://placehold.it/260x180" %>
+					<% else %>
+						<% target_image_path = item.elements.first.picture.url(:small) %>
+					<% end %>
+					<a class="thumbnail itempicture" href="<%= item_path item %>" style="background-image : url('<%= target_image_path %>')">					
 						<div class="caption">
 							<h5><i class="icon-tag"></i> <%= item.title %></h5>
-							<p><%= item.description %></p>
+							<p><%= item.description.length < 25 ? item.description : item.description[0..24] + "..." %></p>
 						</div>
-					</div>
+					</a>
 				</li>
 			<% end %>
+			<%= t(:nothing_here_yet) if @items.nil? || @items.empty? %>
 		</ul>
 	</div>
 </section>

@@ -1,0 +1,21 @@
+<!-- location edit form -->
+
+<%= form_for [parent, @location], :method => method, :remote => remote, :class => "well" do |f| %>
+	<fieldset>
+  	<legend><%= t(:edit_location) %></legend>
+  	<% [:name, :address, :city, :state, :zip, :country ].each do |field| %>
+			<div class="control-group">
+				<%= f.label field, :class => "control-label" %>
+				<% case field %>
+					<% when :phone %>
+						<%= f.email_field field, :class => "input-xlarge" %>
+					<% when :company %>
+						<%= f.phone_field field, :class => "input-xlarge" %>
+					<% else %>
+						<%= f.text_field field, :class => "input-xlarge" %>
+				<% end %>
+			</div>
+		<% end %>
+		<button type="submit" class="btn btn-primary"><%= t(:submit) %></button>
+  </fieldset>
+<% end # form_tag  %>

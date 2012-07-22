@@ -45,10 +45,10 @@ class User < ActiveRecord::Base
   include Location::Locateable
   
   # Callbacks
-  before_save do |user|
+  before_validation do |user|
   	user.company = user.company.strip.downcase.squeeze(" ").gsub( /[^a-zA-Z0-9 ]/, "" ) 
 		user.phone = user.phone.strip.gsub( /\D/,"" )
-  end # before_save
+  end # before_validation
   
   def bid( bid_data, item_id )
   	b = self.bids.new( bid_data )
