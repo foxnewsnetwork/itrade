@@ -9,7 +9,6 @@ describe LocationsController do
 		@user = User.create Factory.next(:user)
 	end # before each
 	
-	it "Note to future programmer, put the user and bid items in here for testing also"
 	[[Item, :item, :item_id]].each do |thing|
 		describe "creation" do
 			before(:each) do
@@ -157,7 +156,7 @@ describe LocationsController do
 				it "should show flash and redirect" do
 					@delete.call @item
 					response.should redirect_to @item
-					flash[:notice].should_not be_nil
+					flash[:error].should_not be_nil
 				end # it
 			end # incorrect
 		end # logged in
