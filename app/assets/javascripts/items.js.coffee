@@ -11,5 +11,5 @@ $(document).ready =>
 			false
 		# click cb	
 	# register
-	register dialog for dialog in ['bid','element']
+	register dialog for dialog in ['bid','element','location']
 # ready callback

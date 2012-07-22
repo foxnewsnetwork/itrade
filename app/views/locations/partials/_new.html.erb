@@ -1,6 +1,5 @@
-<!-- location edit form -->
-
-<%= form_for [parent, @location], :method => method, :remote => remote, :class => "well" do |f| %>
+<!-- location new form -->
+<%= form_for [parent, @location], :method => "post", :remote => remote, :class => "well" do |f| %>
 	<fieldset>
   	<legend><%= t(:edit_location) %></legend>
   	<% {:shipping => "mini", :address => "large", :city => "small", :state => "mini inline", :zip => "mini inline", :country => "mini inlin" }.each do |field, style| %>

@@ -1,0 +1,11 @@
+<!-- Location show page -->
+<%= content_tag :dl do %>
+	<% {:shipping => "shipping", :address => "address", :city => "city", :state => "state", :zip => "zip", :country => "country" }.each do |key, val| %>
+		<%= content_tag :dt do %>
+			<%= val.capitalize %>
+		<% end # dt %>
+		<%= content_tag :dd do %>
+			<%= @location[key].blank? ? t(:unknown) : @location[key] %>
+		<% end # dt %>
+	<% end # each key %>
+<% end unless @location.nil? # dl %>

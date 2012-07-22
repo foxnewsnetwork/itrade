@@ -6,6 +6,12 @@ class ItemsController < ApplicationController
 			return
 		end # if nil
 		@elements = @item.elements
+		@location = @item.location
+		@bids = @item.bids.order( "created_at DESC" )
+		if user_signed_in?
+			@bid = current_user.bids.new
+			@location ||= Location.new
+		end
 	end # show
 	
 	def index

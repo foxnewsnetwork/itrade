@@ -24,14 +24,32 @@
 			<div class="span4 well">
 				<div class="span12-fluid">
 					<div class="page-header">
-						<h2><%= t(:bid_data) %></h2>
-						<p><%= content_tag(:i, "", :class => "icon-flag" )%> <%= @item.bids.count %></p>
+						<h2><%= t(:item_info) %></h2>
+						<dl>
+							<% [:description , :quantity , :units , :material].each do |key, title| %>
+								<dt><%= t(key) %></dt>
+								<dd><%= @item[key].nil? ? t(:unknown) : @item[key] %></dd>
+							<% end # each key %>
+						</dl>
 					</div>
 				</div>
 				<div class="span12-fluid">
 					<div class="page-header">
-						<h2><%= t(:description) %></h2>
-						<p><%= @item.description %></p>
+						<h2><%= t(:shipping_location) %></h2>
+						<% if current_user == @item.user %>
+							<%= content_tag(:button, :class => "btn btn-info", :id => "new-location-button") do %>
+								<%= content_tag(:i, "", :class => "icon-pencil icon-white") %>
+								<%= t(:edit_location) %>
+							<% end # button tag %>
+						<% end # if correct uer %>	
+						<%= render "locations/partials/show" %>
+					</div>
+				</div>
+				<div class="span12-fluid">
+					<div class="page-header">
+						<h2><%= t(:bid_data) %></h2>
+						<p><%= content_tag(:i, "", :class => "icon-flag" )%> <%= @bids.count %></p>
+						<p><%= t(:last_offer) %> <%= @bids.last.offer %> <%= @bids.last.units %></p>
 					</div>
 				</div>
 			</div>
@@ -39,9 +57,9 @@
 	</div>
 </div>
 
-<% { 'element' => user_signed_in? && current_user == @item.user ,'bid' => user_signed_in? }.each do |type, show| %>
+<% { 'element' => current_user == @item.user ,'bid' => user_signed_in?, 'location' => current_user == @item.user }.each do |type, show| %>
 	<div id="new-<%= type %>-dialog" class="ui-dialog-content ui-widget-content">
-		<%= render "#{type.pluralize}/partials/new", :remote => false if show %>
+		<%= render "#{type.pluralize}/partials/new", :remote => false, :parent => @item if show %>
 	</div>
 <% end %>
 

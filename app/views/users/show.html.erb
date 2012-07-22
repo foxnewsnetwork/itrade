@@ -58,16 +58,7 @@
 					<% end %>
 				<% end # if correct_user %>
 			<% end # page-header %>
-			<%= content_tag :dl do %>
-				<% {:address => "address", :city => "city", :state => "state", :zip => "zip", :country => "country" }.each do |key, val| %>
-					<%= content_tag :dt do %>
-						<%= val.capitalize %>
-					<% end # dt %>
-					<%= content_tag :dd do %>
-						<%= @location[key].blank? ? t(:unknown) : @user[key] %>
-					<% end # dt %>
-				<% end # each key %>
-			<% end unless @location.nil? # dl %>
+			<%= render "locations/partials/show" %>
 		<% end # span6-fluid well %>
 	<% end # row-fluid %>
 <% end # container %>

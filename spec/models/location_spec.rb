@@ -8,6 +8,7 @@
 #  created_at :datetime         not null
 #  id         :integer          not null, primary key
 #  name       :string(255)
+#  shipping   :string(255)      default("EXWORKS"), not null
 #  state      :string(255)
 #  updated_at :datetime         not null
 #  zip        :string(255)

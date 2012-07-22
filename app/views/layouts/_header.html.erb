@@ -30,7 +30,7 @@
 					<% end %>
 					<li>
 						<%= form_tag "#", :class => "form-search" do %>
-							<%= text_field_tag :navbarsearch, "", :class => "search-query", :placeholder => "Search" %>
+							<%= text_field_tag :navbarsearch, "", :class => "search-query disabled", :placeholder => "Search disabled", :disabled => "" %>
 						<% end %>
 					</li>
 					<% if user_signed_in? %>

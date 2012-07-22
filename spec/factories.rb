@@ -4,6 +4,10 @@ Factory.sequence :company do |n|
 	Faker::Company.name
 end # company
 
+Factory.sequence :shipping do |n|
+	['EXWORKS','FAS','FOB','CNF','CIF'][n%5]
+end # shipping
+
 Factory.sequence :password do |n|
 	(0..64).map { |x| ("a".."z").map { |y| y }[rand(26)] }.join
 end # password
@@ -109,6 +113,7 @@ Factory.define :location do |location|
 	location.zip Factory.next(:zipcode)
 	location.name Factory.next(:random_string)
 	location.country Factory.next(:country)
+	location.shipping Factory.next(:shipping)
 end # location
 
 Factory.sequence :location do |n|
@@ -118,6 +123,7 @@ Factory.sequence :location do |n|
 	:state => Factory.next(:state) ,
 	:zip => Factory.next(:zipcode),
 	:name => Factory.next(:random_string) ,
-	:country => Factory.next(:country)
+	:country => Factory.next(:country) ,
+	:shipping => Factory.next(:shipping)
 }
 end # location

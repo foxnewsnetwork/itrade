@@ -8,6 +8,7 @@
 #  created_at :datetime         not null
 #  id         :integer          not null, primary key
 #  name       :string(255)
+#  shipping   :string(255)      default("EXWORKS"), not null
 #  state      :string(255)
 #  updated_at :datetime         not null
 #  zip        :string(255)
@@ -15,7 +16,7 @@
 
 class Location < ActiveRecord::Base
 	# attributes
-  attr_accessible :address, :city, :country, :name, :state, :zip
+  attr_accessible :address, :city, :country, :name, :state, :zip, :shipping
   
   # Relationships
   has_many :items
@@ -28,13 +29,14 @@ class Location < ActiveRecord::Base
   	:city => /^[\D\s-]+$/,
   	:country => /^[\D\s-]+$/,
   	:state => /^[\D\s-]+$/,
-  	:zip => /^(\d){5}(-(\d){4})*$/
+  	:zip => /^(\d){5}(-(\d){4})*$/ ,
+  	:shipping => /^(EXWORKS|FAS|FOB|CNF|CIF)$/
 	}.each do |field, regex|
 	  validates field, :presence => true, :format => { :with => regex }
 	end # presence validation
 	
 	# Callbacks
-	before_save :p_process_name
+	before_validation :p_process_name
 		
 	# Duck-typing yay!
 	def has( item = nil )
@@ -48,7 +50,7 @@ class Location < ActiveRecord::Base
 	
 	private
 		def p_process_name
-			self.name = self.name.strip.downcase.squeeze(" ").gsub( /(\W|\s|\d|_)/, "" )
+			self.name = self.name.strip.downcase.squeeze(" ").gsub( /(\W|\s|\d|_)/, "" ) unless self.name.nil?
 		end # p_process_name
 	
 	module Locateable 
