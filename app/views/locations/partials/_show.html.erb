@@ -9,3 +9,4 @@
 		<% end # dt %>
 	<% end # each key %>
 <% end unless @location.nil? # dl %>
+<%= t(:location_not_specified) if @location.nil? %>

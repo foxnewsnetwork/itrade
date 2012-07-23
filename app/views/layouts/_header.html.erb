@@ -23,7 +23,7 @@
 					</li>
 					<% { "shopping-cart" => t(:buy), "gift" => t(:sell) }.each do |icon, tab| %>
 						<li>
-							<a href='<%= icon=="gift" ? new_item_path : root_path + "#stock-items" %>'>
+							<a href='<%= icon=="gift" ? new_item_path : items_path %>'>
 								<i class="<%= "icon-#{icon}" %>"></i> <%= tab %>
 							</a>
 						</li>

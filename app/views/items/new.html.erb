@@ -6,10 +6,12 @@
 				<fieldset>
 					<legend><%= t(:new_item_form) %></legend>
 					<div class="control-group">
-						<% [:title,:description].each do |tag| %>
-							<%= f.label tag, :class => "control-label" %>
-							<%= f.text_field tag, :value => "" %>
+						<% {:title => "HDPE pipes", :description => "White, no impurities", :material => "Packed in 12 gaylord boxes" }.each do |tag, placeholder| %>
+							<%= f.label t(tag), :class => "control-label" %>
+							<%= f.text_field tag, :value => "", :placeholder => "ex." + placeholder %>
 						<% end %>
+						<%= f.label :category, :class => "control-label" %>
+						<%= f.select :category, options_for_select(['plastic scraps','waste paper','regular products'].map { |x| [x,x] }) %>
 						<div class="inline">
 							<%= f.label :quantity, :class => "control-label" %>
 							<%= f.number_field :quantity %>

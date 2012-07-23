@@ -17,7 +17,7 @@
 
 class Item < ActiveRecord::Base
   # attributes
-  attr_accessible :description, :quantity, :title, :units, :location_id, :type, :category
+  attr_accessible :description, :quantity, :title, :units, :location_id, :material, :category
   
   # Relationships
   has_many :bids, :dependent => :destroy

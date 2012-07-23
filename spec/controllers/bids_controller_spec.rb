@@ -6,6 +6,16 @@ describe BidsController do
 		@user = User.create Factory.next( :user )
 		@item = Factory(:item, :user => @user)
 	end # before each
+	describe "get" do
+		login_user
+		before(:each) do
+			@bid = Factory(:bid, :user => @current_user, :item => @item)
+		end # before each
+		it "should be success" do
+			get "show", :id => @bid
+			response.should be_success
+		end # it
+	end # get
 	describe "bid creation" do
 		describe "success" do
 			login_user
@@ -14,7 +24,7 @@ describe BidsController do
 			end # before each
 			it "should be successful" do
 				post :create, :item_id => @item, :bid => @bid_data
-				response.should redirect_to item_path @item
+				responses.should redirect_to [@item, assigns(:bid)]
 				flash[:success].should_not be_nil
 			end # it
 			it "should change the database" do
@@ -89,10 +99,13 @@ describe BidsController do
 				it "should redirect to signin" do
 					delete :destroy, :item_id => @item, :id => @bid
 					response.should redirect_to new_user_session_path
-					flash[:error].should_not be_nil
+					flash[:notice].should_not be_nil
 				end # it
 			end # failure
 		end # deletion
 	end # item creation
 	
+	describe "put updates" do
+		it "SHOULD HAVE TESTING IN THIS SECTION!!"
+	end # put updates
 end # BidsController

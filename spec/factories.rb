@@ -58,6 +58,10 @@ Factory.define :bid do |bid|
 	bid.association :user
 end # bid
 
+Factory.sequence :bid do |n|
+	{ :offer => rand(34334) }
+end # sequence
+
 Factory.define :item do |item|
 	item.title Factory.next( :random_string )
 	item.description Factory.next( :random_string )

@@ -175,4 +175,8 @@ describe LocationsController do
 			end # it
 		end # anonymous
 	end # deletion
+	
+	describe "put updates" do
+		it "SHOULD HAVE TEST TO TEST THIS SECIONT!"
+	end # put updates
 end # LocationsController

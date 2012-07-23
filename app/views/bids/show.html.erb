@@ -1,0 +1,76 @@
+<!-- bid show page -->
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12 well">
+			<div class="page-header">
+				<h4>
+					<i class="icon-user"></i> <%= link_to @item.title.capitalize, item_path( @item ) %> &raquo;
+					<i class="icon-briefcase"></i> <%= @item.quantity %> <%= @item.units %> &raquo;
+					<i class="icon-tag" ></i> <%= t(:bid) %>
+				</h4>
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span4 well">
+			<div class="span12-fluid">
+				<div class="page-header">
+					<h4><i class="icon-tag" ></i> <%= t(:my_bid_info) %></h4>
+					<%= content_tag(:button, :class => "btn btn-info", :id => "new-bid-button") do %>
+						<i class="icon-pencil icon-white"></i>
+						<%= t(:edit_bid) %>
+					<% end # button tag %>
+				</div>
+			</div>
+			<dl>
+				<% [:offer, :units].each do |key| %>
+					<dt><%= t(key) %></dt>
+					<dd><%= @bid[key] %></dd>
+				<% end # each key %>
+			</dl>
+			<div class="span12-fluid">
+				<div class="page-header">
+					<h4><i class="icon-tag" ></i> <%= t(:my_bid_location) %></h4>
+					<%= content_tag(:button, :class => "btn btn-info", :id => "new-location-button") do %>
+						<i class="icon-pencil icon-white"></i>
+						<%= t(:edit_location) %>
+					<% end # button tag %>
+				</div>
+				<%= render "locations/partials/show" %>
+			</div>
+		</div>
+		<div class="span8 well">
+			<div class="span12-fluid">
+				<div class="page-header">
+					<h4><i class="icon-tags" ></i> <%= t(:bids_info) %></h4>
+				</div>
+			</div>
+			<% if @bids.nil? %>
+				<%= t(:no_bid_history) %>
+			<% else # if no bids %>
+				<dl>
+					<% last = @bids.last %>
+					<dt><%= t(:last_bid) %></dt>
+					<dd><%= last.offer %> <%= last.units %></dd>
+					
+					<% location = last.location %>
+					<dt><%= t(:target) %></dt>
+					<% unless location.nil? %>
+						<dd><%= location.shipping %> <%= location.city %></dd>
+					<% else %>
+						<dd><%= t(:unknown) %></dd>
+					<% end %>
+					
+					<dt><%= t(:bid_count) %></dt>
+					<dd><%= @bids.count %></dd>
+				</dl>
+			<% end # else bids %>
+		</div>
+	</div>
+</div>
+
+<% { 'bid' => 'edit', 'location' => 'edit' }.each do |type, verb| %>
+	<div id="<%= "new-#{type}-dialog" %>" class="ui-dialog-content ui-widget-content">
+		<%= render "#{type.pluralize}/partials/#{verb}", :remote => false, :parent => @bid %>
+	</div>
+<% end %>

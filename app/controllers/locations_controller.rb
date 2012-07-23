@@ -1,10 +1,28 @@
 class LocationsController < ApplicationController
-  before_filter :filter_anonymous_users, :only => [:create, :destroy]
-  before_filter :p_getitems, :only => [:create, :destroy]
+  before_filter :filter_anonymous_users, :only => [:create, :destroy, :update]
+  before_filter :p_getitems, :only => [:create, :destroy, :update]
   
   def search
   end
 
+	def update
+		if current_user == @item.user
+			@location = Location.find_by_id params[:id]
+			if @location.nil?
+				render "public/404"
+				return
+			end # if bad location
+			if @location.update_attributes( params[:location] )
+				flash[:success] = t(:success_location_update)
+			else
+				flash[:error] = t(:fail_location_update)
+			end # if success update
+		else
+			flash[:error] = t(:fail_location_update)
+		end # if correct_user
+		redirect_to @item
+	end # update
+	
   def create
   	if current_user == @item.user
   		@location = @item.location.destroy unless @item.location.nil?
@@ -39,6 +57,9 @@ class LocationsController < ApplicationController
   		@item ||= Item.find_by_id params[:item_id]
 			@item ||= Bid.find_by_id params[:bid_id]
 			@item ||= User.find_by_id params[:user_id]
-			render "public/404" if @item.nil?
+			if @item.nil?
+				render "public/404" 
+				return
+			end
   	end # p_getitems
 end # LocationsController

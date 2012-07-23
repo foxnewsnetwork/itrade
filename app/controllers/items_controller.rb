@@ -17,6 +17,10 @@ class ItemsController < ApplicationController
 	def index
 		# TODO: show less, paginate, or do something here
 		@items = Item.limit(25)
+		respond_to do |format|
+			format.html
+			format.js
+		end # respond_to
 	end # index
 	
 	def new

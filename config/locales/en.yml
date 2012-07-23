@@ -3,3 +3,17 @@
 
 en:
   hello: "Hello world"
+  company_name: "ML Resources"
+  new_bid: "Next..."
+  new_bid_form: "New Bid"
+  submit: "Continue..."
+  success_bid_create: "New bid successfully registered."
+  success_item_create: "You're item has been successfully listed"
+  new_element_form: "Upload Picture"
+  new_item_form: "Material To Sell"
+  title: "I Want To Sell..."
+  description: "Description"
+  material: "How is it packed?"
+  category: "Category"
+  quantity: "Quantity"
+  metadata: "Item Name"

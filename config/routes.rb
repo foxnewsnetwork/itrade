@@ -2,10 +2,10 @@ Itrade::Application.routes.draw do
 
   devise_for :users
 	resources :users do
-		resources :locations, :only => [:create, :destroy]
+		resources :locations, :only => [:create, :destroy, :update]
 	end # resources
 	resources :bids, :only => [:show] do
-		resources :locations, :only => [:create, :destroy]
+		resources :locations, :only => [:create, :destroy, :update]
 	end # bids
 	resources :locations do
 		resources :items, :only => [:index]
@@ -13,8 +13,8 @@ Itrade::Application.routes.draw do
 		resources :users, :only => [:index]
 	end # locations
   resources :items do
-  	resources :locations, :only => [:create, :destroy]
-  	resources :bids, :only => [:create, :update, :destroy]
+  	resources :locations, :only => [:create, :destroy, :update]
+  	resources :bids, :only => [:create, :update, :destroy, :show, :new]
   	resources :elements, :only => [:create, :destroy]
   end # resources items
 	

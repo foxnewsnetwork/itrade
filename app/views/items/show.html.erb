@@ -4,16 +4,24 @@
 		<div class="span12 well">
 			<div class="page-header">
 				<h4>
-					<i class="icon-user"></i> <%= link_to @item.user.company.capitalize, user_path( @item.user ) %> &raquo;
+					<i class="icon-user"></i> <%= link_to @item.user.company.capitalize, user_path( @item.user ) %>  &raquo;  
 					<i class="icon-tag" ></i> <%= @item.title.capitalize %>
 				</h4>
 			</div>	
 			<% if user_signed_in? %>
 				<% if current_user == @item.user %>
-					<%= content_tag(:button, content_tag(:i, "", :class => "icon-picture icon-white") + t(:new_element_form), :class => "btn btn-info", :id => "new-element-button" ) %>
+					<%= content_tag(:button, :class => "btn btn-info", :id => "new-element-button" ) do %>
+						<%= content_tag(:i, "", :class => "icon-picture icon-white") %>
+						<%= t(:new_element_form) %>
+					<% end # content %>
 				<% else %>
-					<%= content_tag(:button, content_tag(:i, "", :class => "icon-flag icon-white") + t(:bid), :class => "btn btn-success", :id => "new-bid-button" ) %>
+					<%= link_to new_item_bid_path( @item ), :class => "btn btn-success" do %>
+						<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
+						<%= t(:bid) %>
+					<% end # link %>
 				<% end %>
+			<% else %>
+				<%= t(:need_to_sign_in_to_bid) %>
 			<% end %>	
 		</div>
 		<div class="row-fluid">
@@ -49,7 +57,9 @@
 					<div class="page-header">
 						<h2><%= t(:bid_data) %></h2>
 						<p><%= content_tag(:i, "", :class => "icon-flag" )%> <%= @bids.count %></p>
-						<p><%= t(:last_offer) %> <%= @bids.last.offer %> <%= @bids.last.units %></p>
+						<% unless @bids.nil? || @bids.empty? %>
+							<p><%= t(:last_offer) %> <%= @bids.last.offer %> <%= @bids.last.units %></p>
+						<% end %>
 					</div>
 				</div>
 			</div>

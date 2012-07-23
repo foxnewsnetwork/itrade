@@ -1,15 +1,40 @@
 <!-- Home landing page -->
-
+<script type="text/javascript">
+	var increment = 0;
+	var timer;
+	$(function() { 
+		$("#buy-button").click( function() { 
+			timer = setInterval( function() { 
+				increment += 1 - increment / 100;
+				$("#now-loading-bar").css("width", increment + "%");
+			} , 100 ); // setInterval
+		} ); // click
+	} ); // document ready
+</script>
 
 <div class="container-fluid">
-	<div class="row-fluid">
-		<div class="hero-unit" id="now-loading">
-			<h2><%= t(:header) %></h2>
+	<div class="row">
+		<div class="span6 offset4 well" id="now-loading">
+			<div class="logo" id="debug">
+				<h1><%= t(:company_name) %></h1>
+			</div>
 			<div class="progress progress-striped active">
 			  <div class="bar" style="width: 0%;" id="now-loading-bar"></div>
 			</div>
+			<div class="pull-right">
+				<%= link_to( items_path, :class => "btn btn-large btn-primary", :remote => true, :id => "buy-button") do %>
+					<%= content_tag(:i, "", :class => "icon-globe icon-white") %>
+					<%= t(:buy) %>
+				<% end # button %>
+				<%= link_to( new_item_path, :class => "btn btn-large btn-success") do %>
+					<%= content_tag(:i, "", :class => "icon-gift icon-white") %>
+					<%= t(:sell) %>
+				<% end # button %>
+			</div>
 		</div>
-		<%= render "items/partials/index" %> 
+		<div class="span12-fluid" id="page-index-container" style="visibility : none;">
+
+		</div>
 	</div>
 </div>
 
