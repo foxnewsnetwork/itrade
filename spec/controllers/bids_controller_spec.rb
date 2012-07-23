@@ -24,7 +24,7 @@ describe BidsController do
 			end # before each
 			it "should be successful" do
 				post :create, :item_id => @item, :bid => @bid_data
-				responses.should redirect_to [@item, assigns(:bid)]
+				response.should redirect_to [@item, assigns(:bid)]
 				flash[:success].should_not be_nil
 			end # it
 			it "should change the database" do
