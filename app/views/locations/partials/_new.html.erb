@@ -4,7 +4,7 @@
   	<legend><%= t(:edit_location) %></legend>
   	<% {:shipping => "mini", :address => "large", :city => "small", :state => "mini inline", :zip => "mini inline", :country => "mini inlin" }.each do |field, style| %>
 			<div class="control-group">
-				<%= f.label field, :class => "control-label" %>
+				<%= f.label t(field), :class => "control-label" %>
 				<% case field %>
 					<% when :phone %>
 						<%= f.email_field field, :class => "input" + style %>

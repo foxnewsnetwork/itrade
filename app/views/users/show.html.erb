@@ -2,18 +2,32 @@
 <%= content_tag(:div, :class => "container-fluid") do %>
 	<%= content_tag :div, :class => "row-fluid" do %>
 		<%= content_tag :div, :class => "span12-fluid well" do %>
-			<%= content_tag :div, :class => "page-header" do %>
-				<%= content_tag :h4 do %>
-					<%= content_tag :div, "", :class => "icon-user" %>
-					<%= link_to @user.company, user_path( @user ) %>
-				<% end # h2 %>
-			<% end # page-header %>
+			<%= content_tag :div, :class => "span4" do %>
+				<%= content_tag :div, :class => "page-header" do %>
+					<%= content_tag :h4 do %>
+						<%= content_tag :div, "", :class => "icon-user" %>
+						<%= link_to @user.company, user_path( @user ) %>
+						<%= t(:this_is_you) if current_user == @user %>
+					<% end # h4 %>
+				<% end # page-header %>
+			<% end # span4 fluid %>
+			<%= content_tag :div, :class => "span4" do %>
+				<% done = 1 + (@items.empty? ? 1 : 0) + (@location.valid? ? 1 : 0) %>
+				<% left = { } %>
+				<% left[:location]= "edit-location-button" unless @location.valid? %>
+				<% left[:item] = "new-item-button" if @items.empty? %>
+				<%= render "shared/almost_complete", :done => done, :left => left %>
+			<% end if current_user == @user # span4 fluid %>
 		<% end # span12 well %>
 	<% end # row-fluid %>
 	<%= content_tag :div, :class => "row-fluid" do %>
 		<%= content_tag :div, :class => "span6 well" do %>
 			<%= content_tag :div, :class => "page-header" do %>
 				<%= t(:items) %>
+				<%= link_to( new_item_path, :class => "btn btn-success", :id => "new-item-button" ) do %>
+					<%= content_tag(:i, "", :class => "icon-tag icon-white" ) %>
+					<%= t(:new_item) %>
+				<% end if current_user == @user %>
 			<% end # page-header %>
 			<%= content_tag :dl do %>
 				<% @items.each do |item| %>
@@ -65,8 +79,8 @@
 
 <% if current_user == @user %>
 	<% ['user','location'].each do |type| %>
-		<div id="edit-<%= type %>-dialog" class="ui-dialog-content ui-widget-content">
-			<%= render "#{type.pluralize}/partials/edit", :remote => false, :parent => @user, :method => "post" %>
-		</div>
+		<%= content_tag( :div, :class => "ui-dialog-content ui-widget-content", :id => "edit-#{type}-dialog" ) do %>
+			<%= render "#{type.pluralize}/partials/edit", :remote => false, :parent => @user, :method => @location.valid? ? "put" : "post" %>
+		<% end # dialog div %>
 	<% end # each type %>
 <% end # if correct user %>

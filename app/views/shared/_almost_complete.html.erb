@@ -1,0 +1,31 @@
+<!-- the helper thingie that lets people know percentage completion -->
+<% # Be sure to pass in variables done = [] and left = { :field => id } %>
+<% percentage = 100 * done / (done + left.count) %>
+<% bar = ['info','process','warning','danger'].reverse[(percentage / 25).floor] %>
+<div class="progress progress-striped active progress-<%= bar %>">
+	<div class="bar" style="width : <%= percentage %>%"></div>
+</div>
+<div class="help-block">
+	<% unless left.nil? || left.empty? %>	
+		<%= t( :todo ) %>
+		<% l = left.keys[0] %>
+		<%= content_tag :i, "", :class => "icon-bell" %>
+		<%= t( (l.to_s + "_almost_complete").to_sym ) %>
+	<% else  %>
+		<%= t( :complete ) if left.nil? || left.empty? %>
+	<% end # each left %>
+</div>
+<script type="text/javascript">
+	$(function() { $("#<%= left[l] %>").nudgenudge({
+			arrow: '../assets/img/arrow_default.png', // path to the arrow image
+			arrowWidth: 150,
+			arrowHeight: 60,
+			intensity: 'medium',  // the intensity of the nudge (low, medium, high)
+			placement: 'right', // place on the left or the right of the target
+			closeEvent: { "el": '#<%= left[l] %>', "event": 'click' }, // selector and event which triggers arrow hiding
+			hideAfter: 0,  // hide after this many nudges, 0 = for the rest of eternity
+			offsetX: 0, // adjust x position
+			offsetY: 0 // adjust y position
+		}); // nudgenudge
+	} ); // document ready
+</script>

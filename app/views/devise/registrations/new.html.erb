@@ -1,18 +1,30 @@
-<h2>Sign up</h2>
+<!-- User signup form -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="span5 offset3 well">
+			<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+				<%= devise_error_messages! %>
+				<fieldset>
+					<legend><%= t(:summary_new_user) %></legend>
+					<% [:email, :password, :phone, :company].each do |field| %>
+						<div class="control-group">
+							<%= f.label field, :class => "control-label" %>
+							<% case field %>
+								<% when :email, :password, :phone %>
+<%= f.method((field.to_s + "_field").to_sym).call(field,:placeholder => t((field.to_s + "_placeholder").to_sym), :class => "input-xlarge") %>
+								<% else %>
+									<%= f.text_field( field, :placeholder => t((field.to_s + "_placeholder").to_sym), :class => "input-xlarge" )  %>
+							<% end %>
+							<%= content_tag(:p, t((field.to_s + "_help").to_sym), :class => "help-block") %>
+						</div>
+					<% end %>
+					<div class="form-actions">
+						<button type="submit" class="btn btn-primary"><%= t(:submit) %></button>
+					</div>
+				</fieldset>
+			<% end %>  
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+			<%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>
