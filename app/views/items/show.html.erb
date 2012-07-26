@@ -5,7 +5,7 @@
 			<div class="span4">
 				<div class="page-header">
 					<h4>
-						<i class="icon-user"></i> <%= link_to @item.user.company.capitalize, user_path( @item.user ) %>  &raquo;  
+						<i class="icon-user"></i> <%= link_to @item.user.company.capitalize, user_path( @item.user ) %>    &raquo;    
 						<i class="icon-tag" ></i> <%= @item.title.capitalize %>
 					</h4>
 				</div>	
@@ -22,27 +22,31 @@
 			</div>
 			<div class="span4">
 				<h4>
-					<%= t(:ask_price, :scope => [:views, :items, :show] ) %>
-					<% unless @bid.id.nil? %>
-						<% asking_bid = @bid %>
-						<%= "#{asking_bid.offer} #{asking_bid.units} / #{@item.units}" %> »
-						<%= "#{asking_bid.location.shipping} #{asking_bid.location.city}" unless asking_bid.location.nil? %>
-						<%= t(:unknown, :scope => [:views, :locations, :show] ) if asking_bid.location.nil? %>
-					<% else %>
-						<%= t(:unknown, :scope => [:views, :locations, :show] ) %>
-					<% end # empty bids %>
+					<% if user_signed_in? %>
+						<%= t(:ask_price, :scope => [:views, :items, :show] ) %>
+						<% unless @bid.id.nil? %>
+							<% asking_bid = @bid %>
+							<%= "#{asking_bid.offer} #{asking_bid.units} / #{@item.units}" %> »
+							<%= "#{asking_bid.location.shipping} #{asking_bid.location.city}" unless asking_bid.location.nil? %>
+							<%= t(:unknown, :scope => [:views, :locations, :show] ) if asking_bid.location.nil? %>
+						<% else %>
+							<%= t(:unknown, :scope => [:views, :locations, :show] ) %>
+						<% end # empty bids %>
+					<% end # if user_signed_in? %>
 				</h4>
-				<% unless @bid.id.nil? %>
-					<%= link_to [@item, @bid], :class => "btn btn-success", :id => "edit-bid-button" do %>
-						<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
-						<%= t(:bid, :scope => [:views, :bids, :forms, :new]) %>
-					<% end # link %>
-				<% else %>
-					<%= link_to new_item_bid_path( @item ), :class => "btn btn-success", :id => "new-bid-button" do %>
-						<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
-						<%= t(:bid, :scope => [:views, :bids, :forms, :new]) %>
-					<% end # link %>
-				<% end # correct user %>
+				<% if user_signed_in? %>
+					<% unless @bid.id.nil? %>
+						<%= link_to [@item, @bid], :class => "btn btn-success", :id => "edit-bid-button" do %>
+							<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
+							<%= t(:bid, :scope => [:views, :bids, :forms, :new]) %>
+						<% end # link %>
+					<% else %>
+						<%= link_to new_item_bid_path( @item ), :class => "btn btn-success", :id => "new-bid-button" do %>
+							<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
+							<%= t(:bid, :scope => [:views, :bids, :forms, :new]) %>
+						<% end # link %>
+					<% end # correct user %>
+				<% end #user_signed_in %>
 			</div>	
 		</div>
 		<div class="row-fluid">
@@ -97,7 +101,13 @@
 	</div>
 </div>
 
-<% { 'element' => "post" ,'bid' => "post", 'location' => (@location.valid? ? "put" : "post") }.each do |type, meth| %>
+<% stuff = {} %>
+<% if user_signed_in? %>
+	<% stuff["element"] = "post" if @item.user == current_user %>
+	<% stuff["bid"] = "post" %>
+	<% stuff["location"] = @location.valid? ? "put" : "post" %>
+<% end %>
+<% stuff.each do |type, meth| %>
 	<div id="new-<%= type %>-dialog" class="ui-dialog-content ui-widget-content">
 		<%= render "#{type.pluralize}/partials/new", :remote => false, :parent => @item, :method => meth %>
 	</div>

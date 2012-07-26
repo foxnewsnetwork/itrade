@@ -1,21 +1,21 @@
 <!-- User signup form -->
 <%= form_tag users_path, :method => "post", :class => "well" do %>
   <fieldset>
-  	<legend><%= t(:summary_new_user) %></legend>
+  	<legend><%= t(:new_user, :scope => [:views,:users,:forms,:labels]) %></legend>
   	<% [:email, :password, :phone, :company].each do |field| %>
 			<div class="control-group">
-				<%= label_tag "user_#{field.to_s}", field.capitalize, :class => "control-label" %>
+				<%= label_tag "user_#{field.to_s}", t(field, :scope => [:views,:users,:forms,:labels] ), :class => "control-label" %>
 				<% case field %>
 					<% when :email, :password, :phone %>
-						<%= method((field.to_s + "_field_tag").to_sym).call("user[#{field.to_s}]", "", :placeholder => t((field.to_s + "_placeholder").to_sym), :class => "input-xlarge") %>
+<%= method((field.to_s + "_field_tag").to_sym).call("user[#{field.to_s}]", "", :placeholder => t(field,:scope => [:views,:users,:forms,:placeholders]), :class => "input-xlarge") %>
 					<% else %>
-						<%= text_field_tag( "user[#{field.to_s}]", "", :placeholder => t((field.to_s + "_placeholder").to_sym), :class => "input-xlarge" )  %>
+						<%= text_field_tag( "user[#{field.to_s}]", "", :placeholder => t(field, :scope => [:views,:users,:forms,:placeholders] ), :class => "input-xlarge" )  %>
 				<% end %>
-				<%= content_tag(:p, t((field.to_s + "_help").to_sym), :class => "help-block") %>
+				<%= content_tag(:p, t(field, :scope => [:views,:users,:forms,:help]), :class => "help-block") %>
 			</div>
 		<% end %>
 		<div class="form-actions">
-			<button type="submit" class="btn btn-primary"><%= t(:submit) %></button>
+			<button type="submit" class="btn btn-primary"><%= t(:submit, :scope => [:views,:users,:forms,:labels]) %></button>
 		</div>
   </fieldset>
 <% end %>  

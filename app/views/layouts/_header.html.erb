@@ -39,9 +39,12 @@
 							<%= link_to content_tag(:i, "", :class => "icon-remove-sign") + t(:logout), destroy_user_session_path, :method => :delete %>
 						</li>
 					<% else %>
-						<% { "plus" => t(:signup), "user" => t(:signin) }.each do |icon, tab| %>
+						<% { :signup => "plus", :signin => "user" }.each do |tab, icon| %>
 							<li>
-								<%= link_to content_tag(:i, "", :class => "icon-#{icon}") + tab, icon == "user" ? "#login" : new_user_path, :id => "nav-#{icon}-login" %>
+								<%= link_to( (tab == :signin ? "#login" : new_user_registration_path), :id => "nav-#{icon}-login" ) do %>
+									<%= content_tag(:i, "", :class => "icon-#{icon}") %>
+									<%= t(tab, :scope => [:views, :headers, :forms, :labels]) %>
+								<% end %>
 							</li>
 						<% end %>
 					<% end %>

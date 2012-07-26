@@ -5,21 +5,21 @@
 			<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
 				<%= devise_error_messages! %>
 				<fieldset>
-					<legend><%= t(:summary_new_user) %></legend>
+					<legend><%= t(:new_user, :scope => [:views,:users,:forms,:labels]) %></legend>
+					<div class="control-group">
 					<% [:email, :password, :phone, :company].each do |field| %>
-						<div class="control-group">
-							<%= f.label field, :class => "control-label" %>
+							<%= f.label t(field, :scope => [:views, :users, :forms, :labels]), :class => "control-label" %>
 							<% case field %>
 								<% when :email, :password, :phone %>
-<%= f.method((field.to_s + "_field").to_sym).call(field,:placeholder => t((field.to_s + "_placeholder").to_sym), :class => "input-xlarge") %>
+<%= f.method((field.to_s + "_field").to_sym).call(field, :placeholder => t(field,:scope => [:views,:users,:forms,:placeholders]), :class => "input-xlarge") %>
 								<% else %>
-									<%= f.text_field( field, :placeholder => t((field.to_s + "_placeholder").to_sym), :class => "input-xlarge" )  %>
+									<%= f.text_field( field, :placeholder => t(field, :scope => [:views,:users,:forms,:placeholders] ), :class => "input-xlarge" )  %>
 							<% end %>
-							<%= content_tag(:p, t((field.to_s + "_help").to_sym), :class => "help-block") %>
-						</div>
+							<%= content_tag(:p, t(field, :scope => [:views,:users,:forms,:help]), :class => "help-block") %>
 					<% end %>
+					</div>
 					<div class="form-actions">
-						<button type="submit" class="btn btn-primary"><%= t(:submit) %></button>
+						<button type="submit" class="btn btn-primary"><%= t(:submit, :scope => [:views,:users,:forms,:labels]) %></button>
 					</div>
 				</fieldset>
 			<% end %>  

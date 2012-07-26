@@ -32,6 +32,31 @@ en: {
 				return: "Okay, you're done here, go back to the item page and we will take care of the rest"
 			} ,  # almost
 		} , # shared
+		users: {
+			forms: {
+				placeholders: {
+					email: "ex. johnsmith144@a16z.com" ,
+					password: "ex. trustno1" ,
+					company: "ex. ACME Investment Inc." ,
+					phone: "ex. 555-454-4545" ,
+				} , # placeholders
+				labels: {
+					email: "Email" ,
+					password: "Password" ,
+					company: "Company Name" ,
+					phone: "Phone Number" ,
+				  login_user: "Login" ,
+				  edit_user: "Edit Account" ,
+				  submit: "Next..." ,
+				} , # labels
+				help: { 
+					email: "Your company email address" ,
+					password: "Something you can remember" ,
+					company: "Your company name" ,
+					phone: "The best way for potential buyers / sellers to contact you" ,
+				} , # new
+			} ,# forms
+		} , # users
 		items: {
 			forms: {
 				placeholders: {
