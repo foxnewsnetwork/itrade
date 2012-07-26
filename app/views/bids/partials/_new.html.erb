@@ -1,5 +1,5 @@
 <!-- new bid form -->
-<%= form_for [@item, @bid ], :remote => remote do |f| %>
+<%= form_for [@item, @bid ], :remote => remote, :method => method do |f| %>
 	<fieldset>
 		<legend><%= t(:new_bid_form) %></legendt>
 		<div class="control-group">

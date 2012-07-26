@@ -3,21 +3,21 @@
 <% percentage = 100 * done / (done + left.count) %>
 <% bar = ['info','process','warning','danger'].reverse[(percentage / 25).floor] %>
 <div class="progress progress-striped active progress-<%= bar %>">
-	<div class="bar" style="width : <%= percentage %>%"></div>
+	<div class="bar" style="width : <%= percentage %>%"><%= "#{percentage}%" %></div>
 </div>
 <div class="help-block">
 	<% unless left.nil? || left.empty? %>	
-		<%= t( :todo ) %>
+		<%= t(:todo, :scope => [:views, :shared, :almost] ) %>
 		<% l = left.keys[0] %>
 		<%= content_tag :i, "", :class => "icon-bell" %>
-		<%= t( (l.to_s + "_almost_complete").to_sym ) %>
+		<%= t(l, :scope => [:views, :shared, :almost]) %>
 	<% else  %>
-		<%= t( :complete ) if left.nil? || left.empty? %>
+		<%= t( :complete, :scope => [:views, :shared, :almost] ) if left.nil? || left.empty? %>
 	<% end # each left %>
 </div>
 <script type="text/javascript">
 	$(function() { $("#<%= left[l] %>").nudgenudge({
-			arrow: '../assets/img/arrow_default.png', // path to the arrow image
+			arrow: 'http://andyshora.com/demos/nudgenudge/img/arrow_default.png', // path to the arrow image
 			arrowWidth: 150,
 			arrowHeight: 60,
 			intensity: 'medium',  // the intensity of the nudge (low, medium, high)

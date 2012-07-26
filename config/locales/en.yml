@@ -1,37 +1,77 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
-en:
-  hello: "Hello world"
-  company_name: "ML Resources"
-  new_bid: "Next..."
-  new_bid_form: "New Bid"
-  submit: "Continue..."
-  success_bid_create: "New bid successfully registered."
-  success_item_create: "You're item has been successfully listed"
-  new_element_form: "Upload Picture"
-  new_item_form: "Material To Sell"
-  title: "I Want To Sell..."
-  description: "Description"
-  material: "How is it packed?"
-  category: "Category"
-  quantity: "Quantity"
-  metadata: "Item Name"
-  email_placeholder : "ex. johnsmith411@a16z.com"
-  password_placeholder : ""
-  phone_placeholder : "ex. 555-123-4567"
-  company_placeholder : "ex. ACME Inc."
-  email_help : "Your company email"
-  password_help : "Something you can remember"
-  phone_help : "Your main contact number"
-  company_help : "Your company's name"
-  shipping : "Preferred shipping method"
-  address : "Address"
-  city : "City"
-  state : "State"
-  zip : "Zip"
-  country : "Country"
-  complete : "Congratulations! Everything works now!"
-  location_almost_complete : "You need to update your company location"
-  item_almost_complete : "You need to list your products if you want to sell them"
-  
+en: {
+	controls: { 
+		items: { 
+			flash: { 
+				success_create: "Your item has been successfully created" ,
+				success_update: "Your item attributes have been successfully updated" ,
+				success_destroy: "Your item has been successfully destroyed" ,
+				fail_create: "You have failed terribly while trying to create your item" ,
+				fail_update: "You have failed wretchedly while trying to update your item attributes" ,
+				fail_destroy: "It's still there, which means you failed at deleting the item" ,
+			}, # flash
+		}, # items
+		locations: { 
+			flash: { 
+			
+			} , # flash
+		} , # locations
+	}, # controls
+	views: {
+		shared : { 
+			almost : { 
+				location: "You need to specify a valid shipping location" ,
+				user: "You need to specify valid user details" ,
+				item: "You need to specify valid item details" ,
+				element: "You need to add some good descriptive pictures" ,
+				bid: "You need to setup a valid initial bid" ,
+				complete: "Congratulations, everything should be working now" ,
+				todo: "ToDo: "
+			} ,  # almost
+		} , # shared
+		items: {
+			forms: {
+				placeholders: {
+					title: "ex. HDPE pipes" ,
+					description: "ex. Used in irrigation. Hot-washed" ,
+					material: "ex. In 12 gaylord boxes" ,
+				} , # placeholders
+				labels: {
+					title: "I Want To Sell..." ,
+					description: "Description" ,
+					material: "How is it packed?" ,
+					category: "Category" ,
+				  quantity: "Quantity" ,
+				} , # labels
+				new: { 
+					item : "New Item Listing" ,
+				} , # new
+			} ,# forms
+		} , # items
+		locations: {
+			forms: {
+				placeholders: {
+					shipping: "ex. FOB" ,
+					address: "ex. 1234 Fake Street",
+					city: "ex. Beverely Hills",
+					state: "ex. California",
+					zip: "ex. 91210",
+					country: "ex. USA",
+				} , # placeholders
+				labels: {
+					shipping: "Preferred Shipping Method" ,
+					address: "Address",
+					city: "City",
+					state: "State",
+					zip: "Zip Code",
+					country: "Country",
+				} , # labels
+				new: { 
+					edit_location : "Edit Location" ,
+				} , # new
+			} ,# forms
+		} , # locations
+	} , # views
+} # en

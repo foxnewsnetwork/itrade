@@ -6,7 +6,7 @@
 				<%= content_tag :div, :class => "page-header" do %>
 					<%= content_tag :h4 do %>
 						<%= content_tag :div, "", :class => "icon-user" %>
-						<%= link_to @user.company, user_path( @user ) %>
+						<%= link_to @user.company, user_path( @user ) %>     
 						<%= t(:this_is_you) if current_user == @user %>
 					<% end # h4 %>
 				<% end # page-header %>

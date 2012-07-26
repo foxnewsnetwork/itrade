@@ -9,7 +9,8 @@ class ItemsController < ApplicationController
 		@location = @item.location
 		@bids = @item.bids.order( "created_at DESC" )
 		if user_signed_in?
-			@bid = current_user.bids.new
+			@bid = current_user.bids.find_by_item_id( @item.id )
+			@bid ||= current_user.bids.new
 			@location ||= Location.new
 		end
 	end # show
@@ -50,14 +51,14 @@ class ItemsController < ApplicationController
 		if user_signed_in?
 			@item = current_user.items.new( params[:item] )	
 			if @item.save
-				flash[:success] = t( :success_item_create )
+				flash[:success] = t( :success_create, :scope => [:controls, :items, :flash] )
 				redirect_to item_path(@item)
 			else
-				flash[:error] = t( :fail_item_create )
+				flash[:error] = t( :fail_create, :scope => [:controls, :items, :flash] )
 				redirect_to new_item_path
 			end # if save
 		else
-			flash[:notice] = t( :fail_item_create )
+			flash[:notice] = t( :fail_create, :scope => [:controls, :items, :flash] )
 			redirect_to new_user_session_path
 		end # if signed in
 	end # create
@@ -65,9 +66,9 @@ class ItemsController < ApplicationController
 	def update
 		@item = Item.find_by_id( params[:id] )
 		if @item.update_attributes( params[:item] )
-			flash[:success] = t( :success_item_update )
+			flash[:success] = t( :success_update, :scope => [:controls, :items, :flash] )
 		else
-			flash[:error] = t( :fail_item_update )
+			flash[:error] = t( :fail_update, :scope => [:controls, :items, :flash] )
 		end # if success update
 		redirect_to edit_item_path( @item )
 	end # update
@@ -75,7 +76,7 @@ class ItemsController < ApplicationController
 	def destroy
 		@item = Item.find_by_id params[:id]
 		@item.destroy
-		flash[:success] = t( :success_item_destroy )
+		flash[:success] = t( :success_destroy, :scope => [:controls, :items, :flash] )
 		redirect_to root_path
 	end # destroy
 end # ItemsController

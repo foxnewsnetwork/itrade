@@ -4,11 +4,11 @@
 		<div class="span12 well">
 			<%= form_for @item do |f| %>
 				<fieldset>
-					<legend><%= t(:new_item_form) %></legend>
+					<legend><%= t(:item, :scope => [:views, :items, :forms, :new]) %></legend>
 					<div class="control-group">
-						<% {:title => "HDPE pipes", :description => "White, no impurities", :material => "Packed in 12 gaylord boxes" }.each do |tag, placeholder| %>
-							<%= f.label t(tag), :class => "control-label" %>
-							<%= f.text_field tag, :value => "", :placeholder => "ex." + placeholder %>
+						<% [:title, :description, :material].each do |tag| %>
+							<%= f.label t(tag, :scope => [:views, :items, :forms, :labels]), :class => "control-label" %>
+							<%= f.text_field tag, :value => "", :placeholder => t(tag, :scope => [:views, :items, :forms, :placeholders]) %>
 						<% end %>
 						<%= f.label :category, :class => "control-label" %>
 						<%= f.select :category, options_for_select(['plastic scraps','waste paper','regular products'].map { |x| [x,x] }) %>

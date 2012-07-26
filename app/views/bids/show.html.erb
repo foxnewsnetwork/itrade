@@ -2,12 +2,27 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12 well">
-			<div class="page-header">
-				<h4>
-					<i class="icon-user"></i> <%= link_to @item.title.capitalize, item_path( @item ) %> &raquo;
-					<i class="icon-briefcase"></i> <%= @item.quantity %> <%= @item.units %> &raquo;
-					<i class="icon-tag" ></i> <%= t(:bid) %>
-				</h4>
+			<div class="span4">
+				<div class="page-header">
+					<h4>
+						<i class="icon-user"></i> <%= link_to @item.title.capitalize, item_path( @item ) %> &raquo;
+						<i class="icon-briefcase"></i> <%= @item.quantity %> <%= @item.units %> &raquo;
+						<i class="icon-tag" ></i> <%= t(:bid) %>
+					</h4>
+				</div>
+			</div>
+			<div class="span4">
+				<% done = 1 + (@location.valid? ? 1 : 0) + ((Time.now - @bid.created_at).seconds < 15.minutes ? 0 : 1) %>
+				<% left = {} %>
+				<% left[:location] = "new-location-button" unless @location.valid? %>
+				<% left[:return] = "new-return-button" if (Time.now - @bid.created_at).seconds < 15.minutes %>
+				<%= render "shared/almost_complete", :done => done, :left => left %>
+			</div>
+			<div class="span4">
+				<%= link_to( item_path(@item), :class => "btn btn-inverse", :id => "new-return-button") do %>
+					<%= content_tag(:i, "", :class => "icon-arrow-left icon-white") %>
+					<%= t(:return, :scope => [:views, :items, :show]) %>
+				<% end # link_to %>
 			</div>
 		</div>
 	</div>
@@ -69,8 +84,8 @@
 	</div>
 </div>
 
-<% { 'bid' => 'edit', 'location' => 'edit' }.each do |type, verb| %>
-	<div id="<%= "new-#{type}-dialog" %>" class="ui-dialog-content ui-widget-content">
-		<%= render "#{type.pluralize}/partials/#{verb}", :remote => false, :parent => @bid %>
+<% { :bid => 'put', :location => (@location.valid? ? "put":"post") }.each do |type, verb| %>
+	<div id="<%= "new-#{type.to_s}-dialog" %>" class="ui-dialog-content ui-widget-content">
+		<%= render "#{type.to_s.pluralize}/partials/edit", :method => verb, :remote => false, :parent => @bid %>
 	</div>
 <% end %>

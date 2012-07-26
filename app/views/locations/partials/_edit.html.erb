@@ -1,23 +1,3 @@
 <!-- location edit form -->
+<%= render "locations/partials/new", :method => method, :remote => remote, :parent => parent %>
 
-<%= form_for [parent, @location], :method => method, :remote => remote, :class => "well" do |f| %>
-	<fieldset>
-  	<legend><%= t(:edit_location) %></legend>
-  	<% {:shipping => "mini", :address => "large", :city => "small", :state => "mini inline", :zip => "mini inline", :country => "mini inlin" }.each do |field, style| %>
-			<div class="control-group">
-				<%= f.label t(field), :class => "control-label" %>
-				<% case field %>
-					<% when :phone %>
-						<%= f.email_field field, :class => "input" + style %>
-					<% when :company %>
-						<%= f.phone_field field, :class => "input" + style %>
-					<% when :shipping %>
-					<%= f.select( field, options_for_select( ['exworks','fas','fob','cnf','cif'].map { |x| [x.upcase, x.upcase] } ), :class => "input" + style ) %>
-					<% else %>
-						<%= f.text_field field, :class => "input" + style %>
-				<% end %>
-			</div>
-		<% end %>
-		<button type="submit" class="btn btn-primary"><%= t(:submit) %></button>
-  </fieldset>
-<% end # form_tag  %>
