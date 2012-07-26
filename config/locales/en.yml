@@ -28,7 +28,8 @@ en: {
 				element: "You need to add some good descriptive pictures" ,
 				bid: "You need to setup a valid initial bid" ,
 				complete: "Congratulations, everything should be working now" ,
-				todo: "ToDo: "
+				todo: "ToDo: " ,
+				return: "Okay, you're done here, go back to the item page and we will take care of the rest"
 			} ,  # almost
 		} , # shared
 		items: {
@@ -73,5 +74,19 @@ en: {
 				} , # new
 			} ,# forms
 		} , # locations
+		bids: {
+			forms: {
+				placeholders: {
+					
+				} , # placeholders
+				labels: {
+					submit: "New Bid" ,
+					offer: "Price Per Unit" ,
+				} , # labels
+				new: { 
+					bid : "Make an Offer" ,
+				} , # new
+			} ,# forms
+		} , # bids
 	} , # views
 } # en

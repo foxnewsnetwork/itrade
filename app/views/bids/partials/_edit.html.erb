@@ -1,13 +1,3 @@
 <!-- edit bid form -->
-<%= form_for [@item, @bid], :method => "put", :remote => remote do |f| %>
-	<fieldset>
-		<legend><%= t(:edit_bid_form) %></legendt>
-		<div class="control-group">
-			<%= f.label :offer, :class => "control-label" %>
-			<%= f.number_field :offer, :class => "input-small" %>
-			<%= f.select :units, options_for_select(["USD"]), :class => "input-small" %>
-			<%= content_tag(:button, t(:bid), :class => "btn btn-success", :type => "submit" ) %>
-		</div>
-	</fieldset>
-<% end %>
+<%= render "bids/partials/new", :remote => remote, :method => "put" %>
 

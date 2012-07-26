@@ -1,13 +1,14 @@
 <!-- new bid form -->
 <%= form_for [@item, @bid ], :remote => remote, :method => method do |f| %>
 	<fieldset>
-		<legend><%= t(:new_bid_form) %></legendt>
+		<legend><%= t(:bid, :scope => [:views, :bids, :forms, :new]) %></legendt>
 		<div class="control-group">
-			<%= f.label :offer, :class => "control-label" %>
-			<%= f.number_field :offer, :class => "input-small" %>
+			<%= f.label t(:offer, :scope => [:views, :bids, :forms, :labels]), :class => "control-label" %>
+			<%= f.number_field :offer, :class => "input-large" %>
 			<%= f.select :units, options_for_select(["USD"]), :class => "input-small" %>
-			<%= content_tag(:button, t(:new_bid), :class => "btn btn-success", :type => "submit" ) %>
+			<%= "/ #{@item.units}"%>
 		</div>
+		<%= content_tag(:button, t(:submit, :scope => [:views, :bids, :forms, :labels]), :class => "btn btn-success", :type => "submit" ) %>	
 	</fieldset>
 <% end %>
 

@@ -23,11 +23,13 @@
 			<div class="span4">
 				<h4>
 					<%= t(:ask_price, :scope => [:views, :items, :show] ) %>
-					<% unless @bids.empty? %>
-						<% asking_bid = @bids.first %>
+					<% unless @bid.id.nil? %>
+						<% asking_bid = @bid %>
 						<%= "#{asking_bid.offer} #{asking_bid.units} / #{@item.units}" %> »
 						<%= "#{asking_bid.location.shipping} #{asking_bid.location.city}" unless asking_bid.location.nil? %>
 						<%= t(:unknown, :scope => [:views, :locations, :show] ) if asking_bid.location.nil? %>
+					<% else %>
+						<%= t(:unknown, :scope => [:views, :locations, :show] ) %>
 					<% end # empty bids %>
 				</h4>
 				<% unless @bid.id.nil? %>
