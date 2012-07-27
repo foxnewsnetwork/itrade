@@ -12,4 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
+//= require jquery.nudgenudge.1.0
+//= require bootstrap
 //= require_tree .
