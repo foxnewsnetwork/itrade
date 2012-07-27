@@ -30,6 +30,7 @@ end # get
 		email: Faker::Internet.email ,
 		password: Faker::Company.bs
 	) # user
+	
 	# Step 2: Create up to 15 items each
 	rand(15).times do
 		item = user.items.create!(

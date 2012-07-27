@@ -22,11 +22,22 @@ class Element < ActiveRecord::Base
   
   # Attachments (be sure to change these for S3 environment in production)
   has_attached_file :picture, :styles => { :small => "50x50>", :thumb => "260x180" } ,
-    :url => "/images/elements/:id/:style/:basename.:extension" ,
-    :path => ":rails_root/public/images/elements/:id/:style/:basename.:extension"
+    :path => "pictures/:attachment/:id/:style/:basename.:extension" ,
+    :s3_credentials => Rails.root.join( "config/s3.yml") ,
+    :storage => :s3 ,
+    :bucket => "itrade" ,
+    :default_url => "pictures/images/missing_:style.jpg"
     
   # Validations
   validates_attachment_presence :picture
   validates_attachment_size :picture, :less_than => 5.megabytes
   validates_attachment_content_type :picture, :content_type => ['image/png', 'image/gif', 'image/jpg','image/jpeg']
 end # Element
+
+####### -- Local Storage Instead of S3 -- ######
+#
+# has_attached_file :picture, :styles => { :small => "50x50>", :thumb => "260x180" } ,
+#    :url => "/images/elements/:id/:style/:basename.:extension" ,
+#    :path => ":rails_root/public/images/elements/:id/:style/:basename.:extension" ,
+#
+###############################################

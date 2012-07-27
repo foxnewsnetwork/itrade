@@ -4,6 +4,7 @@ gem 'rails', '3.2.6'
 gem "thin", '~> 1.4.1'
 gem "devise", "~> 2.1.2"
 gem "paperclip", "~> 3.0.0"
+gem "aws-sdk"
 gem 'bootstrap-sass', '2.0.4.0'
 
 group :development do
