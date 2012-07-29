@@ -16,7 +16,8 @@ production:
 	socket: /opt/bitnami/mysql/tmp/mysql.sock
 			) # f.puts
 		end # File.Open
-		sh "rake db:setup RAILS_ENV=production"
-		sh "thin start -d -e production"
+		sh "bundle exec rake db:create RAILS_ENV=production"
+		sh "bundle exec rake db:schema:load RAILS_ENV=production"
+		sh "bundle exec thin start -C config/itrade.yml"
 	end # go
 end # production

@@ -1,0 +1,45 @@
+upstream domain1 {
+        server 127.0.0.1:3000;
+        server 127.0.0.1:3001;
+        server 127.0.0.1:3002;
+    }
+
+server {
+            listen   80;
+            server_name  www.itrade.com;
+            rewrite ^/(.*) http://itrade.com/$1 permanent;
+           }
+
+
+server {
+            listen   80;
+            server_name itrade.com;
+
+            access_log /home/bitnami/railsapp/log/access.log;
+            error_log /home/demo/public_html/railsapp/log/error.log;
+
+            root   /home/demo/public_html/railsapp/public/;
+            index  index.html;
+
+            location / {
+                          proxy_set_header  X-Real-IP  $remote_addr;
+                          proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+                          proxy_set_header Host $http_host;
+                          proxy_redirect false;
+
+                          if (-f $request_filename/index.html) {
+                                           rewrite (.*) $1/index.html break;
+                          }
+
+                          if (-f $request_filename.html) {
+                                           rewrite (.*) $1.html break;
+                          }
+
+                          if (!-f $request_filename) {
+                                           proxy_pass http://domain1;
+                                           break;
+                          }
+            }
+
+}
+
