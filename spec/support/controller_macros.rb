@@ -16,6 +16,11 @@ module ControllerMacros
     end # before
   end # login_user
   
+  def signed_in? 
+  	@request.env["devise.mapping"] = Devise.mappings[:user]
+  	user_signed_in?
+  end # user_signed_in?
+  
   def create_product(symbol = :login)
 		before(:each) do
 			@current_user = Factory(:user)
