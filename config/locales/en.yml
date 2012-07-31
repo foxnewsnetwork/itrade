@@ -2,6 +2,9 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en: {
+	buy : "Browse Listings" ,
+	sell : "New Listing",
+	company_name : "Tracago!" ,
 	controls: { 
 		items: { 
 			flash: { 
@@ -32,6 +35,14 @@ en: {
 				return: "Okay, you're done here, go back to the item page and we will take care of the rest"
 			} ,  # almost
 		} , # shared
+		headers : { 
+			forms : { 
+				labels : { 
+					signup : "Register" ,
+					signin : "Log In" ,
+				} , # labels
+			} , # forms
+		} , # headers
 		users: {
 			forms: {
 				placeholders: {
@@ -48,6 +59,8 @@ en: {
 				  login_user: "Login" ,
 				  edit_user: "Edit Account" ,
 				  submit: "Next..." ,
+				  remember_me : "Remember Me" ,
+				  new_user : "New Account" ,
 				} , # labels
 				help: { 
 					email: "Your company email address" ,

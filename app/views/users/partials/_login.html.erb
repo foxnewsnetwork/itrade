@@ -1,12 +1,12 @@
 <!-- User login form -->
-<%= form_tag user_session_path, :method => "post", :remote => remote do %>
+<%= form_tag user_session_path, :method => "post", :remote => remote, :id => "login_user_form" do %>
   <fieldset>
   	<legend><%= t(:login_user, :scope => [:views,:users,:forms,:labels]) %></legend>
   	<div class="control-group">
 			<%= label_tag "user_email", t(:email, :scope => [:views,:users,:forms,:labels]), :class => "control-label" %>
-			<%= email_field_tag "user[email]", "" %>
+			<%= email_field_tag "user[email]", "", :id => "login_user_email" %>
 			<%= label_tag "user_password", t(:password, :scope => [:views,:users,:forms,:labels]), :class => "control-label" %>
-			<%= password_field_tag "user[password]", "" %>
+			<%= password_field_tag "user[password]", "", :id => "login_user_password" %>
 			<%= label_tag "user_remember_me", t(:remember_me, :scope => [:views,:users,:forms,:labels]), :class => "control-label" %>
 			<%= check_box_tag "user[remember_me]" %>
 		</div>
