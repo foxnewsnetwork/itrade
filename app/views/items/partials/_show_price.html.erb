@@ -1,0 +1,26 @@
+<!-- show prices partial -->
+<div class="span12-fluid">
+	<div class="page-header">
+		<h2><%= t(:price_title, :scope => [:views, :items, :show]) %></h2>
+		<% if user_signed_in? %>
+			<% if is_correct?( @item.user ) %>
+				<% # do nothing %>
+			<% else # if is_correct %>
+				<%= content_tag(:button, :class => "btn btn-info", :id => "new-location-button") do %>
+					<%= content_tag(:i, "", :class => "icon-pencil icon-white") %>
+					<%= t(:bid, :scope => [:views, :bids, :forms, :new]) %>
+				<% end # button tag %>	
+			<% end # else incorrect user %>
+		<% else # if signed in %>
+			<%= link_to(new_user_session_path, 
+				:class => "btn btn-warning", 
+				:rel => "popover", 
+				"data-original-title" => t(:help) ,
+				"data-content" => t(:signin, :scope => [:views, :shared, :warnings]) ) do %>
+				<%= content_tag(:i, "", :class => "icon-pencil icon-white") %>
+				<%= t(:bid, :scope => [:views, :bids, :forms, :new]) %>
+			<% end %>
+		<% end # else not signed in %>
+		<%= render "bids/partials/index" %>
+	</div>
+</div>

@@ -10,6 +10,19 @@ $(document).ready =>
 			$("#new-" + tag + "-dialog").dialog( "open" )
 			false
 		# click cb	
+		$("#close-" + tag + "-button").click =>
+			$("#new-" + tag + "-dialog").dialog( "close" )
+			false;
+		# click cb
 	# register
 	register dialog for dialog in ['bid','location']
+	
+	autoOptions = ['Los Angeles','Oakland','Richmond']
+	setup = (tag) ->
+		$("#autocomplete-" + tag + "-box").autocomplete({
+			source : autoOptions
+		})  # autocomplete
+	# setup
+	
+	setup combo for combo in ['target']
 # ready callback

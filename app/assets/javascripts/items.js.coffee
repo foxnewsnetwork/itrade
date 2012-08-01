@@ -12,4 +12,7 @@ $(document).ready =>
 		# click cb	
 	# register
 	register dialog for dialog in ['bid','element','location']
+	
+	
+
 # ready callback

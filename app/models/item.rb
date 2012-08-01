@@ -37,6 +37,10 @@ class Item < ActiveRecord::Base
   	return nil
   end # bid
   
+  def suggested_prices
+  	self.bids.where( :user_id => self.user_id )
+  end # suggested_price
+  
   private
   	def kill_all_bids
   		# TODO : make the batch deletion less resource intensive

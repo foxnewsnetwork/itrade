@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery.nudgenudge.1.0
+//= require jquery.combobox
 //= require bootstrap
 //= require_tree .

@@ -1,0 +1,29 @@
+<!-- Show title bar -->
+<div class="span4">
+	<div class="page-header">
+		<h4>
+			<i class="icon-user"></i> <%= link_to @item.user.company.capitalize, user_path( @item.user ) %>    &raquo;    
+			<i class="icon-tag" ></i> <%= @item.title.capitalize %>
+		</h4>
+	</div>	
+</div>
+<div class="span4">
+	<% if @item.user == current_user %>
+		<% done = 1 + (@location.valid? ? 1 : 0) + (@elements.empty? ? 0 : 1) + (@bids.empty? || @bids.first.location.nil? ? 0 : 1) %>
+		<% left = {} %>
+		<% left[:location] = "new-location-button" unless @location.valid? %>
+		<% left[:element] = "new-element-button" if @elements.empty? %>
+		<% left[:bid] = "new-bid-button" if @bids.empty? || @bids.first.location.nil? %>
+		<%= render "shared/almost_complete", :done => done, :left => left %>
+	<% end # if correct user %>
+</div>
+<div class="span4">
+	<h4>
+		<% if current_user == @item.user %>
+			<%= link_to new_item_bid_path(@item), :class => "btn btn-success", :id => "new-bid-button" do %>
+				<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
+				<%= t(:initial_price, :scope => [:views, :bids, :forms, :new]) %>
+			<% end # link %>
+		<% end # if correct user %>
+	</h4>
+</div>

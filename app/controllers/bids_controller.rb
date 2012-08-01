@@ -21,6 +21,8 @@ class BidsController < ApplicationController
 
 	def create
 		@bid = current_user.bid params[:bid], params[:item_id]
+		@location = Location.create params[:location] unless params[:location].nil?
+		@bid.at @location unless @location.nil?
 		flash[:success] = t( :success_bid_create )
 		redirect_to item_bid_path( params[:item_id], @bid )
 	end # create
@@ -43,13 +45,22 @@ class BidsController < ApplicationController
 			render "public/404"
 		end # if no bid
 		@item = Item.find_by_id params[:item_id]
-		
 		if current_user == @bid.user
-			if @bid.update_attributes params[:bid]
-				flash[:success] = t(:success_bid_update)
-			else
-				flash[:error] = t(:fail_bid_update)
-			end # if success update
+			unless params[:location].nil?
+				if @bid.location.nil?
+					@bid.at Location.create( params[:location] )
+				else
+					@bid.location.update_attributes params[:location]
+				end # if no location
+				flash[:error] = t(:fail_location_create, :scope => [:controller, :bids, :update] ) if @bid.location.nil?
+			end # unless no location params
+			unless params[:bid].nil?
+				if @bid.update_attributes params[:bid]
+					flash[:success] = t(:success_bid_update)
+				else
+					flash[:error] = t(:fail_bid_update)
+				end # if success update
+			end # unless no bid params
 		else
 			flash[:error] = t(:fail_bid_update)
 		end # if correct user

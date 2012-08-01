@@ -12,7 +12,7 @@
 					<% if item.elements.empty? %>
 						<% target_image_path = "http://placehold.it/260x180" %>
 					<% else %>
-						<% target_image_path = item.elements.first.picture.url(:small) %>
+						<% target_image_path = item.elements.first.picture.url(:thumb) %>
 					<% end %>
 					<a class="thumbnail itempicture" href="<%= item_path item %>" style="background-image : url('<%= target_image_path %>')">					
 						<div class="caption">

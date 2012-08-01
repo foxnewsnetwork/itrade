@@ -21,7 +21,23 @@ describe BidsController do
 			login_user
 			before(:each) do
 				@bid_data = { :offer => rand(999) }
+				@location_data = Factory.next(:location)
+				@methods = { 
+					:vanilla => lambda { post :create, :item_id => @item, :bid => @bid_data, :location => @location_data } ,
+					:ajax => lambda { xhr :post, :create, :item_id => @item, :bid => @bid_data, :location => @location_data }
+				} # methods
 			end # before each
+			[:vanilla, :ajax].each do |style|
+				[Bid, Location].each do |target|
+					it "should change the bid database" do
+						@methods[style].should change(target, :count).by(1)
+					end # it
+				end # each target
+				it "the item should be correctly linked" do
+					@methods[style].call
+					Bid.last.location.should_not be_nil
+				end # it
+			end # each style
 			it "should be successful" do
 				post :create, :item_id => @item, :bid => @bid_data
 				response.should redirect_to [@item, assigns(:bid)]
@@ -106,6 +122,66 @@ describe BidsController do
 	end # item creation
 	
 	describe "put updates" do
-		it "SHOULD HAVE TESTING IN THIS SECTION!!"
+		before(:each) do
+			@bid_data = Factory.next(:bid)
+			@location_data = Factory.next(:location)
+		end # before each
+		context "When logged in" do
+			login_user
+			before(:each) do
+				@bid = Factory(:bid, :user => @current_user, :item => @item)
+			end # before each
+			describe "correct user" do
+				before(:each) do
+					@methods = { 
+						:ajax => lambda { xhr :put, :update, :item_id => @item, :id => @bid, :bid => @bid_data, :location => @location_data } ,
+						:vanilla => lambda { put :update, :item_id => @item, :id => @bid, :bid => @bid_data, :location => @location_data }
+					} # methods
+				end # before each
+				describe "existing location" do
+					[:vanilla, :ajax].each do |style|
+						describe "success in #{style.to_s}" do
+							before(:each) { @bid.at Factory(:location) }
+							it "should change the bid data" do
+								@methods[style].call 
+								Bid.find_by_id(@bid).offer.should eq @bid_data[:offer]
+							end # it
+							[:address, :city, :state, :country, :shipping, :zip].each do |field|
+								it "should change the location data #{field}" do
+									@methods[style].call
+									Bid.find_by_id(@bid).location[field].should eq @location_data[field]
+								end # it
+							end # each field
+						end # success 
+					end # each style
+				end # existing location
+				describe "no location" do
+					[:vanilla, :ajax].each do |style|
+						describe "success in #{style.to_s}" do
+							it "should change the bid data" do
+								@methods[style].call
+								Bid.find_by_id(@bid).offer.should eq @bid_data[:offer]
+							end # it
+							it "should create a new location data" do
+								@methods[style].should change(Location, :count).by(1)
+							end # it
+							[:address, :city, :state, :country, :shipping, :zip].each do |field|
+								it "should match the #{field.to_s}" do
+									@methods[style].call
+									Bid.find_by_id(@bid).location[field].should eq @location_data[field]
+								end # it
+							end # each field
+						end # success 
+					end # each style
+				end # no location
+			end # correct user
+			describe "wrong user" do
+				it "SHOULD HAVE TESTING IN THIS SECTION!!"
+			end # wrong user
+		end # "when logged in"
+		context "when anonymous" do
+			it "SHOULD HAVE TESTING IN THIS SECTION!!"
+		end # when anonymous
+		
 	end # put updates
 end # BidsController

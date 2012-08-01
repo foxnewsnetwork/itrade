@@ -9,8 +9,7 @@ class ItemsController < ApplicationController
 		@location = @item.location
 		@bids = @item.bids.order( "created_at DESC" )
 		if user_signed_in?
-			@bid = @item.bids.find_by_user_id( @item.user_id )
-			@bid ||= current_user.bids.new
+			@bid = current_user.bids.new
 			@location ||= Location.new
 		end
 	end # show

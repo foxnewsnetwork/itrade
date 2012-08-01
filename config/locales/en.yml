@@ -2,9 +2,11 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en: {
+	USD : "USD" ,
 	buy : "Browse Listings" ,
 	sell : "New Listing",
 	company_name : "Tracago!" ,
+	help : "Help" ,
 	controls: { 
 		items: { 
 			flash: { 
@@ -24,6 +26,9 @@ en: {
 	}, # controls
 	views: {
 		shared : { 
+			warnings : { 
+				signin: "This button will take you to the sign-in page because you needed to be logged in to bid on listings." ,
+			} , # warnings
 			almost : { 
 				location: "You need to specify a valid shipping location" ,
 				user: "You need to specify valid user details" ,
@@ -87,6 +92,9 @@ en: {
 				new: { 
 					item : "New Item Listing" ,
 				} , # new
+				show: { 
+					price_title: "Prices" ,
+				}, # show
 			} ,# forms
 		} , # items
 		locations: {
@@ -115,14 +123,20 @@ en: {
 		bids: {
 			forms: {
 				placeholders: {
-					
+					name: "Destination"		,
+					address: "Street Address",
+					city: "City",
+					state: "State",
+					zip: "Zip" ,
+					country: "Country" ,
 				} , # placeholders
 				labels: {
-					submit: "New Bid" ,
+					submit: "Next..." ,
 					offer: "Price Per Unit" ,
 				} , # labels
 				new: { 
 					bid : "Make an Offer" ,
+					initial_price : "Set Initial Price" ,
 				} , # new
 			} ,# forms
 		} , # bids

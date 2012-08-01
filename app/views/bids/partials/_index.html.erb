@@ -1,0 +1,33 @@
+<!-- bid index page -->
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<% [:price,:shipping,:city].each do |title| %>
+				<th><%= t(title, :scope => [:views, :bids, :show]) %></th>
+			<% end # each title %>
+		</tr>
+	</thead>
+	<tbody>
+		<% @bids.each do |bid| %>
+			<a href="<%= item_bid_path [@item, bid] %>" rel="popover" data-content="stuff" data-original-title="title">
+			<tr>
+				<% [:offer].each do |field| %>
+					<td><%= bid[field] %> <%= bid[:units] %></td>
+				<% end # each field %>
+				<% [:shipping, :city].each do |field| %>
+					<td>
+						<% if bid.location.nil? %>
+							<%= t(:unknown) %>
+						<% else %>
+							<%= bid.location[field] %>
+						<% end # if bad location %>
+					</td>
+				<% end # each field %>
+			</tr>
+			</a>
+		<% end # each bid %>
+		<% if @bids.nil? || @bids.empty? %>
+			<tr><td><%= t(:nothing_here_yet, :scope => [:views, :bids, :show] ) %></tr></td>
+		<% end # no bids %>
+	</tbody>
+</table>
