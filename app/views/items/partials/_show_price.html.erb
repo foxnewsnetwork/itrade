@@ -1,7 +1,7 @@
 <!-- show prices partial -->
 <div class="span12-fluid">
 	<div class="page-header">
-		<h2><%= t(:price_title, :scope => [:views, :items, :show]) %></h2>
+		<h2><%= t(:price_title, :scope => [:views, :items, :forms, :show]) %></h2>
 		<% if user_signed_in? %>
 			<% if is_correct?( @item.user ) %>
 				<% # do nothing %>

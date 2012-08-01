@@ -17,7 +17,7 @@
 							<%= f.number_field :quantity %>
 							<%= f.select :units, options_for_select(['grams','kilograms','pounds','tons','metric tons'].map { |x| [x,x] } ) %>
 						</div>
-						<%= content_tag(:button, t(:submit), :class => "btn btn-primary", :type => "submit" ) %>
+						<%= content_tag(:button, t(:submit, :scope => [:views, :items, :forms, :labels]), :class => "btn btn-primary", :type => "submit", :id => "item[submit]" ) %>
 					</div>
 				</fieldset>
 			<% end %>

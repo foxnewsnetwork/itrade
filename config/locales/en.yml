@@ -7,6 +7,10 @@ en: {
 	sell : "New Listing",
 	company_name : "Tracago!" ,
 	help : "Help" ,
+	unknown : "??",
+	nothing_here_yet : "Nothing here yet..." ,
+	nothin_here_yet : "Nothing here yet..." ,
+	this_is_you: "This is you!" ,
 	controls: { 
 		items: { 
 			flash: { 
@@ -45,10 +49,15 @@ en: {
 				labels : { 
 					signup : "Register" ,
 					signin : "Log In" ,
+					logout : "Log Out" ,
 				} , # labels
 			} , # forms
 		} , # headers
 		users: {
+			show : { 
+				contact_info : "Company Contact Information" ,
+				edit_contact_info : "Edit" ,
+			} , # show
 			forms: {
 				placeholders: {
 					email: "ex. johnsmith144@a16z.com" ,
@@ -76,6 +85,15 @@ en: {
 			} ,# forms
 		} , # users
 		items: {
+			show : { 
+				items: "My Listings" ,
+				title: "Title" ,
+				description: "Description" ,
+				material: "Packing",
+				category: "Category",
+				quantity: "Quantity" ,
+				units: "Units" ,
+			} , # show
 			forms: {
 				placeholders: {
 					title: "ex. HDPE pipes" ,
@@ -88,16 +106,25 @@ en: {
 					material: "How is it packed?" ,
 					category: "Category" ,
 				  quantity: "Quantity" ,
+				  submit: "Go Next"
 				} , # labels
 				new: { 
 					item : "New Item Listing" ,
 				} , # new
+				index: { 
+					new_items: "New Items" ,
+				}, # index
 				show: { 
 					price_title: "Prices" ,
+					item_info: "Listing Information" ,
 				}, # show
 			} ,# forms
 		} , # items
 		locations: {
+			show : { 
+				location: "Address" ,
+				edit_location: "Edit" ,
+			} , 
 			forms: {
 				placeholders: {
 					shipping: "ex. FOB" ,
@@ -114,6 +141,7 @@ en: {
 					state: "State",
 					zip: "Zip Code",
 					country: "Country",
+					submit: "Submit" ,
 				} , # labels
 				new: { 
 					edit_location : "Edit Location" ,
@@ -121,6 +149,12 @@ en: {
 			} ,# forms
 		} , # locations
 		bids: {
+			show : { 
+				price: "Offer Price" ,
+				shipping: "Shipping" ,
+				city: "City",
+				nothing_here_yet: "Nothing here yet!"
+			} , # show
 			forms: {
 				placeholders: {
 					name: "Destination"		,
@@ -133,12 +167,32 @@ en: {
 				labels: {
 					submit: "Next..." ,
 					offer: "Price Per Unit" ,
+					cancel: "Cancel" ,
 				} , # labels
 				new: { 
 					bid : "Make an Offer" ,
 					initial_price : "Set Initial Price" ,
 				} , # new
+				show: { 
+					bid_data : "Offer Statistics" ,
+					last_offer : "Latest Offer" ,
+				} , # show
 			} ,# forms
 		} , # bids
+		elements : { 
+			forms : { 
+				new : { 
+					element : "New Picture" ,
+					picture : "Picture" ,
+					metadata : "Picture Tags" ,
+				} , # new
+				labels : { 
+					submit : "Upload" ,
+				}, # labels
+			} , # forms
+			show : { 
+				elements : "Pictures" ,
+			} , # show
+		} ,# elements
 	} , # views
 } # en

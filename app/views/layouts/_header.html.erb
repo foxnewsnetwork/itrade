@@ -21,10 +21,10 @@
 					<li>
 						<%= link_to( image_tag("http://placehold.it/150x30") , root_path) %>
 					</li>
-					<% { "shopping-cart" => t(:buy), "gift" => t(:sell) }.each do |icon, tab| %>
+					<% { "shopping-cart" => :buy, "gift" => :sell }.each do |icon, tab| %>
 						<li>
-							<a href='<%= icon=="gift" ? new_item_path : items_path %>'>
-								<i class="<%= "icon-#{icon}" %>"></i> <%= tab %>
+							<a href='<%= icon=="gift" ? new_item_path : items_path %>' id="<%= "header_link_#{tab.to_s}" %>">
+								<i class="<%= "icon-#{icon}" %>"></i> <%= t tab %>
 							</a>
 						</li>
 					<% end %>
@@ -36,7 +36,10 @@
 					<% if user_signed_in? %>
 						<li><%= link_to content_tag(:i, "", :class => "icon-user") + current_user.company, user_path( current_user ) %></li>
 						<li>
-							<%= link_to content_tag(:i, "", :class => "icon-remove-sign") + t(:logout), destroy_user_session_path, :method => :delete %>
+							<%= link_to destroy_user_session_path, :method => :delete do %>
+								<%= content_tag(:i, "", :class => "icon-remove-sign") %>
+								<%= t(:logout, :scope => [:views, :headers, :forms, :labels] ) %>
+							<% end # link_to %>
 						</li>
 					<% else %>
 						<% { :signup => "plus", :signin => "user" }.each do |tab, icon| %>

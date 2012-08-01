@@ -23,10 +23,10 @@
 	<%= content_tag :div, :class => "row-fluid" do %>
 		<%= content_tag :div, :class => "span6 well" do %>
 			<%= content_tag :div, :class => "page-header" do %>
-				<%= t(:items) %>
+				<%= t(:items, :scope => [:views, :items, :show]) %>
 				<%= link_to( new_item_path, :class => "btn btn-success", :id => "new-item-button" ) do %>
 					<%= content_tag(:i, "", :class => "icon-tag icon-white" ) %>
-					<%= t(:new_item) %>
+					<%= t(:item, :scope => [:views, :items, :forms, :new]) %>
 				<% end if current_user == @user %>
 			<% end # page-header %>
 			<%= content_tag :dl do %>
@@ -44,11 +44,11 @@
 		<% end # span6-fluid well %>
 		<%= content_tag :div, :class => "span6 well" do %>
 			<%= content_tag :div, :class => "page-header" do %>
-				<%= t(:contact_info) %>
+				<%= t(:contact_info, :scope => [:views, :users, :show]) %>
 				<% if current_user == @user %>
 					<%= content_tag(:button, :class => "btn btn-info", :id => "edit-user-button" ) do %>
 						<%= content_tag(:i, "", :class => "icon-pencil") %>
-						<%= t(:edit_contact_info) %>
+						<%= t(:edit_contact_info, :scope => [:views, :users, :show]) %>
 					<% end %>
 				<% end # if correct_user %>
 			<% end # page-header %>
@@ -64,11 +64,11 @@
 				<% end # each key %>
 			<% end # dl %>
 			<%= content_tag :div, :class => "page-header" do %>
-				<%= t(:location_info) %>
+				<%= t(:location, :scope => [:views, :locations, :show]) %>
 				<% if current_user == @user %>
 					<%= content_tag(:button, :class => "btn btn-info", :id => "edit-location-button" ) do %>
 						<%= content_tag(:i, "", :class => "icon-pencil") %>
-						<%= t(:edit_location_info) %>
+						<%= t(:edit_location, :scope => [:views, :locations, :show]) %>
 					<% end %>
 				<% end # if correct_user %>
 			<% end # page-header %>

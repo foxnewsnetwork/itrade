@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
 			render "public/404"
 			return
 		end # if nil
+		@title = "Listing #{@item.title}"
 		@elements = @item.elements
 		@location = @item.location
 		@bids = @item.bids.order( "created_at DESC" )
@@ -17,6 +18,7 @@ class ItemsController < ApplicationController
 	def index
 		# TODO: show less, paginate, or do something here
 		@items = Item.limit(25)
+		@title = "Listing Index"
 		respond_to do |format|
 			format.html
 			format.js
@@ -25,6 +27,7 @@ class ItemsController < ApplicationController
 	
 	def new
 		if user_signed_in?
+			@title = "New Listing"
 			@item = Item.new
 		else
 			redirect_to new_user_session_path
@@ -36,6 +39,7 @@ class ItemsController < ApplicationController
 		if user_signed_in?
 			@item = Item.find_by_id( params[:id] )	
 			render "public/404" if @item.nil?
+			@title = "Edit listing #{@item.title}"
 			unless current_user == @item.user
 				flash[:notice] = t( :fail_item_edit )
 				redirect_to item_path @item

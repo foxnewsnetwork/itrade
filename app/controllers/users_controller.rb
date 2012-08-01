@@ -7,12 +7,14 @@ class UsersController < ApplicationController
   		render "public/404"
   		return
   	end # if nil
+  	@title = @user.company
   	@items = @user.items
   	@location = @user.location
   	@location ||= Location.new
   end # show
 
   def index
+  	@title = "User Index"
   	@users = User.all
   end # index
 
@@ -21,12 +23,14 @@ class UsersController < ApplicationController
   		flash[:notice] = t( :failed_user_new )
   		redirect_to user_path current_user
   	else
+  		@title = "New User"
   		@user = User.new	
   	end # user_signed_in
   end # new
 
   def edit
 		@user = User.find_by_id( params[:id] )
+		@title = "Edit #{@user.company}"
 		unless current_user.id == @user.id
 			flash[:notice] = t( :failed_user_edit )
 			redirect_to user_path @user

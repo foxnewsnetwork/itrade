@@ -1,10 +1,10 @@
 <!-- show miscellanious data partial -->
 <div class="span12-fluid">
 	<div class="page-header">
-		<h2><%= t(:item_info, :scope => [:views, :items, :show]) %></h2>
+		<h2><%= t(:item_info, :scope => [:views, :items, :forms, :show]) %></h2>
 		<dl>
 			<% [:description , :quantity , :units , :material].each do |key, title| %>
-				<dt><%= t(key) %></dt>
+				<dt><%= t(key, :scope => [:views, :items, :show]) %></dt>
 				<dd><%= @item[key].nil? ? t(:unknown) : @item[key] %></dd>
 			<% end # each key %>
 		</dl>
@@ -12,10 +12,10 @@
 </div>
 <div class="span12-fluid">
 	<div class="page-header">
-		<h2><%= t(:bid_data) %></h2>
+		<h2><%= t(:bid_data, :scope => [:views, :bids, :forms, :show] ) %></h2>
 		<p><%= content_tag(:i, "", :class => "icon-flag" )%> <%= @bids.count %></p>
 		<% unless @bids.nil? || @bids.empty? %>
-			<p><%= t(:last_offer) %> <%= @bids.last.offer %> <%= @bids.last.units %></p>
+			<p><%= t(:last_offer, :scope => [:views, :bids, :forms, :show] ) %> <%= @bids.last.offer %> <%= @bids.last.units %></p>
 		<% end %>
 	</div>
 </div>
