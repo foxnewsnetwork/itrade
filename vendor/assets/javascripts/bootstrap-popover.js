@@ -43,6 +43,7 @@
         , title = this.getTitle()
         , content = this.getContent()
 
+      this.loadOptions(); // customCode
       $tip.find('.popover-title')[this.isHTML(title) ? 'html' : 'text'](title)
       $tip.find('.popover-content > *')[this.isHTML(content) ? 'html' : 'text'](content)
 
@@ -63,6 +64,14 @@
 
       return content
     }
+    
+    // addition to the popover, looks for the placement attr and uses it in options
+    // this is custom code
+  , loadOptions : function () { 
+  	var $e = this.$element;
+  	if ( $e.attr('placement') != undefined )
+	  	this.options['placement'] = $e.attr('placement');
+  } // loadOptions 
 
   , tip: function () {
       if (!this.$tip) {

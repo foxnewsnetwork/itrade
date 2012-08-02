@@ -18,5 +18,5 @@ var register = function(tag) {
 }; // register
 
 $(document).ready( function() {
-	$("[rel=popover]").popover();
+	$("[rel=popover]").popover( ); // popover
 } ); // document ready

@@ -1,41 +1,67 @@
 <!-- Home landing page -->
+<% stuff = { :cargo => "cargo", :truck => "truck", :ship => "ship", :w1 => "warehouse-1", :w2 => "warehouse-2", :earth => "earthicon" } %>
+<% stuff.each do |key, val| %>
+	<% (@i ||= {} )[key] = "http://i299.photobucket.com/albums/mm281/foxnewsnetwork/#{val}.png" %>
+<% end %>
 <script type="text/javascript">
 	var increment = 0;
 	var timer;
 	$(function() { 
-		$("#buy-button").click( function() { 
-			timer = setInterval( function() { 
-				increment += 1 - increment / 100;
-				$("#now-loading-bar").css("width", increment + "%");
-			} , 100 ); // setInterval
-		} ); // click
+		timer = setInterval( function() { 
+			increment += 1 - increment / 100;
+			$("#now-loading-bar").css("width", increment + "%");
+		} , 100 ); // setInterval
+		var loadCount = 0;
+		<% stuff.each do |k, v| %>
+			var image = new Image();
+			image.src = "<%= @i[k] %>";
+			$("#splash-icon-<%= k.to_s %>").append( image );
+			image.onload = function() { 
+				$("#splash-icon-<%= k.to_s %>")
+					.show("<%= k == :earth ? "slide" : "bounce" %>", 500) 
+					.draggable();
+				loadCount += 1;
+				if ( loadCount >= 6 ) { 
+					$("#now-loading-bar").css("width", "100%");
+					clearInterval(timer);
+					$("#now-loading").hide("explode", 1000);
+				} // if
+			}; // image onload
+		<% end # each k %>
 	} ); // document ready
 </script>
 
-<div class="container-fluid">
-	<div class="row">
-		<div class="span6 offset4 well" id="now-loading">
-			<div class="logo" id="debug">
-				<h1><%= t(:company_name) %></h1>
-			</div>
-			<div class="progress progress-striped active">
-			  <div class="bar" style="width: 0%;" id="now-loading-bar"></div>
-			</div>
-			<div class="pull-right">
-				<%= link_to( items_path, :class => "btn btn-large btn-primary", :remote => true, :id => "buy-button") do %>
-					<%= content_tag(:i, "", :class => "icon-globe icon-white") %>
-					<%= t(:buy) %>
-				<% end # button %>
-				<%= link_to( new_item_path, :class => "btn btn-large btn-success") do %>
-					<%= content_tag(:i, "", :class => "icon-gift icon-white") %>
-					<%= t(:sell) %>
-				<% end # button %>
-			</div>
-		</div>
-		<div class="span12-fluid" id="page-index-container" style="visibility : none;">
 
+
+<div class="container-fluid">
+	<div class="splash-container">
+		<div class="progress progress progress-striped active" id="now-loading">
+			<div class="bar" style="width : 0%" id="now-loading-bar"></div>
 		</div>
+		<% stuff.each do |k,v| %>
+			<%= content_tag(:div, "", 
+				:class => "splash-icon-#{k.to_s}", 
+				:id => "splash-icon-#{k.to_s}", 
+				:style => "display : none;" ,
+				"data-content" => t(k, :scope => [:views, :pages, :home, :popovers]) ,
+				"data-original-title" => t(k, :scope => [:views, :pages, :home, :labels]) ,
+				:rel => "popover",
+				:placement => k == :cargo ? "bottom" : "top"	) %>
+		<% end %>
 	</div>
-</div>
+	<div class="row-fluid">
+		<% [:buy, :ship, :sell].each do |section| %>
+			<%= content_tag(:div, :class => "span4 well") do %>
+				<%= content_tag(:div, :class => "page-header") do %>
+						<%= content_tag(:h3, t(section, :scope => [:views, :pages, :home, :labels]) )%>
+				<% end # page-header %>
+				<%= content_tag(:p) do %>
+					<%= t(section, :scope => [:views, :pages, :home, :explanations] ) %>
+				<% end # p %>
+			<% end # span4 %>
+		<% end # each section %>
+	</div>
+</div>		
+		
 
 

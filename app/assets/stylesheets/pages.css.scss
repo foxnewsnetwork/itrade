@@ -27,5 +27,43 @@ body {
 	border-radius: 4px;
 }
 
+.splash-background {
+	background-color : #444;
+}
 
+.splash-container { 
+	width : 98%;
+	margin-left : 1%;
+	height : 40em;
+}
 
+.splash-icon-cargo { 
+	position : absolute;
+	top : 82px;
+	left : 45.7%;
+}
+.splash-icon-ship { 
+	position : absolute;
+	top : 371px;
+	left : 61.25%;
+}
+.splash-icon-truck { 
+	position : absolute;
+	top : 416px;
+	left : 33.28%;
+}
+.splash-icon-w1 { 
+	position : absolute;
+	top : 217px;
+	left : 28.5%;
+}
+.splash-icon-w2 { 
+	position : absolute;
+	top : 218px;
+	left : 61.56%;
+}
+.splash-icon-earth { 
+	position : absolute;
+	left : 39%;
+	top : 15em;
+}

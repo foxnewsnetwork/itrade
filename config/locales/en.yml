@@ -53,6 +53,33 @@ en: {
 				} , # labels
 			} , # forms
 		} , # headers
+		pages : { 
+			home : { 
+				labels : { 
+					cargo : "Materials" ,
+					ship : "International Shipping" ,
+					truck : "Domestic Trucking" ,
+					earth : "Global Integration" ,
+					w1 : "My Warehouse" ,
+					w2 : "Customer's Warehouse" ,
+					buy : "Purchasing Materials" ,
+					sell : "Selling Materials" ,
+				} , # labels
+				popovers : { 
+					earth : "Tracago provides a safe and secure international platform for you to trade across the globe from in front of your computer.",
+					cargo : "Tracago is a great place to list your inventory." ,
+					ship : "Tracago can help you get the best rates when shipping freight internationally." ,
+					truck : "Tracago can get you the fastest, cheapest, and more trustworthy truck drivers to ship your goods locally." ,
+					w1 : "Tracago will provide free market statistics for your warehouse of goods." ,
+					w2 : "Tracago makes sure goods are shipped reliably and safely to your customers. We take care of the hassel." ,
+				} , # popovers
+				explanations : { 
+					buy : "Browse through Tracago's listings and look for materials that interest you. Tracago will provide you with live market price updates so you can best choose the appropriate price." ,
+					sell : "List your materials and set your initial asking price through Tracago. We will sell it to highest bidder or the buyer of your choice." ,
+					ship : "Tracago coordinates with trucking and shipping services to get you the best prices no matter what your volumne." ,
+				} ,
+			} , # home
+		} , # pages
 		users: {
 			show : { 
 				contact_info : "Company Contact Information" ,
