@@ -1,18 +1,3 @@
-<script type="text/javascript">
-	$.fx.speeds._defaults = 750;
-	$(document).ready( function() { 
-		$("#user-login-dialog").dialog( { 
-			autoOpen: false,
-			show: "explode",
-			hide: "explode"
-		} ); // dialog setup
-		$("#nav-user-login").click( function() { 
-			$("#user-login-dialog").dialog( "open" );
-			return false;
-		} ); // click cb
-	} );	// jq ready
-</script>
-
 <header>
 	<div class="navbar navbar-fixed-top">
 		<div class="container-fluid">
@@ -44,7 +29,7 @@
 					<% else %>
 						<% { :signup => "plus", :signin => "user" }.each do |tab, icon| %>
 							<li>
-								<%= link_to( (tab == :signin ? "#login" : new_user_registration_path), :id => "nav-#{icon}-login" ) do %>
+								<%= link_to( (tab == :signin ? new_user_session_path : new_user_registration_path), :id => "open-#{icon}-button" ) do %>
 									<%= content_tag(:i, "", :class => "icon-#{icon}") %>
 									<%= t(tab, :scope => [:views, :headers, :forms, :labels]) %>
 								<% end %>
@@ -56,6 +41,8 @@
 		</div>
 	</div>
 </header>
-<div id="user-login-dialog" class="ui-dialog-content ui-widget-content">
-	<%= render "users/partials/login", :remote => false %>
-</div>
+<% unless user_signed_in? %>
+	<%= dialog_tag( "dialog-login-user-header", :open => "open-user-button", :close => "close-login-button" ) do %>
+		<%= render "users/partials/login", :remote => false %>
+	<% end # dialog %>
+<% end # signed in %>

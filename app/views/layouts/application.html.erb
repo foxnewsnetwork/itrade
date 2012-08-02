@@ -9,11 +9,11 @@
 </head>
 <body>
 
-<%= render "layouts/header" %>
+<%= render "shared/header" %>
 <div id="flash-container">
-	<%= render "layouts/flash", :flash => flash %>
+	<%= render "shared/flash", :flash => flash %>
 </div>
 <%= yield %>
-<%= render "layouts/footer" %>
+<%= render "shared/footer" %>
 </body>
 </html>

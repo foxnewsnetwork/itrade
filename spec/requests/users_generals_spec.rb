@@ -24,7 +24,7 @@ describe "UsersGenerals" do
 					[:email, :password].each do |input|
 						fill_in( "login_user_#{input.to_s}", :with => @user_data[input] )
 					end # fill_in
-					click_on( "Login" )
+					click_on( "submit-login-button" )
 				end # login user form
 				page.should have_content( @user.company )			
 			end # 

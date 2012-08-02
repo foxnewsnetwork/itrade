@@ -23,12 +23,11 @@
 <% if user_signed_in? %>
 	<% stuff["element"] = "post" if @item.user == current_user %>
 	<% stuff["bid"] = "post" %>
-	<% stuff["location"] = @location.valid? ? "put" : "post" %>
 <% end %>
 <% stuff.each do |type, meth| %>
-	<div id="new-<%= type %>-dialog" class="ui-dialog-content ui-widget-content">
+	<%= dialog_tag("dialog-#{type}-item-show", :open => "open-#{type}-button", :close => "close-#{type}-button") do %>
 		<%= render "#{type.pluralize}/partials/new", :remote => false, :parent => @item, :method => meth %>
-	</div>
+	<% end %>
 <% end %>
 
 

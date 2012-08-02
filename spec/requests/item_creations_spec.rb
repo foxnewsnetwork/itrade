@@ -12,7 +12,7 @@ describe "ItemCreations" do
   			lambda do 
   				fill_in( "login_user_email", :with => @user_data[:email] )
   				fill_in( "login_user_password", :with => @user_data[:password] )
-  				click_on( "Login" )
+  				click_on( "submit-login-button" )
   			end ,
   			lambda { click_link( "header_link_sell" ) } ,
   			lambda do
@@ -20,7 +20,7 @@ describe "ItemCreations" do
   				fill_in( "item[description]", :with => "hilarious rocks for destroy lives")
   				fill_in( "item[material]", :with => "in 12 gaylord boxes")
   				fill_in( "item[quantity]", :with => "2340820384")
-  				click_on( "item[submit]" )
+  				click_on( "submit-item-button" )
   			end
   		] # steps
   	end # before each

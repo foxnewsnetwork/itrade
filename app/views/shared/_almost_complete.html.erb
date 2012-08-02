@@ -16,7 +16,8 @@
 	<% end # each left %>
 </div>
 <script type="text/javascript">
-	$(function() { $("#<%= left[l] %>").nudgenudge({
+	$(function() { 
+		$("#<%= left[l] %>").nudgenudge({
 			arrow: 'http://andyshora.com/demos/nudgenudge/img/arrow_default.png', // path to the arrow image
 			arrowWidth: 150,
 			arrowHeight: 60,
@@ -27,5 +28,13 @@
 			offsetX: 0, // adjust x position
 			offsetY: 0 // adjust y position
 		}); // nudgenudge
+		// Setup popover
+		<% left.each do |key, val| %>
+			$("#<%= val %>")
+				.attr("rel", "popover")
+				.attr("data-content", "<%= t(key, :scope => [:views, :shared, :almost]) %>")
+				.attr("data-original-title", "<%= t(:todo, :scope => [:views, :shared, :almost] ) %>")
+				.popover({ placement : "top" });
+		<% end unless left.nil? %>
 	} ); // document ready
 </script>

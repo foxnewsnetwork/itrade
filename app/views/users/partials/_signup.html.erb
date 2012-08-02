@@ -15,7 +15,12 @@
 			</div>
 		<% end %>
 		<div class="form-actions">
-			<button type="submit" class="btn btn-primary"><%= t(:submit, :scope => [:views,:users,:forms,:labels]) %></button>
+			<%= content_tag(:button, :class => "btn btn-primary", :type => "submit") do %>
+				<%= content_tag(:i, "", :class => "icon-ok icon-white") %>
+			<% end # submit btn %>
+			<%= content_tag(:button, :class => "btn btn-inverse", :type => "reset", :name => "reset", :id => "close_user_button") do %>
+				<%= content_tag(:i, "", :class => "icon-remove icon-white") %>
+			<% end # reset btn %>
 		</div>
   </fieldset>
 <% end %>  

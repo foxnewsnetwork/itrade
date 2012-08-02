@@ -151,8 +151,8 @@ en: {
 		bids: {
 			show : { 
 				price: "Offer Price" ,
-				shipping: "Shipping" ,
-				city: "City",
+				shipping: "Price Terms" ,
+				city: "Location",
 				nothing_here_yet: "Nothing here yet!"
 			} , # show
 			forms: {

@@ -16,7 +16,7 @@ describe "UserSignups" do
 	context "when given crap for data" do
 		it "should not do anything" do
 			expect do 
-				click_button( "Next..." )
+				click_button( "submit-user-button" )
 			end.not_to change(User, :count)
 		end # it
 	end # crap
@@ -30,7 +30,7 @@ describe "UserSignups" do
 		end # each
 		it "should change the db" do
 			expect do 
-				click_button("Next...") 
+				click_button("submit-user-button") 
 			end.to change(User, :count).by(1)
 		end # it
 	end # good data

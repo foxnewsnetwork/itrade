@@ -21,8 +21,7 @@
 			<% end # each mini %>
 			<%= text_field_tag "location[country]", "", :placeholder => t(:country, :scope => [:views, :bids, :forms, :placeholders] ) %>
 		</div>
-		<%= content_tag(:button, t(:submit, :scope => [:views, :bids, :forms, :labels]), :class => "btn btn-success", :type => "submit" ) %>	
-		<%= content_tag(:button, t(:cancel, :scope => [:views, :bids, :forms, :labels]), :class => "btn", :id => "close-bid-button" ) %>
+		<%= form_action_tag( :bid ) %>
 	</fieldset>
 <% end %>
 

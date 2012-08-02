@@ -1,11 +1,11 @@
-<!-- user show page -->
+<!-- user show page (yes, it's all in erb) -->
 <%= content_tag(:div, :class => "container-fluid") do %>
 	<%= content_tag :div, :class => "row-fluid" do %>
 		<%= content_tag :div, :class => "span12-fluid well" do %>
 			<%= content_tag :div, :class => "span4" do %>
 				<%= content_tag :div, :class => "page-header" do %>
 					<%= content_tag :h4 do %>
-						<%= content_tag :div, "", :class => "icon-user" %>
+						<%= content_tag :i, "", :class => "icon-user" %>
 						<%= link_to @user.company, user_path( @user ) %>     
 						<%= t(:this_is_you) if current_user == @user %>
 					<% end # h4 %>
@@ -14,7 +14,7 @@
 			<%= content_tag :div, :class => "span4" do %>
 				<% done = 1 + (@items.empty? ? 1 : 0) + (@location.valid? ? 1 : 0) %>
 				<% left = { } %>
-				<% left[:location]= "edit-location-button" unless @location.valid? %>
+				<% left[:location]= "open-location-button" unless @location.valid? %>
 				<% left[:item] = "new-item-button" if @items.empty? %>
 				<%= render "shared/almost_complete", :done => done, :left => left %>
 			<% end if current_user == @user # span4 fluid %>
@@ -25,8 +25,9 @@
 			<%= content_tag :div, :class => "page-header" do %>
 				<%= t(:items, :scope => [:views, :items, :show]) %>
 				<%= link_to( new_item_path, :class => "btn btn-success", :id => "new-item-button" ) do %>
+					<%= content_tag(:i, "", :class => "icon-plus-sign icon-white" ) %>
 					<%= content_tag(:i, "", :class => "icon-tag icon-white" ) %>
-					<%= t(:item, :scope => [:views, :items, :forms, :new]) %>
+					<% # t(:item, :scope => [:views, :items, :forms, :new]) %>
 				<% end if current_user == @user %>
 			<% end # page-header %>
 			<%= content_tag :dl do %>
@@ -46,29 +47,29 @@
 			<%= content_tag :div, :class => "page-header" do %>
 				<%= t(:contact_info, :scope => [:views, :users, :show]) %>
 				<% if current_user == @user %>
-					<%= content_tag(:button, :class => "btn btn-info", :id => "edit-user-button" ) do %>
+					<%= content_tag(:button, :class => "btn", :id => "open-user-button" ) do %>
 						<%= content_tag(:i, "", :class => "icon-pencil") %>
-						<%= t(:edit_contact_info, :scope => [:views, :users, :show]) %>
+						<% # t(:edit_contact_info, :scope => [:views, :users, :show]) %>
 					<% end %>
 				<% end # if correct_user %>
 			<% end # page-header %>
 			<%= render "shared/error_messages", :model => @user %>
 			<%= content_tag :dl do %>
-				<% {:company => "company", :email => "email", :phone => "phone" }.each do |key, val| %>
+				<% [:company, :email, :phone].each do |key| %>
 					<%= content_tag :dt do %>
-						<%= val.capitalize %>
+						<%= t(key, :scope => [:views, :users, :forms, :labels]) %>
 					<% end # dt %>
 					<%= content_tag :dd do %>
-						<%= @user[key].blank? ? t(:unknown) : @user[key] %>
+						<%= @user[key].blank? ? t(:unknown) : ( key == :phone ? number_to_phone(@user[key], :area_code => true ) : @user[key]) %>
 					<% end # dt %>
 				<% end # each key %>
 			<% end # dl %>
 			<%= content_tag :div, :class => "page-header" do %>
 				<%= t(:location, :scope => [:views, :locations, :show]) %>
 				<% if current_user == @user %>
-					<%= content_tag(:button, :class => "btn btn-info", :id => "edit-location-button" ) do %>
+					<%= content_tag(:button, :class => "btn", :id => "open-location-button" ) do %>
 						<%= content_tag(:i, "", :class => "icon-pencil") %>
-						<%= t(:edit_location, :scope => [:views, :locations, :show]) %>
+						<% # t(:edit_location, :scope => [:views, :locations, :show]) %>
 					<% end %>
 				<% end # if correct_user %>
 			<% end # page-header %>
@@ -79,8 +80,9 @@
 
 <% if current_user == @user %>
 	<% ['user','location'].each do |type| %>
-		<%= content_tag( :div, :class => "ui-dialog-content ui-widget-content", :id => "edit-#{type}-dialog" ) do %>
+		<%= dialog_tag("dialog-#{type}-user-show", :open => "open-#{type}-button", :close => "close-#{type}-button") do %>
 			<%= render "#{type.pluralize}/partials/edit", :remote => false, :parent => @user, :method => @location.valid? ? "put" : "post" %>
-		<% end # dialog div %>
-	<% end # each type %>
+		<% end # end dialog box %>
+	<% end # each type %>	
 <% end # if correct user %>
+

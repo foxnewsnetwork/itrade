@@ -6,9 +6,10 @@
 			<% if is_correct?( @item.user ) %>
 				<% # do nothing %>
 			<% else # if is_correct %>
-				<%= content_tag(:button, :class => "btn btn-info", :id => "new-location-button") do %>
-					<%= content_tag(:i, "", :class => "icon-pencil icon-white") %>
-					<%= t(:bid, :scope => [:views, :bids, :forms, :new]) %>
+				<%= content_tag(:button, :class => "btn btn-info", :id => "open-bid-button") do %>
+					<%= content_tag(:i, "", :class => "icon-plus-sign icon-white") %>
+					<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
+					<% # t(:bid, :scope => [:views, :bids, :forms, :new]) %>
 				<% end # button tag %>	
 			<% end # else incorrect user %>
 		<% else # if signed in %>
@@ -17,8 +18,9 @@
 				:rel => "popover", 
 				"data-original-title" => t(:help) ,
 				"data-content" => t(:signin, :scope => [:views, :shared, :warnings]) ) do %>
-				<%= content_tag(:i, "", :class => "icon-pencil icon-white") %>
-				<%= t(:bid, :scope => [:views, :bids, :forms, :new]) %>
+				<%= content_tag(:i, "", :class => "icon-plus-sign icon-white") %>
+				<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
+				<% # t(:bid, :scope => [:views, :bids, :forms, :new]) %>
 			<% end %>
 		<% end # else not signed in %>
 		<%= render "bids/partials/index" %>
