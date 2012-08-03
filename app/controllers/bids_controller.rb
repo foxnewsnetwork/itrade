@@ -24,7 +24,7 @@ class BidsController < ApplicationController
 		@location = Location.create params[:location] unless params[:location].nil?
 		@bid.at @location unless @location.nil?
 		flash[:success] = t( :success_bid_create )
-		redirect_to item_bid_path( params[:item_id], @bid )
+		redirect_to item_path params[:item_id]
 	end # create
 	
 	def destroy

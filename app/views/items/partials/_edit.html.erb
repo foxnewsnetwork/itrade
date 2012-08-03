@@ -1,0 +1,20 @@
+<!-- item edit form -->
+<%= form_for @item, :method => method, :remote => true do |f| %>
+	<fieldset>
+		<legend><%= t(:item, :scope => [:views, :items, :forms, :new]) %></legend>
+		<div class="control-group">
+			<% [:title, :description, :material].each do |tag| %>
+				<%= f.label t(tag, :scope => [:views, :items, :forms, :labels]), :class => "control-label" %>
+				<%= f.text_field tag, :value => "", :placeholder => t(tag, :scope => [:views, :items, :forms, :placeholders]) %>
+			<% end %>
+			<%= f.label :category, :class => "control-label" %>
+			<%= f.select :category, options_for_select(['plastic scraps','waste paper','regular products'].map { |x| [x,x] }) %>
+			<div class="inline">
+				<%= f.label :quantity, :class => "control-label" %>
+				<%= f.number_field :quantity %>
+				<%= f.select :units, options_for_select(['grams','kilograms','pounds','tons','metric tons'].map { |x| [x,x] } ) %>
+			</div>
+			<%= form_action_tag(:item) %>
+		</div>
+	</fieldset>
+<% end %>

@@ -9,7 +9,7 @@ module IntegrationMacros
 				missing << spec
 			end # each spec
 		end # each span
-		missing << html.match(/<title>.+<\/title>/)[0] unless missing.empty?
+		missing << html.match(/<title>.+<\/title>/)[0] unless missing.empty? || html.match(/<title>.+<\/title>/).nil?
 		missing.should eq []
 	end # should_have translations
 end # IntegrationMacros

@@ -19,4 +19,5 @@ var register = function(tag) {
 
 $(document).ready( function() {
 	$("[rel=popover]").popover( ); // popover
+	$("[rel=tooltip]").tooltip( ); // popover
 } ); // document ready

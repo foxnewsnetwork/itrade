@@ -10,7 +10,7 @@
 		<%= t(:todo, :scope => [:views, :shared, :almost] ) %>
 		<% l = left.keys[0] %>
 		<%= content_tag :i, "", :class => "icon-bell" %>
-		<%= t(l, :scope => [:views, :shared, :almost]) %>
+		<% # t(l, :scope => [:views, :shared, :almost]) %>
 	<% else  %>
 		<%= t( :complete, :scope => [:views, :shared, :almost] ) if left.nil? || left.empty? %>
 	<% end # each left %>
@@ -34,7 +34,7 @@
 				.attr("rel", "popover")
 				.attr("data-content", "<%= t(key, :scope => [:views, :shared, :almost]) %>")
 				.attr("data-original-title", "<%= t(:todo, :scope => [:views, :shared, :almost] ) %>")
-				.popover({ placement : "top" });
+				.popover();
 		<% end unless left.nil? %>
 	} ); // document ready
 </script>

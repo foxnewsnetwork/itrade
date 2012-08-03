@@ -23,6 +23,7 @@
 <% if user_signed_in? %>
 	<% stuff["element"] = "post" if @item.user == current_user %>
 	<% stuff["bid"] = "post" %>
+	<% stuff["item"] = "put" %>
 <% end %>
 <% stuff.each do |type, meth| %>
 	<%= dialog_tag("dialog-#{type}-item-show", :open => "open-#{type}-button", :close => "close-#{type}-button") do %>

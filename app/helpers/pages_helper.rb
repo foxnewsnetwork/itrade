@@ -25,12 +25,12 @@ module PagesHelper
 		content_tag(:script, :type => "text/javascript") do
 			%Q(
 				$( function() { 
-					$('##{id}-submit').tooltip( { title : '...', trigger : 'manual' } ).click( function(e) { 
+					$('##{id}_submit').tooltip( { title : '...', trigger : 'manual' } ).click( function(e) { 
 						$(this).tooltip( 'show' );
 						$(this).attr('disabled', true);
 						setTimeout( function() { 
-							$('##{id}-submit').attr('disabled', false);
-							$('##{id}-submit').tooltip( 'hide' );
+							$('##{id}_submit').attr('disabled', false);
+							$('##{id}_submit').tooltip( 'hide' );
 						}, 1500 ); // setTimeout
 						$('##{id}').submit();
 						return false;

@@ -3,15 +3,11 @@
 	<div class="page-header">
 		<h2><%= t(:price_title, :scope => [:views, :items, :forms, :show]) %></h2>
 		<% if user_signed_in? %>
-			<% if is_correct?( @item.user ) %>
-				<% # do nothing %>
-			<% else # if is_correct %>
-				<%= content_tag(:button, :class => "btn btn-info", :id => "open-bid-button") do %>
+				<%= content_tag(:button, :class => "btn btn-info", :id => "open-bid-button", :placement => "top") do %>
 					<%= content_tag(:i, "", :class => "icon-plus-sign icon-white") %>
 					<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
-					<% # t(:bid, :scope => [:views, :bids, :forms, :new]) %>
-				<% end # button tag %>	
-			<% end # else incorrect user %>
+					<% # t(:initial_price, :scope => [:views, :bids, :forms, :new]) %>
+				<% end # button tag %>
 		<% else # if signed in %>
 			<%= link_to(new_user_session_path, 
 				:class => "btn btn-warning", 

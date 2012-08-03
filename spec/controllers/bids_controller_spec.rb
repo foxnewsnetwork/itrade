@@ -40,7 +40,7 @@ describe BidsController do
 			end # each style
 			it "should be successful" do
 				post :create, :item_id => @item, :bid => @bid_data
-				response.should redirect_to [@item, assigns(:bid)]
+				response.should redirect_to @item
 				flash[:success].should_not be_nil
 			end # it
 			it "should change the database" do
@@ -176,11 +176,51 @@ describe BidsController do
 				end # no location
 			end # correct user
 			describe "wrong user" do
-				it "SHOULD HAVE TESTING IN THIS SECTION!!"
+				before(:each) do 
+					@user = User.create Factory.next(:user)
+					@item2 = Factory(:item, :user => @user )
+					@bid2 = Factory(:bid, :item => @item2, :user => @user)
+					@methods = { 
+						:ajax => lambda { xhr :put, :update, :item_id => @item2, :id => @bid2, :bid => @bid_data, :location => @location_data } ,
+						:vanilla => lambda { put :update, :item_id => @item2, :id => @bid2, :bid => @bid_data, :location => @location_data }
+					} # methods
+				end # before each
+				[:vanilla, :ajax].each do |style|
+					it "should not change anything" do
+						[@user, @item2, @bid2].each do |target|
+							@methods[style].call
+							target.should eq target.class.find_by_id(target.id)
+						end # each target
+					end # it
+					it "should have a proper flash" do
+						@methods[style].call
+						flash[:error].should_not be_nil
+					end # it
+				end # each style
 			end # wrong user
 		end # "when logged in"
 		context "when anonymous" do
-			it "SHOULD HAVE TESTING IN THIS SECTION!!"
+			before(:each) do 
+				@user = User.create Factory.next(:user)
+				@item2 = Factory(:item, :user => @user )
+				@bid2 = Factory(:bid, :item => @item2, :user => @user)
+				@methods = { 
+					:ajax => lambda { xhr :put, :update, :item_id => @item2, :id => @bid2, :bid => @bid_data, :location => @location_data } ,
+					:vanilla => lambda { put :update, :item_id => @item2, :id => @bid2, :bid => @bid_data, :location => @location_data }
+				} # methods
+			end # before each
+			[:vanilla, :ajax].each do |style|
+				it "should not change anything" do
+					[@user, @item2, @bid2].each do |target|
+						@methods[style].call
+						target.should eq target.class.find_by_id(target.id)
+					end # each target
+				end # it
+				it "should have a proper flash" do
+					@methods[style].call
+					flash[:error].should_not be_nil
+				end # it
+			end # each style
 		end # when anonymous
 		
 	end # put updates

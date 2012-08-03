@@ -8,9 +8,7 @@
 		</div>
 		<div class="control-group">
 			<%= label_tag :shipping, "Shipping", :class => "control-label" %>
-			<select name="location[shipping]" style="width : 4em">
-				<%= options_for_select(['FAS','FOB','CNF','CIF','EXWORK']) %>
-			</select>
+			<%= select_tag( "location[shipping]", options_for_select(['FAS','FOB','CNF','CIF','EXWORK']), :style => "width : 4em") %>
 			<%= text_field_tag "location[name]", "", :placeholder => t(:name, :scope => [:views, :bids, :forms, :placeholders]), 
 				:id => "autocomplete-target-box", :class => "input-small" %>
 		</div>

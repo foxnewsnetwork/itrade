@@ -2,6 +2,16 @@
 <div class="span12-fluid">
 	<div class="page-header">
 		<h2><%= t(:item_info, :scope => [:views, :items, :forms, :show]) %></h2>
+		<% if current_user == @item.user %>
+			<%= content_tag( :button, 
+				:class => "btn btn-info", 
+				:id => "open-item-button" ,
+				:rel => "tooltip" ,
+				:title => t(:edit, :scope => [:views, :items, :forms, :labels] ) ,
+				:placement => "top" ) do %>
+				<%= content_tag( :i, "", :class => "icon-pencil icon-white") %>
+			<% end %>
+		<% end # if correct_user %>
 		<dl>
 			<% [:description , :quantity , :units , :material].each do |key, title| %>
 				<dt><%= t(key, :scope => [:views, :items, :show]) %></dt>

@@ -2,11 +2,12 @@
 <div class="page-header">
 	<h3>
 		<%= t(:elements, :scope => [:views, :elements, :show]) %>
-		<%= content_tag(:button, :class => "btn btn-info", :id => "new-element-button" ) do %>
-			<%= content_tag(:i, "", :class => "icon-picture icon-white") %>
-			<%= t(:element, :scope => [:views, :elements, :forms, :new]) %>
-		<% end if @item.user == current_user # content %>
 	</h3>
+	<%= content_tag(:button, :class => "btn btn-info", :id => "open-element-button", :placement => "right" ) do %>
+		<%= content_tag(:i, "", :class => "icon-plus-sign icon-white") %>
+		<%= content_tag(:i, "", :class => "icon-picture icon-white") %>
+		<% # t(:element, :scope => [:views, :elements, :forms, :new]) %>
+	<% end if @item.user == current_user # content %>
 </div>
 <%= render "elements/partials/index" unless @elements.nil? %>
 <%= t(:nothin_here_yet) if @elements.nil? || @elements.empty? %>

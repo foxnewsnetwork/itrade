@@ -133,7 +133,8 @@ en: {
 					material: "How is it packed?" ,
 					category: "Category" ,
 				  quantity: "Quantity" ,
-				  submit: "Go Next"
+				  submit: "Go Next" ,
+				  edit: "Edit Listing", 
 				} , # labels
 				new: { 
 					item : "New Item Listing" ,

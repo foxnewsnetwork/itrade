@@ -7,7 +7,7 @@
 			<%= f.file_field :picture, :accept => "image/gif,image/png, image/jpg, image/jpeg" %>
 			<%= f.label :metadata, t(:metadata, :scope => [:views, :elements, :forms, :new]), :class => "control-label" %>
 			<%= f.text_field :metadata %>
-			<button type="submit" class="btn btn-primary"><%= t(:submit, :scope => [:views, :elements, :forms, :labels]) %></button>
 		</div>
+		<%= form_action_tag( :element ) %>
 	</fieldset>
 <% end %>
