@@ -3,7 +3,8 @@ module ControllerMacros
   def login_admin
     before(:each) do
       @request.env["devise.mapping"] = Devise.mappings[:admin]
-      sign_in Factory(:admin) # Using factory girl as an example
+      @current_user = Factory(:user, :admin => true)
+      sign_in @current_user
     end # before each
   end
 

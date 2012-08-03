@@ -4,6 +4,8 @@ Factory.sequence :company do |n|
 	Faker::Company.name
 end # company
 
+
+
 Factory.sequence :shipping do |n|
 	['EXWORKS','FAS','FOB','CNF','CIF'][n%5]
 end # shipping
@@ -39,6 +41,14 @@ end
 Factory.sequence :random_string do |n|
   (0..55).map { |x| ("a".."z").map { |y| y }[rand(26)] }.join
 end
+
+Factory.sequence :random_hash do |n|
+	output = {}
+	(1 + rand(24)).times do |k|
+		output["field#{k}".to_sym] = "entry_number#{k}"
+	end # times k
+	output
+end # random_hash
 
 Factory.sequence :city do |n|
 	["Springfield","Berkeley","Los Angeles","Palo Alto","Fagville"][rand(5)]
@@ -137,3 +147,13 @@ Factory.sequence :location do |n|
 	:shipping => Factory.next(:shipping)
 }
 end # location
+
+Factory.define :category do |category|
+	category.name Factory.next(:random_string)
+end # category
+
+Factory.sequence :category do |n|
+{ 
+	:name => Factory.next(:random_string)
+}
+end # category

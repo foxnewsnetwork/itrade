@@ -13,7 +13,7 @@ class Category < ActiveRecord::Base
   attr_accessible :name
   
   # relationships
-  has_many :children, :class_name => "Category", :foreign_key => :parent_id
+  has_many :children, :class_name => "Category", :foreign_key => :parent_id, :dependent => :destroy
   belongs_to :parent, :foreign_key => :parent_id, :class_name => "Category"
   
 	def spawn( child_data = nil )

@@ -13,8 +13,15 @@ module UsersHelper
 	
 	def filter_anonymous_users
   	unless user_signed_in?
-	  	flash[:notice] = t(:require_login)
+	  	flash[:notice] = t(:require_login, :scope => [:helpers, :users])
 	  	redirect_to new_user_session_path
 	  end # user_signed_in?
   end # filter_anonymouse_users
+  
+  def filter_regular_users
+  	unless user_signed_in? && current_user.admin
+  		flash[:error] = t(:require_admin, :scope => [:helpers, :users])
+  		redirect_to root_path
+  	end # unless 
+  end # filter_regular_users
 end # UserHelpers
