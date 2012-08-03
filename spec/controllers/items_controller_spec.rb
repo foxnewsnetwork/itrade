@@ -1,6 +1,44 @@
 require 'spec_helper'
 require "factories"
 describe ItemsController do
+	describe "index parameters" do
+		before(:each) do
+			@methods = {
+				:vanilla => lambda { |c, t| get :index, :category => c, :type => t }, 
+				:ajax => lambda { |c, t| xhr :get , :index, :category => c, :type => t }
+			} # methods
+			@user = User.create Factory.next(:user)
+		end # before each
+		[:plastic, :metal, :paper].each do |category|
+			[:hdpe, :pp, :ldpe, :pet].each do |type|
+				[ :vanilla, :ajax ].each do |style|
+					context "categorized search for #{type} in #{category}" do
+						subject { assigns(:items) }
+						before(:each) do
+							(1 + rand(7)).times do
+								(@good_items ||= []) << Factory(:item, :user => @user, :category => category, :material_type => type)
+								(@bad_items ||= []) << Factory(:item, 
+									:user => @user, 
+									:category => category == :paper ? :plastic : :paper, 
+									:material_type => type == :hdpe ? :pp : :hdpe )
+							end # 25 times
+							@methods[style].call category, type
+						end # before each
+						it "should show all #{category} that are #{type}" do
+							should eq @good_items
+						end # it
+						it "should not have anything else" do
+							items = assigns(:items)
+							@bad_items.each do |bad|
+								items.should_not include bad
+							end # each bad
+						end # it
+					end # categorized search
+				end # each style
+			end # each type
+		end # each category
+	end # index parameters
+
 	describe "GET requests" do
 		before(:each) do
 			@user = User.create Factory.next(:user)

@@ -2,22 +2,23 @@
 #
 # Table name: items
 #
-#  category    :string(255)      default("plastic"), not null
-#  created_at  :datetime         not null
-#  description :text
-#  id          :integer          not null, primary key
-#  location_id :integer
-#  material    :string(255)
-#  quantity    :integer          default(0)
-#  title       :string(255)      default("No title")
-#  units       :string(255)      default("kg")
-#  updated_at  :datetime         not null
-#  user_id     :integer
+#  category      :string(255)      default("plastic"), not null
+#  created_at    :datetime         not null
+#  description   :text
+#  id            :integer          not null, primary key
+#  location_id   :integer
+#  material      :string(255)
+#  material_type :string(255)
+#  quantity      :integer          default(0)
+#  title         :string(255)      default("No title")
+#  units         :string(255)      default("kg")
+#  updated_at    :datetime         not null
+#  user_id       :integer
 #
 
 class Item < ActiveRecord::Base
   # attributes
-  attr_accessible :description, :quantity, :title, :units, :location_id, :material, :category
+  attr_accessible :description, :quantity, :title, :units, :location_id, :material, :category, :material_type
   
   # Relationships
   has_many :bids, :dependent => :destroy

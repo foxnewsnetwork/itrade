@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120722190046) do
+ActiveRecord::Schema.define(:version => 20120802223924) do
 
   create_table "bids", :force => true do |t|
     t.integer  "item_id",                                                       :null => false
@@ -39,16 +39,17 @@ ActiveRecord::Schema.define(:version => 20120722190046) do
   end
 
   create_table "items", :force => true do |t|
-    t.integer  "quantity",    :default => 0
-    t.string   "units",       :default => "kg"
-    t.string   "title",       :default => "No title"
+    t.integer  "quantity",      :default => 0
+    t.string   "units",         :default => "kg"
+    t.string   "title",         :default => "No title"
     t.text     "description"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.integer  "user_id"
     t.string   "material"
-    t.string   "category",    :default => "plastic",  :null => false
+    t.string   "category",      :default => "plastic",  :null => false
     t.integer  "location_id"
+    t.string   "material_type"
   end
 
   add_index "items", ["user_id", "id"], :name => "index_items_on_user_id_and_id", :unique => true

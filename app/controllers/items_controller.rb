@@ -17,7 +17,13 @@ class ItemsController < ApplicationController
 	
 	def index
 		# TODO: show less, paginate, or do something here
-		@items = Item.limit(25)
+		[:category, :type].each do |term|
+			(@terms ||= {})[term == :type ? :material_type : term] = params[term] unless params[term].nil?
+		end # each term
+		@items ||= Item.where( @terms ) unless @terms.nil? || @terms.empty?
+		@items ||= Item.order("created_at DESC").limit(20)
+		@categories = [:plastic, :metal, :paper]
+		@types = [:hdpe, :ldpe, :pp, :pet]
 		@title = "Listing Index"
 		respond_to do |format|
 			format.html

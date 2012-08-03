@@ -68,6 +68,9 @@ Factory.define :item do |item|
 	item.quantity rand(500)
 	item.units Factory.next( :units )
 	item.association :user
+	item.material Factory.next(:random_string)
+	item.category "plastic"
+	item.material_type [:hdpe, :ldpe, :pp, :pet][rand(4)].to_s
 end # item
 
 Factory.sequence :item do |n|
@@ -76,6 +79,9 @@ Factory.sequence :item do |n|
 	:description => Factory.next( :random_string ) ,
 	:quantity => rand( 500 ),
 	:units => Factory.next( :units ) ,
+	:material => Factory.next(:random_string) ,
+	:category => "plastic" ,
+	:material_type => [:hdpe, :ldpe, :pp, :pet][rand(4)].to_s
 	}
 end # item
 
