@@ -4,8 +4,8 @@
 		<!-- item search section -->
 		<div class="span12 well">
 			<%= form_tag items_path, :class => "form-inline", :method => "get", :remote => true, :id => "item_search_form" do %>
-				<%= select_tag "category", options_for_select(@categories), :id => "item_search_category" %>
-				<%= select_tag "type", options_for_select(@types), :id => "item_search_type" %>
+				<%= select_tag "category", options_for_select(@categories.map { |c| c.name }), :id => "item_search_category" %>
+				<%= select_tag "type", options_for_select(@types.map { |c| c.name }), :id => "item_search_type" %>
 				<%= ajax_submit_tag("item_search_form", :class => "btn btn-info") do %>
 					<%= content_tag(:i, "", :class => "icon-search icon-white") %>
 				<% end # button %>
@@ -16,3 +16,31 @@
 		<%= render "items/partials/index" %> 
 	</div>
 </div>
+
+<script type="text/javascript">
+	$(function() { 
+		var getkittens = function(id, target) { 
+			$.get("<%= categories_path %>" + (id==0?"":"/"+id) + ".json", function(data) { 
+				var c = undefined;
+				if ( id == 0 ) { 
+					c = data['categories'];
+				} // if root
+				else { 
+					c = data['children'];
+				}  // else
+				var output = "";
+				for( var k = 0; k < c.length; k++ ) { 
+					var i = c[k];
+					output += "<option value='" + i['name'] + "' title='" + i['id'] + "' id='cat-option-" + i['name'] + "'>" + i['name'] + "</option>";
+				} // for k
+				$(target).html(output);
+			} ); // ajax get
+		}; // getkittens
+		getkittens(0, "#item_search_category");
+		$("#item_search_category").click( function() {
+			var id = $("#cat-option-" + $(this).val() ).attr("title");
+			getkittens(id, "#item_search_type");
+		} ); // click callback
+	} ); // jquery ready
+</script>
+

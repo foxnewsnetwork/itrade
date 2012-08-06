@@ -13,7 +13,7 @@
 			<% end %>
 		<% end # if correct_user %>
 		<dl>
-			<% [:description , :quantity , :units , :material].each do |key, title| %>
+			<% [:description , :quantity , :units , :material, :category, :material_type].each do |key, title| %>
 				<dt><%= t(key, :scope => [:views, :items, :show]) %></dt>
 				<dd><%= @item[key].nil? ? t(:unknown) : @item[key] %></dd>
 			<% end # each key %>

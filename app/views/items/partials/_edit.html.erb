@@ -1,5 +1,5 @@
 <!-- item edit form -->
-<%= form_for @item, :method => method, :remote => true do |f| %>
+<%= form_for @item, :method => method, :remote => remote do |f| %>
 	<fieldset>
 		<legend><%= t(:item, :scope => [:views, :items, :forms, :new]) %></legend>
 		<div class="control-group">
@@ -7,8 +7,10 @@
 				<%= f.label t(tag, :scope => [:views, :items, :forms, :labels]), :class => "control-label" %>
 				<%= f.text_field tag, :value => "", :placeholder => t(tag, :scope => [:views, :items, :forms, :placeholders]) %>
 			<% end %>
-			<%= f.label :category, :class => "control-label" %>
-			<%= f.select :category, options_for_select(['plastic scraps','waste paper','regular products'].map { |x| [x,x] }) %>
+			<%= f.label t(:category, :scope => [:views, :items, :forms, :labels]), :class => "control-label" %>
+			<%= f.select :category, "" %>
+			<%= f.label t(:material_type, :scope => [:views, :items, :forms, :labels]), :class => "control-label" %>
+			<%= f.select :material_type, "" %>
 			<div class="inline">
 				<%= f.label :quantity, :class => "control-label" %>
 				<%= f.number_field :quantity %>
@@ -18,3 +20,33 @@
 		</div>
 	</fieldset>
 <% end %>
+
+<script type="text/javascript">
+	$(function() { 
+		var getchildcats = function(id) { 
+			$.get( '<%= categories_path %>/' + id + ".json", function(data) { 
+					var output = "";
+					var cats = data['children'];
+					for( var k = 0; k < cats.length; k++ ) { 
+						var i = cats[k];
+						output += "<option value='" + i['name'] + "'>" + i['name'] + "</option>";
+					} // for k
+					$("#item_material_type").html(output);
+				} ); // get children
+		}; // getchildcats
+		$.get( '<%= categories_path %>.json', function(data) { 
+			var output = "";
+			var cats = data['categories'];
+			for( var k = 0; k < cats.length; k++ ) { 
+				var i = cats[k];
+				output += "<option value='" + i['name'] + "' title='" + i['id'] + "' id='cat-option-" + i['name'] + "'>" + i['name'] + "</option>";
+			} // for k
+			$("#item_category").append(output);
+			getchildcats(cats[0]['id']);
+			$("#item_category").click( function() { 
+				var id = $("#cat-option-" + $(this).val()).attr("title");
+				getchildcats(id);				
+			} ); // click callback
+		} ); // get roots
+	} ); // document.ready
+</script>

@@ -22,8 +22,8 @@ class ItemsController < ApplicationController
 		end # each term
 		@items ||= Item.where( @terms ) unless @terms.nil? || @terms.empty?
 		@items ||= Item.order("created_at DESC").limit(20)
-		@categories = [:plastic, :metal, :paper]
-		@types = [:hdpe, :ldpe, :pp, :pet]
+		@categories = Category.roots
+		@types = @categories.first.children unless @categories.empty?
 		@title = "Listing Index"
 		respond_to do |format|
 			format.html

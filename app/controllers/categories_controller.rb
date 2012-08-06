@@ -45,4 +45,13 @@ class CategoriesController < ApplicationController
   		format.json { render "show", :handler => [:json_builder] }
   	end # respond_to
   end # show
+  
+  def index
+  	@categories = Category.roots
+  	respond_to do |format|
+  		format.js
+  		format.html { render :nothing => true }
+  		format.json { render "index", :handler => [:json_builder] }
+  	end # respond_to
+  end # index
 end # CategoriesController

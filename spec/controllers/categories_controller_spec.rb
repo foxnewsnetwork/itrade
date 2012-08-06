@@ -2,6 +2,36 @@ require 'spec_helper'
 require 'factories'
 
 describe CategoriesController do
+	describe "index" do
+		before(:each) do
+			10.times do
+				(@roots ||= []) << Factory(:category)
+				@methods = { 
+					:vanilla => lambda { get "index", :format => "json" } ,
+					:ajax => lambda { xhr :get, "index", :format => "json" }
+				} # methodds
+			end # 10 times
+		end # before each
+		[:vanilla, :ajax].each do |style|
+			describe "when #{style}" do
+				before(:each) { @methods[style].call }
+				it { response.should be_success }
+				it "should present the roots" do
+					data = MultiJson.load(response.body)
+					@roots.each do |root|
+						match = false
+						data['categories'].each do |root_data|
+							if root_data[:id] == root[:id]
+								if root_data[:name] == root[:name]
+									match = true
+								end # match name
+							end # match id
+						end # each root_data
+					end # each root
+				end # it
+			end # when style
+		end # each style
+	end # index
 	describe "show" do
 		before(:each) do
 			@root = Factory(:category)
