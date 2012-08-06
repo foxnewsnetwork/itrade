@@ -86,6 +86,8 @@ GEM
       jquery-rails
       railties (>= 3.1.0)
     json (1.7.3)
+    json_builder (3.1.5)
+      activesupport (>= 2.0.0)
     libwebsocket (0.1.5)
       addressable
     mail (2.4.4)
@@ -191,6 +193,8 @@ DEPENDENCIES
   faker (~> 1.0.1)
   jquery-rails
   jquery-ui-rails
+  json_builder
+  multi_json
   mysql2
   paperclip (~> 3.0.0)
   rails (= 3.2.6)

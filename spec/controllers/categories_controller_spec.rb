@@ -2,6 +2,41 @@ require 'spec_helper'
 require 'factories'
 
 describe CategoriesController do
+	describe "show" do
+		before(:each) do
+			@root = Factory(:category)
+			10.times { (@children ||= []) << @root.spawn( Factory.next(:category) ) }
+			@methods = { 
+				:vanilla => lambda { get :show, :id => @root.id, :format => "json" }, 
+				:ajax => lambda { xhr :get, :show, :id => @root.id, :format => "json" } 
+			}
+		end # before each
+		[:vanilla, :ajax].each do |style|
+			describe "when #{style}" do
+				before(:each) { @methods[style].call }
+				it "should be successful" do
+					response.should be_success
+				end # it
+				it "should have the correct data" do
+					data = MultiJson.load( response.body )
+					[:id, :name, :parent_id].each do |key|
+						data[key.to_s].should eq @root[key]
+					end # each key
+					data["children"].each do |child|
+						match = false
+						@children.each do |kid|
+							if child["id"] == kid.id
+								if child["name"] == kid.name
+									match = true
+								end # if match name
+							end # if match id
+						end # each kid
+						match.should be_true
+					end # each child
+				end # it
+			end # when style
+		end # each style
+	end # show
 	describe "logged in admin" do
 		login_admin
 		before(:each) { @root = Factory(:category) }

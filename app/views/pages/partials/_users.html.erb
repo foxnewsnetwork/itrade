@@ -1,0 +1,24 @@
+<!-- admin users page -->
+<table class="table-striped">
+	<thead><tr>
+		<% [:email, :company, :phone, :kill].each do |field| %>
+			<th><%= field.to_s %></th>
+		<% end # each field %>
+	</tr></thead>
+	<tbody>
+		<% @users.each do |user| %>
+			<tr>	
+				<% [:email, :company, :phone].each do |field| %>
+					<td><%= (field == :phone ? number_to_phone(user[field], :area_code => true) : user[field] ) %></td>
+				<% end # each field %>
+				<td>
+					<%= link_to( user_path( user ), :method => :delete, :remote => true, :class => "btn btn-danger btn-mini" ) do %>
+						<%= content_tag( :i, "", :class => "icon-remove icon-white") %>
+					<% end # kill %>
+				</td>
+			</tr>
+			
+		<% end # each user%>	
+	</tbody>
+</table>
+		

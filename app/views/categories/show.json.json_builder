@@ -1,0 +1,8 @@
+id @category.id
+name @category.name
+parent_id @category.parent_id
+children @children do |child|
+	id child.id
+	name child.name
+	parent_id child.parent_id
+end

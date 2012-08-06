@@ -1,0 +1,16 @@
+<!-- admin categories partial -->
+<% pid = defined?(parent) ? parent.id : 0 %>
+<ul id="parent-category-<%= pid %>">
+	<% categories.each do |category| %>
+		<%= render "pages/partials/entry", :category => category %>
+	<% end # each category %>
+	<li>
+		<%= form_tag categories_path, :id => "new_cat_#{pid}", :remote => true do %>
+			<%= hidden_field_tag "category[parent_id]", pid, :value => pid %>
+			<%= text_field_tag "category[name]", "" %>
+			<%= ajax_submit_tag( "new_cat_#{pid}", :class => "btn btn-mini" ) do %>
+				<%= content_tag(:i, "", :class => "icon-ok") %>
+			<% end # submit %>
+		<% end # form_tag %>
+	</li>
+</ul>

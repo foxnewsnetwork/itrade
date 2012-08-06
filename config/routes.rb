@@ -1,6 +1,6 @@
 Itrade::Application.routes.draw do
 
-	resources :categories, :only => [:create, :destroy]
+	resources :categories, :only => [:create, :destroy, :show]
 	devise_for :users
 	resources :users do
 		resources :locations, :only => [:create, :destroy, :update]
@@ -17,9 +17,9 @@ Itrade::Application.routes.draw do
   	resources :locations, :only => [:create, :destroy, :update]
   	resources :bids, :only => [:create, :update, :destroy, :show, :new]
   	resources :elements, :only => [:create, :destroy]
-  end # resources items
-  
+  end # resources items  
 	
+	match "/admin", :to => "pages#admin"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

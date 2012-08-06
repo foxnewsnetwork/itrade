@@ -5,7 +5,8 @@ gem "thin", '~> 1.4.1'
 gem "devise", "~> 2.1.2"
 gem "paperclip", "~> 3.0.0"
 gem "aws-sdk"
-
+gem "json_builder"
+gem 'multi_json'
 
 group :development do
   gem 'rspec-rails' , '2.11.0'

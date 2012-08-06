@@ -33,6 +33,7 @@ module PagesHelper
 							$('##{id}_submit').tooltip( 'hide' );
 						}, 1500 ); // setTimeout
 						$('##{id}').submit();
+						$('##{id}')[0].reset();
 						return false;
 					} ); // click callback
 				} ); //  document.ready

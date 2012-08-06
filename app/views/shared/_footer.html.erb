@@ -12,6 +12,9 @@
 							<%= link_to tag, "#" %> <span class="divider">/</span>
 						</li>
 					<% end %>
+					<% if user_signed_in? && current_user.admin %>
+						<li><%= link_to "admin", "/admin" %></li>
+					<% end %>
 					<li class="active">
 						<%= image_tag("http://i299.photobucket.com/albums/mm281/foxnewsnetwork/minilogo.png") %>
 					</li>

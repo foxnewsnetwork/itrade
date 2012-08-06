@@ -1,0 +1,9 @@
+<!-- entry tag -->
+<%= content_tag(:div, :id => "category-#{category.id}") do %>
+	<li>
+		<%= link_to category.name, category_path(category), :method => "get", :remote => true %>
+		<%= link_to( category_path(category), :method => "delete", :remote => true) do %>
+			<%= content_tag(:i,"", :class => "icon-remove") %>
+		<% end # delete %>
+	</li>
+<% end # div tag %>

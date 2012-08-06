@@ -1,0 +1,3 @@
+$("#category-<%= @category.id %>").append( '<%= escape_javascript(
+	render( "pages/partials/categories", :categories => @children, :parent => @category ) 
+) %>' );

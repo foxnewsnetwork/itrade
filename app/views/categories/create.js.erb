@@ -1,0 +1,4 @@
+<% pid = @parent.nil? ? 0 : @parent.id %>
+$("#parent-category-<%= pid %>").prepend('<%= escape_javascript( 
+	render("pages/partials/entry", :category => @category)
+) %>');

@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_filter :filter_regular_users
+  before_filter :filter_regular_users, :only => [:create, :destroy]
   def create
   	if params[:category].nil? 
   		flash[:error] = t(:error, :scope => [:controllers, :categories, :create])
@@ -14,16 +14,35 @@ class CategoriesController < ApplicationController
 	  		flash[:error] = t(:error, :scope => [:controllers, :categories, :create])
 	  	end # if successful save
   	end # if bad params
-  	render :nothing => true
+  	respond_to do |format|
+  		format.js
+  		format.html { render :nothing => true }
+  	end # respond_to
   end # create
 
   def destroy
   	if params[:id].nil?
   		flash[:error] = t(:error, :scope => [:controllers, :categories, :destroy])
   	else
-  		Category.find_by_id(params[:id]).destroy
+  		@category = Category.find_by_id(params[:id]).destroy
   		flash[:success] = t(:success, :scope => [:controllers, :categories, :destroy])
   	end # if bad params
-  	render :nothing => true
+  	respond_to do |format|
+  		format.js
+  		format.html { render :nothing => true }
+  	end # respond_to
   end # destroy
+  
+  def show
+  	@category = Category.find_by_id(params[:id])
+  	if @category.nil?
+  		render "public/404"
+  		return
+  	end # if nil
+  	@children = @category.children
+  	respond_to do |format|
+  		format.js
+  		format.json { render "show", :handler => [:json_builder] }
+  	end # respond_to
+  end # show
 end # CategoriesController
