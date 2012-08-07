@@ -23,7 +23,7 @@ class ItemsController < ApplicationController
 		@items ||= Item.where( @terms ) unless @terms.nil? || @terms.empty?
 		@items ||= Item.order("created_at DESC").limit(20)
 		@categories = Category.roots
-		@types = @categories.first.children unless @categories.empty?
+		@types = @categories.first.children.map { |x| x.name } unless @categories.empty?
 		@title = "Listing Index"
 		respond_to do |format|
 			format.html

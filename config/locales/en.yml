@@ -120,6 +120,7 @@ en: {
 				category: "Category",
 				quantity: "Quantity" ,
 				units: "Units" ,
+				material_type: "Type" ,
 			} , # show
 			forms: {
 				placeholders: {

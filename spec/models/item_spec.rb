@@ -19,6 +19,7 @@
 require 'spec_helper'
 require "factories"
 describe Item do
+	
   describe "Item creation" do
   	it "should have proper default values" do
   		item = Item.create

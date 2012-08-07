@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803183253) do
+ActiveRecord::Schema.define(:version => 20120806193115) do
 
   create_table "bids", :force => true do |t|
     t.integer  "item_id",                                                       :null => false
@@ -75,6 +75,18 @@ ActiveRecord::Schema.define(:version => 20120803183253) do
     t.datetime "updated_at",                        :null => false
     t.string   "shipping",   :default => "EXWORKS", :null => false
   end
+
+  create_table "statuses", :force => true do |t|
+    t.string   "name",       :default => "incomplete", :null => false
+    t.string   "effect"
+    t.integer  "item_id",                              :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+  end
+
+  add_index "statuses", ["item_id", "name"], :name => "index_statuses_on_item_id_and_name", :unique => true
+  add_index "statuses", ["item_id"], :name => "index_statuses_on_item_id"
+  add_index "statuses", ["name"], :name => "index_statuses_on_name"
 
   create_table "users", :force => true do |t|
     t.string   "company",                :default => "",    :null => false

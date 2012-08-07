@@ -4,8 +4,8 @@
 		<!-- item search section -->
 		<div class="span12 well">
 			<%= form_tag items_path, :class => "form-inline", :method => "get", :remote => true, :id => "item_search_form" do %>
-				<%= select_tag "category", options_for_select(@categories.map { |c| c.name }), :id => "item_search_category" %>
-				<%= select_tag "type", options_for_select(@types.map { |c| c.name }), :id => "item_search_type" %>
+				<%= select_tag "category", options_for_select(@categories.map { |x| x.name }), :id => "item_search_category" %>
+				<%= select_tag "type", (@types.nil? ? "" : options_for_select(@types)), :id => "item_search_type" %>
 				<%= ajax_submit_tag("item_search_form", :class => "btn btn-info") do %>
 					<%= content_tag(:i, "", :class => "icon-search icon-white") %>
 				<% end # button %>

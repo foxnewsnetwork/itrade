@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
   include CategoriesHelper
   def after_sign_in_path_for(resource)
     # user_path resource # <- Path you want to redirect the user to.
-    :back
+
+
+
+    	user_path resource
+
   end # after_sign_in_path_for
 end # ApplicationController
