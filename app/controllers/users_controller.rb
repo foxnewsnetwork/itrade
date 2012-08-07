@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_filter :filter_anonymous_users, :only => [:destroy, :update, :edit]
+  before_filter :filter_wrong_users, :only => [:show]
   
   def show
   	@user = User.find_by_id( params[:id] )

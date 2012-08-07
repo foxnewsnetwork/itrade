@@ -6,11 +6,19 @@ describe UsersController do
 		before(:each) do
 			@user = User.create Factory.next(:user)
 		end # before
-		it "should be success" do
+		it "should be redirect" do
 			get "show", :id => @user
-			response.should be_success
+			response.should redirect_to root_path
 		end # it
+		describe "correct in" do
+			login_user
+			it "should succeed" do
+				get "show", :id => @current_user
+				response.should be_success
+			end # it
+		end # logged in
 		it "should show a 404 page" do
+			pending "THIS TEST HAS BEEN DEFUNCT"
 			get "show", :id => 23042034230492
 			response.should render_template "layouts/application"
 		end # it

@@ -18,6 +18,13 @@ module UsersHelper
 	  end # user_signed_in?
   end # filter_anonymouse_users
   
+  def filter_wrong_users
+  	if is_wrong?( current_user )
+  		flash[:notice] = t(:require_correct, :scope => [:helpers, :users])
+  		redirect_to root_path
+  	end # if wrong
+  end # filter_wrong_users
+  
   def filter_regular_users
   	unless user_signed_in? && current_user.admin
   		flash[:error] = t(:require_admin, :scope => [:helpers, :users])
