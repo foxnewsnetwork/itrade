@@ -182,7 +182,8 @@ en: {
 				price: "Offer Price" ,
 				shipping: "Price Terms" ,
 				city: "Location",
-				nothing_here_yet: "Nothing here yet!"
+				nothing_here_yet: "Nothing here yet!" ,
+				sell_to : "Sell?" ,
 			} , # show
 			forms: {
 				placeholders: {

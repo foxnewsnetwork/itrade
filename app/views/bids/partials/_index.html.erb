@@ -5,11 +5,14 @@
 			<% [:price,:shipping,:city].each do |title| %>
 				<th><%= t(title, :scope => [:views, :bids, :show]) %></th>
 			<% end # each title %>
+			<% if current_user == @item.user %>
+				<th><%= t(:sell_to, :scope => [:views, :bids, :show]) %></th>
+			<% end # if correct user %>
 		</tr>
 	</thead>
 	<tbody>
 		<% @bids.each do |bid| %>
-			<a href="<%= item_bid_path [@item, bid] %>" rel="popover" data-content="stuff" data-original-title="title">
+			
 			<tr>
 				<% [:offer].each do |field| %>
 					<td><%= bid[field] %> <%= bid[:units] %></td>
@@ -23,8 +26,13 @@
 						<% end # if bad location %>
 					</td>
 				<% end # each field %>
+				<td>
+					<%= link_to( item_path(@item) + "/sold_to/#{bid.user_id}", :method => "put" ,
+						:class => "btn btn-mini btn-success" ) do %>
+						<%= content_tag(:i, "", :class => "icon-ok icon-white") %> []->$
+					<% end unless bid.user_id == @item.user_id || current_user != @item.user %>
+				</td>
 			</tr>
-			</a>
 		<% end # each bid %>
 		<% if @bids.nil? || @bids.empty? %>
 			<tr><td><%= t(:nothing_here_yet, :scope => [:views, :bids, :show] ) %></tr></td>

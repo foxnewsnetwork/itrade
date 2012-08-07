@@ -79,6 +79,12 @@ class ItemsController < ApplicationController
 		else
 			flash[:error] = t( :fail_update, :scope => [:controls, :items, :flash] )
 		end # if success update
+		unless params[:status].nil? || current_user != @item.user	
+			p = params[:status]
+			user = User.find_by_id(p[:sold_to])
+			@item.sold_to user unless user.nil?
+			@item.recurring( p[:recurring] ) unless p[:recurring].nil?
+		end # no status updates
 		redirect_to edit_item_path( @item )
 	end # update
 	

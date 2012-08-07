@@ -1,6 +1,24 @@
 require 'spec_helper'
 require "factories"
 describe ItemsController do
+	describe "status updates" do
+		describe "correct user" do
+			login_user
+			before(:each) do
+				@user = User.create Factory.next(:user)
+				@item = Factory(:item, :user => @current_user)
+				@status = { 
+					:sold_to => @user.id ,
+					:recurring => 12.days
+				} # status
+			end # before each
+			it "should mark the item status" do
+				put :update, :id => @item, :status => @status
+				Item.find_by_id(@item).sold_to.should eq @user
+				Item.find_by_id(@item).recurring.should eq 12.days
+			end # it
+		end # correct user
+	end # status update
 	describe "index parameters" do
 		before(:each) do
 			@methods = {
