@@ -20,8 +20,14 @@ class ItemsController < ApplicationController
 		[:category, :type].each do |term|
 			(@terms ||= {})[term == :type ? :material_type : term] = params[term] unless params[term].nil?
 		end # each term
-		@items ||= Item.where( @terms ) unless @terms.nil? || @terms.empty?
-		@items ||= Item.order("created_at DESC").limit(20)
+		@raw_items ||= Item.where( @terms ) unless @terms.nil? || @terms.empty?
+		@raw_items ||= Item.order("created_at DESC").limit(20)
+		@raw_items.each do |item|
+			(@item_ids ||= []) << item
+		end # each item
+		@items = Status.where( :item_id => @item_ids, :name => "ready" ).map do |status|
+			@raw_items[@raw_items.index{ |r| r.id == status.item_id }]
+		end # status
 		@categories = Category.roots
 		@types = @categories.first.children.map { |x| x.name } unless @categories.empty?
 		@title = "Listing Index"
@@ -85,7 +91,7 @@ class ItemsController < ApplicationController
 			@item.sold_to user unless user.nil?
 			@item.recurring( p[:recurring] ) unless p[:recurring].nil?
 		end # no status updates
-		redirect_to edit_item_path( @item )
+		redirect_to item_path( @item )
 	end # update
 	
 	def destroy

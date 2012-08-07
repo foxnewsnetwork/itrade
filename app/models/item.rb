@@ -73,7 +73,7 @@ class Item < ActiveRecord::Base
   	def prepare_auxiliaries
   		# TODO : make the batch deletion less resource intensive
   		# NOTE: Do we really even need to do this?
-  		self.bids.each { |bid| bid.destroy }
+  		# self.bids.each { |bid| bid.destroy }
   		
   		# Check the status
   		ready_flag = true

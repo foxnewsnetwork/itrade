@@ -136,6 +136,7 @@ en: {
 				  quantity: "Quantity" ,
 				  submit: "Go Next" ,
 				  edit: "Edit Listing", 
+				  material_type : "Type" ,
 				} , # labels
 				new: { 
 					item : "New Item Listing" ,
