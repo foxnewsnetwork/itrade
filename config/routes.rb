@@ -1,7 +1,7 @@
 Itrade::Application.routes.draw do
 
 	resources :categories, :only => [:create, :destroy, :show, :index]
-	devise_for :users
+	devise_for :users, :controllers => { :sessions => "sessions" }
 	resources :users do
 		resources :locations, :only => [:create, :destroy, :update]
 	end # resources

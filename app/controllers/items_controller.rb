@@ -38,13 +38,10 @@ class ItemsController < ApplicationController
 	end # index
 	
 	def new
+		@title = "New Listing"
 		if user_signed_in?
-			@title = "New Listing"
 			@item = Item.new
-		else
-			redirect_to new_user_session_path
-			flash[:notice] = t( :fail_item_new )
-		end # if signed in 
+		end # user_signed_in
 	end # new
 	
 	def edit

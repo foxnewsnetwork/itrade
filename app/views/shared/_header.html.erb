@@ -45,6 +45,6 @@
 </header>
 <% unless user_signed_in? %>
 	<%= dialog_tag( "dialog-login-user-header", :open => "open-user-button", :close => "close-login-button" ) do %>
-		<%= render "users/partials/login", :remote => false %>
+		<%= render "users/partials/login", :remote => true %>
 	<% end # dialog %>
 <% end # signed in %>

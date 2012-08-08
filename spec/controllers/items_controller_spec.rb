@@ -76,8 +76,7 @@ describe ItemsController do
 		end # it
 		it "should redirect to login" do
 			get "new"
-			response.should redirect_to new_user_session_path
-			flash[:notice].should_not be_nil
+			response.should be_success
 		end # it
 		it "should redirect to login" do
 			get "edit", :id => @item

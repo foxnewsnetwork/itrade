@@ -1,5 +1,6 @@
 <!-- item edit form -->
-<%= form_for @item, :method => method, :remote => remote do |f| %>
+
+<%= form_for (@item.nil? ? Item.new : @item), :method => method, :remote => remote do |f| %>
 	<fieldset>
 		<legend><%= t(:item, :scope => [:views, :items, :forms, :new]) %></legend>
 		<div class="control-group">
@@ -16,13 +17,28 @@
 				<%= f.number_field :quantity %>
 				<%= f.select :units, options_for_select(['grams','kilograms','pounds','tons','metric tons'].map { |x| [x,x] } ) %>
 			</div>
-			<%= form_action_tag(:item) %>
+			<div id="new-items-form-actions">
+				<% unless @item.nil? %>
+					<%= form_action_tag(:item) %>
+				<% else %>
+					<%= content_tag(:button, :class => "btn btn-info", :id => "new_item_sign_in_button") do %>
+						<%= content_tag(:i, "", :class => "icon-user icon-white") %>
+					<% end # button tag %>
+				<% end # no item %>
+			</div>			
 		</div>
 	</fieldset>
 <% end %>
 
 <script type="text/javascript">
 	$(function() { 
+		// items stuff
+		$("#new_item_sign_in_button").click( function( ) { 
+			$("#dialog-login-user-header").dialog("open");
+			return false;
+		} ); // new item sign in button
+	
+		// Categories
 		var getchildcats = function(id) { 
 			$.get( '<%= categories_path %>/' + id + ".json", function(data) { 
 					var output = "";

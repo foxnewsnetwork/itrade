@@ -1,0 +1,4 @@
+$("#dialog-login-user-header").dialog("close");
+$("#header-container").html('<%= escape_javascript( render "shared/header" )%>');
+$("#flash-container").html('<%= escape_javascript( render "shared/flash", :flash => flash )%>');
+$("#new-items-form-actions").html('<%= escape_javascript( form_action_tag(:item) ) %>' );
