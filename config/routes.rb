@@ -15,7 +15,7 @@ Itrade::Application.routes.draw do
 	end # locations
   resources :items do
   	resources :locations, :only => [:create, :destroy, :update]
-  	resources :bids, :only => [:create, :update, :destroy, :show, :new]
+  	resources :bids, :only => [:create, :update, :destroy, :show, :new, :edit]
   	resources :elements, :only => [:create, :destroy]
   end # resources items  
 	

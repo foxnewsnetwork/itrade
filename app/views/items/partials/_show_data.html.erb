@@ -1,7 +1,6 @@
 <!-- show miscellanious data partial -->
-<div class="span12-fluid">
-	<div class="page-header">
-		<h2><%= t(:item_info, :scope => [:views, :items, :forms, :show]) %></h2>
+<div class="page-header">
+	<%= collapse_tag(:h3, t(:item_info, :scope => [:views, :items, :show]), :href => "#item-info" ) do %>
 		<% if current_user == @item.user %>
 			<%= content_tag( :button, 
 				:class => "btn btn-info", 
@@ -12,20 +11,14 @@
 				<%= content_tag( :i, "", :class => "icon-pencil icon-white") %>
 			<% end %>
 		<% end # if correct_user %>
-		<dl>
+		<dl class="dl-horizontal">
 			<% [:description , :quantity , :units , :material, :category, :material_type].each do |key, title| %>
 				<dt><%= t(key, :scope => [:views, :items, :show]) %></dt>
 				<dd><%= @item[key].nil? ? t(:unknown) : @item[key] %></dd>
 			<% end # each key %>
 		</dl>
-	</div>
+	<% end # collapse tag %>
 </div>
-<div class="span12-fluid">
-	<div class="page-header">
-		<h2><%= t(:bid_data, :scope => [:views, :bids, :forms, :show] ) %></h2>
-		<p><%= content_tag(:i, "", :class => "icon-flag" )%> <%= @bids.count %></p>
-		<% unless @bids.nil? || @bids.empty? %>
-			<p><%= t(:last_offer, :scope => [:views, :bids, :forms, :show] ) %> <%= @bids.last.offer %> <%= @bids.last.units %></p>
-		<% end %>
-	</div>
-</div>
+
+
+

@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :filter_anonymous_users, :only => [:destroy, :update, :edit]
-  before_filter :filter_wrong_users, :only => [:show]
+  before_filter :filter_anonymous_users, :only => [:destroy, :update, :edit, :show]
   
   def show
   	@user = User.find_by_id( params[:id] )
@@ -8,10 +7,15 @@ class UsersController < ApplicationController
   		render "public/404"
   		return
   	end # if nil
-  	@title = @user.company
   	@items = @user.items
-  	@location = @user.location
-  	@location ||= Location.new
+  	@title = @user.id
+  	@correct = false
+  	if current_user == @user || current_user.admin
+  		@correct = true
+			@title = @user.company
+			@location = @user.location
+			@location ||= Location.new
+  	end # correct_user
   end # show
 
   def index

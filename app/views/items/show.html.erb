@@ -5,15 +5,17 @@
 			<%= render "items/partials/show_title" %>	
 		</div>
 		<div class="row-fluid">
-			<div class="span4 well">
-				<%= render "items/partials/show_elements" %>
+			<% [[:elements, :data], [:price, :stats]].each do |meta| %>
+			<div class="span6 well">
+				<div class="row-fluid">
+					<% meta.each do |partial| %>
+						<div class="span12">
+							<%= render "items/partials/show_#{partial.to_s}" %>
+						</div>
+					<% end # each partial %>
+				</div>
 			</div>
-			<div class="span4 well">
-				<%= render "items/partials/show_price" %>
-			</div>
-			<div class="span4 well">
-				<%= render "items/partials/show_data" %>
-			</div>
+			<% end # each meta %>
 		</div>	
 	</div>
 </div>

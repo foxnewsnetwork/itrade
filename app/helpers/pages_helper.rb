@@ -1,5 +1,26 @@
 module PagesHelper
 
+	
+	# type is :button, :div, etc.
+	def collapse_tag(type, content = "", options = {}, &block)
+		thenumbers = rand(999999999)
+		link_to( "#collapse-num-#{thenumbers}" ) do
+			content_tag( type, content, options.merge(:id => "collapse-button-num-#{thenumbers}") )		
+		end + # content_tag
+		content_tag( :div, :id => "collapse-num-#{thenumbers}" ) { yield } +
+		content_tag( :script, :type => "text/javascript" ) do
+			%Q(
+				$(function() { 
+					$('#collapse-button-num-#{thenumbers}').collapse({ 'toggle' : true });
+					$('#collapse-num-#{thenumbers}').collapse('toggle');
+					$('#collapse-button-num-#{thenumbers}').click(function() { 
+						$('#collapse-num-#{thenumbers}').collapse('toggle');
+					} ); // click
+				} ); // document.ready
+			) # javascript
+		end # script_tag
+	end # collapse_tag	
+	
 	# options = { :open => id, :close => id, other stuff }
 	def dialog_tag(id, options, &block)
 		content_tag(:div, options.merge( :id => id ) ) { yield } +

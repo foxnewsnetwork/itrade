@@ -1,24 +1,15 @@
 <!-- show prices partial -->
-<div class="span12-fluid">
-	<div class="page-header">
-		<h2><%= t(:price_title, :scope => [:views, :items, :forms, :show]) %></h2>
-		<% if user_signed_in? %>
-				<%= content_tag(:button, :class => "btn btn-info", :id => "open-bid-button", :placement => "top") do %>
-					<%= content_tag(:i, "", :class => "icon-plus-sign icon-white") %>
-					<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
-					<% # t(:initial_price, :scope => [:views, :bids, :forms, :new]) %>
-				<% end # button tag %>
-		<% else # if signed in %>
-			<%= link_to(new_user_session_path, 
-				:class => "btn btn-warning", 
-				:rel => "popover", 
-				"data-original-title" => t(:help) ,
-				"data-content" => t(:signin, :scope => [:views, :shared, :warnings]) ) do %>
+<div class="page-header">
+	<% if @item.user == current_user && @bids.empty? %>
+			<%= content_tag(:button, :class => "btn btn-info", :id => "open-bid-button", :placement => "top") do %>
 				<%= content_tag(:i, "", :class => "icon-plus-sign icon-white") %>
 				<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
-				<% # t(:bid, :scope => [:views, :bids, :forms, :new]) %>
-			<% end %>
-		<% end # else not signed in %>
-		<%= render "bids/partials/index" %>
-	</div>
+				<%= t(:initial_price, :scope => [:views, :bids, :forms, :new]) %>
+			<% end # button tag %>
+	<% else %>
+		<h3><%= t(:bids, :scope => [:views, :bids, :show]) %></h3>
+	<% end # else not signed in %>
 </div>
+<%= render "bids/partials/index" %>
+
+

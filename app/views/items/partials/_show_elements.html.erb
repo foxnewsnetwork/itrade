@@ -1,13 +1,17 @@
 <!-- show elements partial -->
 <div class="page-header">
-	<h3>
-		<%= t(:elements, :scope => [:views, :elements, :show]) %>
-	</h3>
-	<%= content_tag(:button, :class => "btn btn-info", :id => "open-element-button", :placement => "right" ) do %>
-		<%= content_tag(:i, "", :class => "icon-plus-sign icon-white") %>
-		<%= content_tag(:i, "", :class => "icon-picture icon-white") %>
-		<% # t(:element, :scope => [:views, :elements, :forms, :new]) %>
-	<% end if @item.user == current_user # content %>
+	<% if @item.user == current_user %>
+		<%= content_tag(:button, :class => "btn btn-info", :id => "open-element-button", :placement => "right" ) do %>
+			<%= content_tag(:i, "", :class => "icon-plus-sign icon-white") %>
+			<%= content_tag(:i, "", :class => "icon-picture icon-white") %>
+			<%= t(:element, :scope => [:views, :elements, :forms, :new]) %>
+		<% end %>
+	<% else %>
+		<h3><%= t(:elements, :scope => [:views, :elements, :forms, :labels] ) %></h3>
+	<% end %>
 </div>
+
+
+
 <%= render "elements/partials/index" unless @elements.nil? %>
 <%= t(:nothin_here_yet) if @elements.nil? || @elements.empty? %>

@@ -6,8 +6,8 @@
 				<%= content_tag :div, :class => "page-header" do %>
 					<%= content_tag :h4 do %>
 						<%= content_tag :i, "", :class => "icon-user" %>
-						<%= link_to @user.company, user_path( @user ) %>     
-						<%= t(:this_is_you) if current_user == @user %>
+						<%= link_to (@correct ? @user.company : @user.id ), user_path( @user ) %>     
+						<%= t(:this_is_you) if @user == current_user %>
 					<% end # h4 %>
 				<% end # page-header %>
 			<% end # span4 fluid %>
@@ -17,7 +17,7 @@
 				<% left[:location]= "open-location-button" unless @location.valid? %>
 				<% left[:item] = "new-item-button" if @items.empty? %>
 				<%= render "shared/almost_complete", :done => done, :left => left %>
-			<% end if current_user == @user # span4 fluid %>
+			<% end if @correct # span4 fluid %>
 		<% end # span12 well %>
 	<% end # row-fluid %>
 	<%= content_tag :div, :class => "row-fluid" do %>
@@ -28,7 +28,7 @@
 					<%= content_tag(:i, "", :class => "icon-plus-sign icon-white" ) %>
 					<%= content_tag(:i, "", :class => "icon-tag icon-white" ) %>
 					<% # t(:item, :scope => [:views, :items, :forms, :new]) %>
-				<% end if current_user == @user %>
+				<% end if @correct %>
 			<% end # page-header %>
 			<%= content_tag :dl do %>
 				<% @items.each do |item| %>
@@ -38,7 +38,7 @@
 					<% end # dt %>
 					<%= content_tag :dd do %>
 						<%= content_tag :span, :class => "separator" do %>&raquo;<% end %>
-						<%= item.description.length > 75 ? item.description[0..74] + "..." : item.description %>
+						<%= (item.description.nil? || item.description.length < 75) ? item.description : item.description[0..74] + "..." %>
 					<% end # dd %>
 				<% end # each item %>
 			<% end # dl %>
@@ -46,7 +46,7 @@
 		<%= content_tag :div, :class => "span6 well" do %>
 			<%= content_tag :div, :class => "page-header" do %>
 				<%= t(:contact_info, :scope => [:views, :users, :show]) %>
-				<% if current_user == @user %>
+				<% if @corect %>
 					<%= content_tag(:button, :class => "btn", :id => "open-user-button" ) do %>
 						<%= content_tag(:i, "", :class => "icon-pencil") %>
 						<% # t(:edit_contact_info, :scope => [:views, :users, :show]) %>
@@ -63,22 +63,22 @@
 						<%= @user[key].blank? ? t(:unknown) : ( key == :phone ? number_to_phone(@user[key], :area_code => true ) : @user[key]) %>
 					<% end # dt %>
 				<% end # each key %>
-			<% end # dl %>
+			<% end if @correct # dl %>
 			<%= content_tag :div, :class => "page-header" do %>
 				<%= t(:location, :scope => [:views, :locations, :show]) %>
-				<% if current_user == @user %>
+				<% if @correct %>
 					<%= content_tag(:button, :class => "btn", :id => "open-location-button" ) do %>
 						<%= content_tag(:i, "", :class => "icon-pencil") %>
 						<% # t(:edit_location, :scope => [:views, :locations, :show]) %>
 					<% end %>
 				<% end # if correct_user %>
 			<% end # page-header %>
-			<%= render "locations/partials/show" %>
+			<%= render "locations/partials/show" if @correct %>
 		<% end # span6-fluid well %>
 	<% end # row-fluid %>
 <% end # container %>
 
-<% if current_user == @user %>
+<% if @correct %>
 	<% ['user','location'].each do |type| %>
 		<%= dialog_tag("dialog-#{type}-user-show", :open => "open-#{type}-button", :close => "close-#{type}-button") do %>
 			<%= render "#{type.pluralize}/partials/edit", :remote => false, :parent => @user, :method => @location.valid? ? "put" : "post" %>

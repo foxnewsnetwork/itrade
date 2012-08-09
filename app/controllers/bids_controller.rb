@@ -18,6 +18,10 @@ class BidsController < ApplicationController
 		@bid = current_user.bids.new
 		render "public/404" if @item.nil?
 	end # new
+	
+	def edit
+	
+	end # edit
 
 	def create
 		@bid = current_user.bid params[:bid], params[:item_id]

@@ -1,0 +1,9 @@
+<!-- show stat partial -->
+<div class="page-header">
+	<%= collapse_tag(:h3, t(:bid_data, :scope => [:views, :bids, :forms, :show] ) ) do %>
+		<p><%= content_tag(:i, "", :class => "icon-flag" )%> <%= @bids.count %></p>
+		<% unless @bids.nil? || @bids.empty? %>
+			<p><%= t(:last_offer, :scope => [:views, :bids, :forms, :show] ) %> <%= @bids.last.offer %> <%= @bids.last.units %></p>
+		<% end %>
+	<% end # collapse_tag %>
+</div>

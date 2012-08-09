@@ -121,6 +121,7 @@ en: {
 				quantity: "Quantity" ,
 				units: "Units" ,
 				material_type: "Type" ,
+				item_info : "Listing Details" ,
 			} , # show
 			forms: {
 				placeholders: {
@@ -184,7 +185,10 @@ en: {
 				shipping: "Price Terms" ,
 				city: "Location",
 				nothing_here_yet: "Nothing here yet!" ,
-				sell_to : "Sell?" ,
+				sell_to : "Action" ,
+				id : "Who" ,
+				bids : "Offered Prices" ,
+				asking_price : "Asking Price" ,
 			} , # show
 			forms: {
 				placeholders: {
@@ -199,13 +203,14 @@ en: {
 					submit: "Next..." ,
 					offer: "Price Per Unit" ,
 					cancel: "Cancel" ,
+					edit: "Edit" ,
 				} , # labels
 				new: { 
 					bid : "Make an Offer" ,
 					initial_price : "Set Initial Price" ,
 				} , # new
 				show: { 
-					bid_data : "Offer Statistics" ,
+					bid_data : "Listing Statistics" ,
 					last_offer : "Latest Offer" ,
 				} , # show
 			} ,# forms

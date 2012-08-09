@@ -2,19 +2,37 @@
 <div class="span4">
 	<div class="page-header">
 		<h4>
-			<i class="icon-user"></i> <%= link_to @item.user.company.capitalize, user_path( @item.user ) %>    &raquo;    
+			<i class="icon-user"></i> <%= link_to @item.user.id, user_path( @item.user ) %>    &raquo;    
 			<i class="icon-tag" ></i> <%= @item.title.capitalize %>
 		</h4>
 	</div>	
 </div>
 <div class="span4">
-	<% if @item.user == current_user %>
-		<% done = 1 + (@elements.empty? ? 0 : 1) + (@bids.empty? || @bids.first.location.nil? ? 0 : 1) %>
-		<% left = {} %>
-		<% left[:element] = "open-element-button" if @elements.empty? %>
-		<% left[:bid] = "open-bid-button" if @bids.empty? || @bids.first.location.nil? %>
-		<%= render "shared/almost_complete", :done => done, :left => left %>
-	<% end # if correct user %>
+	<% if user_signed_in? %>
+		<% if @item.user == current_user %>
+			<% done = 1 + (@elements.empty? ? 0 : 1) + (@asking_bid.nil? ? 0 : 1) %>
+			<% left = {} %>
+			<% left[:element] = "open-element-button" if @elements.empty? %>
+			<% left[:bid] = "open-bid-button" if @asking_bid.nil? %>
+			<%= render "shared/almost_complete", :done => done, :left => left %>
+		<% else # if correct user %>
+			<%= content_tag(:button, :class => "btn btn-primary btn-large", :id => "open-bid-button", :placement => "top") do %>
+				<%= content_tag(:i, "", :class => "icon-plus-sign icon-white") %>
+				<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
+				<%= t(:bid, :scope => [:views, :bids, :forms, :new]) %>
+			<% end # button tag %>
+		<% end # else wrong user %>
+	<% else # if signed in %>
+		<%= link_to(new_user_session_path, 
+			:class => "btn btn-warning", 
+			:rel => "popover", 
+			"data-original-title" => t(:help) ,
+			"data-content" => t(:signin, :scope => [:views, :shared, :warnings]) ) do %>
+			<%= content_tag(:i, "", :class => "icon-plus-sign icon-white") %>
+			<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
+			<%= t(:bid, :scope => [:views, :bids, :forms, :new]) %>
+		<% end %>
+	<% end # else not signed in %>
 </div>
 <div class="span4">
 	<h4>

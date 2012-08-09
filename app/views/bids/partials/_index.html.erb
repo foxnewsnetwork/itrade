@@ -2,7 +2,7 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<% [:price,:shipping,:city].each do |title| %>
+			<% [:id, :price,:shipping,:city].each do |title| %>
 				<th><%= t(title, :scope => [:views, :bids, :show]) %></th>
 			<% end # each title %>
 			<% if current_user == @item.user %>
@@ -14,6 +14,15 @@
 		<% @bids.each do |bid| %>
 			
 			<tr>
+				<td>
+					<%= link_to user_path(bid.user) do %>
+						<% if bid.user == @item.user %>
+							<%= t(:asking_price, :scope => [:views, :bids, :show]) %>
+						<% else %>
+							<%= bid.user.id %>
+						<% end %>
+					<% end # link_to %>
+				</td>
 				<% [:offer].each do |field| %>
 					<td><%= bid[field] %> <%= bid[:units] %></td>
 				<% end # each field %>
@@ -29,8 +38,13 @@
 				<td>
 					<%= link_to( item_path(@item) + "/sold_to/#{bid.user_id}", :method => "put" ,
 						:class => "btn btn-mini btn-success" ) do %>
-						<%= content_tag(:i, "", :class => "icon-ok icon-white") %> []->$
+						<%= content_tag(:i, "", :class => "icon-ok icon-white") %>
+						<%= t(:sell, :scope => [:views, :bids, :forms, :labels]) %>
 					<% end unless bid.user_id == @item.user_id || current_user != @item.user %>
+					<%= link_to( edit_item_bid_path(bid), :class => "btn btn-warning btn-mini" ) do %>
+						<%= content_tag(:i, "", :class => "icon-pencil icon-white") %>
+						<%= t(:edit, :scope => [:views, :bids, :forms, :labels]) %>
+					<% end unless bid.user_id != current_user.id %>
 				</td>
 			</tr>
 		<% end # each bid %>
