@@ -1,0 +1,20 @@
+<!-- location new form -->
+<%= form_for [parent, @location], :method => method, :remote => remote, :class => "well" do |f| %>
+	<fieldset>
+  	<legend><%= t(:edit_location, :scope => [:views, :locations, :forms, :new]) %></legend>
+  	<div class="control-group">
+  	<% {
+  		:address => "large", 
+  		:city => "small", 
+  		:state => "mini inline", 
+  		:zip => "mini inline", 
+  		:country => "mini inline" }.each do |field, style| %>
+		
+			<%= f.label t(field, :scope => [:views, :locations, :forms, :labels]), :class => "control-label" %>
+			<%= f.text_field field, :class => "input" + style %>
+			<%= hidden_field_tag( "location[shipping]", "EXWORKS") %>
+		<% end %>
+		</div>
+		<%= form_action_tag(:location) %>
+  </fieldset>
+<% end # form_tag  %>

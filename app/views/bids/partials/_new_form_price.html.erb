@@ -1,0 +1,22 @@
+<!-- new form price -->
+<fieldset>
+		<legend><%= t(:bid, :scope => [:views, :bids, :forms, :new]) %></legend>
+		<div class="control-group">
+			<%= f.label t(:offer, :scope => [:views, :bids, :forms, :labels]), :class => "control-label" %>
+			
+			<%= money_field_tag(f, :offer, :class => "input-small", :money => "$") %>
+			<%= content_tag(:select, :class => "span2", :name => "bid[units]", :id => "bid_units") do %>
+				<%= options_for_select(['grams','kilograms','pounds','tons','metric tons']) %>
+			<% end # select %>
+		</div>
+		<hr />
+		<div class="control-group">
+			<%= label_tag :shipping, t(:shipping, :scope => [:views, :locations, :forms, :labels]), :class => "control-label" %>
+			<div class="input-prepend">
+				<%= select_tag( "location[shipping]", options_for_select(['FAS','FOB','CNF','CIF']), :class => "span1 add-on") %>
+				<%= location_field_tag( "location[name]", 
+					:class => "input-medium search-query", 
+					:placeholder => t(:name, :scope => [:views, :locations, :forms, :labels]) ) %>
+			</div>
+		</div>
+</fieldset>

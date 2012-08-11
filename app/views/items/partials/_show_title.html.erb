@@ -16,7 +16,12 @@
 			<% left[:bid] = "open-bid-button" if @asking_bid.nil? %>
 			<%= render "shared/almost_complete", :done => done, :left => left %>
 		<% else # if correct user %>
-			<%= content_tag(:button, :class => "btn btn-primary btn-large", :id => "open-bid-button", :placement => "top") do %>
+			<%= link_to( new_item_bid_path(@item), 
+				:class => "btn btn-primary btn-large", 
+				:rel => "popover" ,
+				"data-original-title" => t(:help) ,
+				"data-content" => t(:bid, :scope => [:views, :bids, :help]) ,
+				:placement => "bottom") do %>
 				<%= content_tag(:i, "", :class => "icon-plus-sign icon-white") %>
 				<%= content_tag(:i, "", :class => "icon-flag icon-white") %>
 				<%= t(:bid, :scope => [:views, :bids, :forms, :new]) %>
@@ -24,8 +29,9 @@
 		<% end # else wrong user %>
 	<% else # if signed in %>
 		<%= link_to(new_user_session_path, 
-			:class => "btn btn-warning", 
+			:class => "btn btn-warning btn-large", 
 			:rel => "popover", 
+			:placement => "bottom" ,
 			"data-original-title" => t(:help) ,
 			"data-content" => t(:signin, :scope => [:views, :shared, :warnings]) ) do %>
 			<%= content_tag(:i, "", :class => "icon-plus-sign icon-white") %>

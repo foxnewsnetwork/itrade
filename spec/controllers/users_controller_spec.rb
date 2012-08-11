@@ -8,7 +8,7 @@ describe UsersController do
 		end # before
 		it "should be redirect" do
 			get "show", :id => @user
-			response.should be_success
+			response.should redirect_to new_user_session_path
 		end # it
 		describe "correct in" do
 			login_user

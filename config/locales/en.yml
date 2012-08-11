@@ -11,6 +11,7 @@ en: {
 	nothing_here_yet : "Nothing here yet..." ,
 	nothin_here_yet : "Nothing here yet..." ,
 	this_is_you: "This is you!" ,
+	now_loading: "Now Loading..." ,
 	controls: { 
 		items: { 
 			flash: { 
@@ -166,6 +167,7 @@ en: {
 					country: "ex. USA",
 				} , # placeholders
 				labels: {
+					name : "Destination" ,
 					shipping: "Preferred Shipping Method" ,
 					address: "Address",
 					city: "City",
@@ -189,7 +191,11 @@ en: {
 				id : "Who" ,
 				bids : "Offered Prices" ,
 				asking_price : "Asking Price" ,
+				name : "Location" ,
 			} , # show
+			help : { 
+				bid : "Make an offer on this listing"
+			} , # help
 			forms: {
 				placeholders: {
 					name: "Destination"		,

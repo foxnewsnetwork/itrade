@@ -1,0 +1,25 @@
+<!-- transportation form -->
+<fieldset>
+	<legend><%= t(:transportation, :scope => [:views, :services, :forms, :new]) %></legend>
+	<%= label_tag "service[shipping]", t(:shipping, :scope => [:views, :bids, :forms, :labels]), :class => "control-label" %>
+	<%= select_tag( "service[shipping]", options_for_select(['a','b','c','d','e']), :include_blank => true ) %>
+	<table>
+		<thead>
+			<tr>
+				<% [:start, :finish, :containers, :cost].each do |head| %>
+					<th><%= t(head, :scope => [:views, :services, :forms, :labels]) %></th>
+				<% end # each head %>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<% [:start, :finish, :containers, :cost].each do |head| %>
+					<%= content_tag(:td, :id => "td-#{head.to_s}") do %>
+						<%= t(:now_loading) %>
+					<% end # td %>
+				<% end # each head %>
+			</tr>
+		</tbody>
+	</table>	
+	
+</fieldset>

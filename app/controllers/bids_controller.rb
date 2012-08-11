@@ -13,9 +13,11 @@ class BidsController < ApplicationController
 	end # show
 	
 	def new
+		@title = "New Bid"
 		@item = Item.find_by_id params[:item_id]
 		@bids = @item.bids
 		@bid = current_user.bids.new
+		@tabs = [:price, :transportation, :insurance]
 		render "public/404" if @item.nil?
 	end # new
 	

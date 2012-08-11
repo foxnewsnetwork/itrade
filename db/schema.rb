@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120806193115) do
+ActiveRecord::Schema.define(:version => 20120809222746) do
 
   create_table "bids", :force => true do |t|
     t.integer  "item_id",                                                       :null => false
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20120806193115) do
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
     t.string   "shipping",   :default => "EXWORKS", :null => false
+    t.boolean  "official",   :default => false,     :null => false
   end
 
   create_table "statuses", :force => true do |t|

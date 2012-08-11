@@ -2,7 +2,7 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<% [:id, :price,:shipping,:city].each do |title| %>
+			<% [:id, :price,:shipping,:name].each do |title| %>
 				<th><%= t(title, :scope => [:views, :bids, :show]) %></th>
 			<% end # each title %>
 			<% if current_user == @item.user %>
@@ -26,7 +26,7 @@
 				<% [:offer].each do |field| %>
 					<td><%= bid[field] %> <%= bid[:units] %></td>
 				<% end # each field %>
-				<% [:shipping, :city].each do |field| %>
+				<% [:shipping, :name].each do |field| %>
 					<td>
 						<% if bid.location.nil? %>
 							<%= t(:unknown) %>
@@ -44,7 +44,7 @@
 					<%= link_to( edit_item_bid_path(bid), :class => "btn btn-warning btn-mini" ) do %>
 						<%= content_tag(:i, "", :class => "icon-pencil icon-white") %>
 						<%= t(:edit, :scope => [:views, :bids, :forms, :labels]) %>
-					<% end unless bid.user_id != current_user.id %>
+					<% end unless bid.user != current_user %>
 				</td>
 			</tr>
 		<% end # each bid %>

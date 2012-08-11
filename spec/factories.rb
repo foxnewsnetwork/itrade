@@ -144,7 +144,7 @@ Factory.sequence :location do |n|
 	:zip => Factory.next(:zipcode),
 	:name => Factory.next(:random_string) ,
 	:country => Factory.next(:country) ,
-	:shipping => Factory.next(:shipping)
+	:shipping => Factory.next(:shipping) ,
 }
 end # location
 

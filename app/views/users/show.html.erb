@@ -23,7 +23,9 @@
 	<%= content_tag :div, :class => "row-fluid" do %>
 		<%= content_tag :div, :class => "span6 well" do %>
 			<%= content_tag :div, :class => "page-header" do %>
-				<%= t(:items, :scope => [:views, :items, :show]) %>
+				<%= content_tag :h3 do %>
+					<%= t(:items, :scope => [:views, :items, :show]) %>
+				<% end # h3 %>
 				<%= link_to( new_item_path, :class => "btn btn-success", :id => "new-item-button" ) do %>
 					<%= content_tag(:i, "", :class => "icon-plus-sign icon-white" ) %>
 					<%= content_tag(:i, "", :class => "icon-tag icon-white" ) %>
@@ -45,8 +47,10 @@
 		<% end # span6-fluid well %>
 		<%= content_tag :div, :class => "span6 well" do %>
 			<%= content_tag :div, :class => "page-header" do %>
-				<%= t(:contact_info, :scope => [:views, :users, :show]) %>
-				<% if @corect %>
+				<%= content_tag :h3 do %>
+					<%= t(:contact_info, :scope => [:views, :users, :show]) %>
+				<% end # h3 %>
+				<% if @correct %>
 					<%= content_tag(:button, :class => "btn", :id => "open-user-button" ) do %>
 						<%= content_tag(:i, "", :class => "icon-pencil") %>
 						<% # t(:edit_contact_info, :scope => [:views, :users, :show]) %>
@@ -54,8 +58,8 @@
 				<% end # if correct_user %>
 			<% end # page-header %>
 			<%= render "shared/error_messages", :model => @user %>
-			<%= content_tag :dl do %>
-				<% [:company, :email, :phone].each do |key| %>
+			<%= content_tag :dl, :class => "dl-horizontal" do %>
+				<% [:company, :phone, :email].each do |key| %>
 					<%= content_tag :dt do %>
 						<%= t(key, :scope => [:views, :users, :forms, :labels]) %>
 					<% end # dt %>
@@ -65,7 +69,9 @@
 				<% end # each key %>
 			<% end if @correct # dl %>
 			<%= content_tag :div, :class => "page-header" do %>
-				<%= t(:location, :scope => [:views, :locations, :show]) %>
+				<%= content_tag :h3 do %>
+					<%= t(:location, :scope => [:views, :locations, :show]) %>
+				<% end # h3 %>
 				<% if @correct %>
 					<%= content_tag(:button, :class => "btn", :id => "open-location-button" ) do %>
 						<%= content_tag(:i, "", :class => "icon-pencil") %>
@@ -73,7 +79,7 @@
 					<% end %>
 				<% end # if correct_user %>
 			<% end # page-header %>
-			<%= render "locations/partials/show" if @correct %>
+			<%= render "users/partials/location_show" if @correct %>
 		<% end # span6-fluid well %>
 	<% end # row-fluid %>
 <% end # container %>
@@ -81,7 +87,7 @@
 <% if @correct %>
 	<% ['user','location'].each do |type| %>
 		<%= dialog_tag("dialog-#{type}-user-show", :open => "open-#{type}-button", :close => "close-#{type}-button") do %>
-			<%= render "#{type.pluralize}/partials/edit", :remote => false, :parent => @user, :method => @location.valid? ? "put" : "post" %>
+			<%= render "users/partials/#{type}_form", :remote => false, :parent => @user, :method => @location.valid? ? "put" : "post" %>
 		<% end # end dialog box %>
 	<% end # each type %>	
 <% end # if correct user %>

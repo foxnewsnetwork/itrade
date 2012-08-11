@@ -2,9 +2,14 @@ class LocationsController < ApplicationController
   before_filter :filter_anonymous_users, :only => [:create, :destroy, :update]
   before_filter :p_getitems, :only => [:create, :destroy, :update]
   
-  def search
-  end
+  def index
+  	@locations = Location.where( :official => true ) 
+  	respond_to do |format|
+  		format.json { render "index", :hander => "json_builder" }
+  	end # respond_to
+  end # index
 
+	
 	def update
 		if current_user == @item.user
 			@location = Location.find_by_id params[:id]

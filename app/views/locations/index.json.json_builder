@@ -1,0 +1,9 @@
+locations @locations do |location|
+	official location.official
+	name location.name
+	address location.address
+	city location.city
+	state location.state
+	zip location.zip
+	country location.country
+end

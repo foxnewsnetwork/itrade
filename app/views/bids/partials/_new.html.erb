@@ -1,18 +1,23 @@
 <!-- new bid form -->
 <%= form_for [@item, @bid ], :remote => remote, :method => method do |f| %>
 	<fieldset>
-		<legend><%= t(:bid, :scope => [:views, :bids, :forms, :new]) %></legendt>
+		<legend><%= t(:initial_price, :scope => [:views, :bids, :forms, :new]) %></legend>
 		<div class="control-group">
 			<%= f.label t(:offer, :scope => [:views, :bids, :forms, :labels]), :class => "control-label" %>
-			<%= f.number_field :offer, :class => "input-small" %> <%=" #{t(:USD)} / #{@item.units.singularize}"%>
+			<%= money_field_tag(f, :offer, :class => "input-small", :money => "$") %>
+			<%= content_tag(:select, :class => "span2", :name => "bid[units]", :id => "bid_units") do %>
+				<%= options_for_select(['grams','kilograms','pounds','tons','metric tons']) %>
+			<% end # select %>
+			
 		</div>
 		<div class="control-group">
 			<%= label_tag :shipping, "Shipping", :class => "control-label" %>
-			<%= select_tag( "location[shipping]", options_for_select(['FAS','FOB','CNF','CIF','EXWORK']), :style => "width : 4em") %>
-			<%= text_field_tag "location[name]", "", :placeholder => t(:name, :scope => [:views, :bids, :forms, :placeholders]), 
-				:id => "autocomplete-target-box", :class => "input-small" %>
+			<%= select_tag( "location[shipping]", options_for_select(['FAS','FOB','CNF','CIF','EXWORKS']), :class => "span1") %>
+			<%= location_field_tag( "location[name]",
+				:placeholder => t(:name, :scope => [:views, :bids, :forms, :placeholders]), 
+				:class => "input-small") %>
 		</div>
-		<div class="control-group">
+		<div class="control-group" id="exworks-location-group" style="display : none;">
 			<%= text_field_tag "location[address]", "", :placeholder => t(:address, :scope => [:views, :bids, :forms, :placeholders] ) %>
 			<% [:city, :state, :zip].each do |mini| %>
 				<%= text_field_tag "location[#{mini.to_s}", "", :class => "inline input-mini", :placeholder => t(mini, :scope => [:views, :bids, :forms, :placeholders] ) %>
@@ -23,3 +28,17 @@
 	</fieldset>
 <% end %>
 
+<script type="text/javascript">
+	$(document).ready( function() { 
+		$("#location_shipping").click(function() { 
+			if ( $(this).val() == "EXWORKS" ) { 
+				$("#exworks-location-group").show();
+				$("#location-select-tag").hide();
+			} // if exworks
+			else { 
+				$("#exworks-location-group").hide();
+				$("#location-select-tag").show();
+			} // else not exworks
+		} ); // click
+	} ); // ready
+</script>

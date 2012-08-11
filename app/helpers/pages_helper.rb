@@ -1,5 +1,12 @@
 module PagesHelper
 
+	# money input tag, be sure to specify the money options
+	def money_field_tag(f, label, options = { :money => "$" })
+		content_tag(:div, :class => "input-prepend") do
+			content_tag(:span, options[:money], :class => "add-on") +
+			f.number_field( label, options )
+		end # div tag
+	end # money_field_tag
 	
 	# type is :button, :div, etc.
 	def collapse_tag(type, content = "", options = {}, &block)
@@ -63,12 +70,17 @@ module PagesHelper
 	end # ajax_content_tag
 	
 	def form_action_tag( target )
-		 content_tag(:button, :class => "btn btn-primary", :type => "submit", :id => "submit-#{target.to_s}-button") do 
+		 form_submit_tag(target) + form_reset_tag(target)
+	end # form_action_tag
+	
+	def form_submit_tag( target )
+		content_tag(:button, :class => "btn btn-primary", :type => "submit", :id => "submit-#{target.to_s}-button") do 
 			 content_tag(:i, "", :class => "icon-ok icon-white") 
-		 end + # submit btn
+		 end
+	end # form_submit_tag
+	def form_reset_tag(target)
 		 content_tag(:button, :class => "btn btn-inverse", :type => "reset", :name => "reset", :id => "close-#{target.to_s}-button") do 
 			 content_tag(:i, "", :class => "icon-remove icon-white")
 		 end # reset btn 
-	end # form_action_tag
-	
+	end # form_reset_tag
 end # PagesHelper

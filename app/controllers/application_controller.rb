@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include UsersHelper
   include PagesHelper
   include CategoriesHelper
+  include LocationsHelper
   def after_sign_in_path_for(resource)
     # user_path resource # <- Path you want to redirect the user to.
 

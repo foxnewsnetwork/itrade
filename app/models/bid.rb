@@ -16,7 +16,7 @@
 
 class Bid < ActiveRecord::Base
   # Attributes
-  attr_accessible :item_id, :offer, :units, :location_id
+  attr_accessible :item_id, :offer, :units, :location_id, :paytype
   
   # Relationships
   belongs_to :item
