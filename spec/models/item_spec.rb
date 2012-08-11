@@ -9,6 +9,7 @@
 #  location_id   :integer
 #  material      :string(255)
 #  material_type :string(255)
+#  maw           :integer
 #  quantity      :integer          default(0)
 #  title         :string(255)      default("No title")
 #  units         :string(255)      default("kg")

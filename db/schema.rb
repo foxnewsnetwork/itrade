@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120809222746) do
+ActiveRecord::Schema.define(:version => 20120811014407) do
+
+  create_table "auxiliaries", :force => true do |t|
+    t.integer  "bid_id",     :null => false
+    t.integer  "s_id",       :null => false
+    t.string   "s_type",     :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "auxiliaries", ["bid_id", "s_id", "s_type"], :name => "index_auxiliaries_on_bid_id_and_s_id_and_s_type", :unique => true
+  add_index "auxiliaries", ["bid_id"], :name => "index_auxiliaries_on_bid_id"
+  add_index "auxiliaries", ["s_id", "s_type"], :name => "index_auxiliaries_on_s_id_and_s_type"
 
   create_table "bids", :force => true do |t|
     t.integer  "item_id",                                                       :null => false
@@ -23,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20120809222746) do
     t.string   "paytype"
     t.datetime "paydate"
     t.integer  "location_id"
+    t.decimal  "maw",         :precision => 10, :scale => 0
   end
 
   add_index "bids", ["user_id"], :name => "index_bids_on_user_id"
@@ -48,17 +61,18 @@ ActiveRecord::Schema.define(:version => 20120809222746) do
   end
 
   create_table "items", :force => true do |t|
-    t.integer  "quantity",      :default => 0
-    t.string   "units",         :default => "kg"
-    t.string   "title",         :default => "No title"
+    t.integer  "quantity",                                     :default => 0
+    t.string   "units",                                        :default => "kg"
+    t.string   "title",                                        :default => "No title"
     t.text     "description"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                                                           :null => false
+    t.datetime "updated_at",                                                           :null => false
     t.integer  "user_id"
     t.string   "material"
-    t.string   "category",      :default => "plastic",  :null => false
+    t.string   "category",                                     :default => "plastic",  :null => false
     t.integer  "location_id"
     t.string   "material_type"
+    t.decimal  "maw",           :precision => 10, :scale => 0
   end
 
   add_index "items", ["user_id", "id"], :name => "index_items_on_user_id_and_id", :unique => true
@@ -77,6 +91,30 @@ ActiveRecord::Schema.define(:version => 20120809222746) do
     t.boolean  "official",   :default => false,     :null => false
   end
 
+  create_table "services", :force => true do |t|
+    t.string   "company",                                    :default => "Tracago", :null => false
+    t.string   "title",                                                             :null => false
+    t.string   "description",                                                       :null => false
+    t.decimal  "price",       :precision => 10, :scale => 0, :default => 0,         :null => false
+    t.datetime "created_at",                                                        :null => false
+    t.datetime "updated_at",                                                        :null => false
+  end
+
+  add_index "services", ["company"], :name => "index_services_on_company"
+  add_index "services", ["title"], :name => "index_services_on_title"
+
+  create_table "ships", :force => true do |t|
+    t.string   "company",                                                  :null => false
+    t.integer  "start",                                                    :null => false
+    t.integer  "finish",                                                   :null => false
+    t.decimal  "price",      :precision => 10, :scale => 0, :default => 0, :null => false
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
+  end
+
+  add_index "ships", ["company"], :name => "index_ships_on_company"
+  add_index "ships", ["start", "finish"], :name => "index_ships_on_start_and_finish"
+
   create_table "statuses", :force => true do |t|
     t.string   "name",       :default => "incomplete", :null => false
     t.string   "effect"
@@ -88,6 +126,18 @@ ActiveRecord::Schema.define(:version => 20120809222746) do
   add_index "statuses", ["item_id", "name"], :name => "index_statuses_on_item_id_and_name", :unique => true
   add_index "statuses", ["item_id"], :name => "index_statuses_on_item_id"
   add_index "statuses", ["name"], :name => "index_statuses_on_name"
+
+  create_table "trucks", :force => true do |t|
+    t.string   "company",                                                  :null => false
+    t.integer  "start",                                                    :null => false
+    t.integer  "finish",                                                   :null => false
+    t.decimal  "price",      :precision => 10, :scale => 0, :default => 0, :null => false
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
+  end
+
+  add_index "trucks", ["company"], :name => "index_trucks_on_company"
+  add_index "trucks", ["start", "finish"], :name => "index_trucks_on_start_and_finish"
 
   create_table "users", :force => true do |t|
     t.string   "company",                :default => "",    :null => false

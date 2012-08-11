@@ -1,0 +1,2 @@
+class AuxiliariesController < ApplicationController
+end

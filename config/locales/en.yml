@@ -168,7 +168,7 @@ en: {
 				} , # placeholders
 				labels: {
 					name : "Destination" ,
-					shipping: "Preferred Shipping Method" ,
+					shipping: "Price Terms" ,
 					address: "Address",
 					city: "City",
 					state: "State",

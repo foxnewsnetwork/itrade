@@ -157,3 +157,19 @@ Factory.sequence :category do |n|
 	:name => Factory.next(:random_string)
 }
 end # category
+
+[:ship, :truck].each do |transport|
+	Factory.define transport do |ship|
+		ship.company Faker::Company.name
+		ship.price rand(99999)
+		ship.association :origination
+		ship.association :destination
+	end # ship
+end # each transport
+
+Factory.define :service do |service|
+	service.company Faker::Company.name
+	service.price rand(9999)
+	service.title ['CCIC','Sample Request','Packing Monitoring','Prostitution'][rand(4)]
+	service.description Faker::Company.bs
+end # service

@@ -6,6 +6,7 @@
 #  id          :integer          not null, primary key
 #  item_id     :integer          not null
 #  location_id :integer
+#  maw         :integer
 #  offer       :integer          default(0)
 #  paydate     :datetime
 #  paytype     :string(255)
