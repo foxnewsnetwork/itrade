@@ -13,4 +13,4 @@
 
 class Service < ActiveRecord::Base
   attr_accessible :company, :description, :price, :title
-end
+end # Service

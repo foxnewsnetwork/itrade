@@ -41,7 +41,8 @@ describe Bid do
 	end # normal items
 	describe "orphaned items" do
 		before(:each) do
-			@item = Factory(:item)
+			@user = Factory(:user)
+			@item = Factory(:item, :user => @user)
 		end # before each
 		describe "location relation" do
 			before(:each) do		

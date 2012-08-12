@@ -27,9 +27,36 @@ class BidsController < ApplicationController
 
 	def create
 		@bid = current_user.bid params[:bid], params[:item_id]
-		@location = Location.create params[:location] unless params[:location].nil?
-		@bid.at @location unless @location.nil?
-		flash[:success] = t( :success_bid_create )
+		if params[:location].nil? || params[:location][:name].nil?
+			raise "Wow, Fuck You Error"
+			flash[:error] = t(:failed, :scope => [:controllers, :bids, :create, :location])
+		else
+			@location = Location.search_names params[:location][:name]
+			@location ||= Location.create params[:location]
+			raise "Null Location Error" if @location.nil?
+			unless @location.nil?
+				@bid.at @location 
+				unless params[:auxiliaries].nil?
+					params[:auxiliaries].each do |aux|
+						case aux[:type]
+							when "ship"
+								@duck = Ship.find_by_id aux[:id] 
+							when "truck"
+								@duck = Truck.find_by_id aux[:id]
+							when "service"
+								@duck = Service.find_by_id aux[:id]
+							else
+								flash[:error] = t(:failed, :scope => [:controllers, :bids, :create, :auxiliary])
+						end # case aux
+						raise "No duck error" if @duck.nil?
+						((@auxiliaries ||= []) << @bid.has( @duck ) ) unless @duck.nil?
+					end # each aux
+				end # unless no aux
+				flash[:success] = t(:success, :scope => [:controllers, :bids, :create])
+			else
+				flash[:error] = t(:failed, :scope => [:controllers, :bids, :create, :location])
+			end # unless location
+		end # if bad location
 		redirect_to item_path params[:item_id]
 	end # create
 	

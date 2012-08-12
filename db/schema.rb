@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120811014407) do
+ActiveRecord::Schema.define(:version => 20120812004936) do
 
   create_table "auxiliaries", :force => true do |t|
     t.integer  "bid_id",     :null => false
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20120811014407) do
     t.datetime "paydate"
     t.integer  "location_id"
     t.decimal  "maw",         :precision => 10, :scale => 0
+    t.string   "shipping"
   end
 
   add_index "bids", ["user_id"], :name => "index_bids_on_user_id"
@@ -90,6 +91,8 @@ ActiveRecord::Schema.define(:version => 20120811014407) do
     t.string   "shipping",   :default => "EXWORKS", :null => false
     t.boolean  "official",   :default => false,     :null => false
   end
+
+  add_index "locations", ["name"], :name => "index_locations_on_name", :unique => true
 
   create_table "services", :force => true do |t|
     t.string   "company",                                    :default => "Tracago", :null => false

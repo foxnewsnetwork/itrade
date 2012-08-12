@@ -20,7 +20,7 @@ describe BidsController do
 		describe "success" do
 			login_user
 			before(:each) do
-				@bid_data = { :offer => rand(999) }
+				@bid_data = Factory.next(:bid)
 				@location_data = Factory.next(:location)
 				@methods = { 
 					:vanilla => lambda { post :create, :item_id => @item, :bid => @bid_data, :location => @location_data } ,
@@ -39,17 +39,17 @@ describe BidsController do
 				end # it
 			end # each style
 			it "should be successful" do
-				post :create, :item_id => @item, :bid => @bid_data
+				@methods[:vanilla].call
 				response.should redirect_to @item
 				flash[:success].should_not be_nil
 			end # it
 			it "should change the database" do
 				lambda do
-					post :create, :item_id => @item, :bid => @bid_data
+					@methods[:vanilla].call
 				end.should change(Bid, :count).by(1)
 			end # it
 			it "should have the correct data" do
-				post :create, :item_id => @item, :bid => @bid_data
+				@methods[:vanilla].call
 				bid = Bid.last
 				bid.price.should eq @bid_data[:offer]
 				bid.user.should eq @current_user

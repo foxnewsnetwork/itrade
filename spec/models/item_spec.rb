@@ -31,7 +31,8 @@ describe Item do
   end # Creation
   describe "item location" do
   	before(:each) do
-  		@item = Factory(:item)
+  		@user = Factory(:user)
+  		@item = Factory(:item, :user => @item)
   		@location = Factory(:location)
   		@test = lambda do
   			Item.find_by_id(@item).location.should eq @location

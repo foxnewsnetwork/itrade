@@ -1,5 +1,23 @@
 require 'faker'
 
+alias :Faggotory :Factory
+def Factory( label, options = {} )
+	case label
+		when :location
+			return Location.create Factory.next(:location)
+		when :user
+			u = User.new Factory.next(:user)
+			if options[:admin]
+				u.admin = true
+			end
+			u.save!
+			return u
+		else
+			return Faggotory(label, options)
+	end # case label
+end # Factory
+
+
 Factory.sequence :company do |n|
 	Faker::Company.name
 end # company
@@ -64,12 +82,16 @@ end # country
 
 Factory.define :bid do |bid|
 	bid.offer rand(18348)
+	bid.shipping Factory.next(:shipping)
 	bid.association :item
 	bid.association :user
 end # bid
 
 Factory.sequence :bid do |n|
-	{ :offer => rand(34334) }
+{ 
+	:offer => rand(34334) ,
+	:shipping => Factory.next(:shipping)
+}
 end # sequence
 
 Factory.define :item do |item|
@@ -95,13 +117,6 @@ Factory.sequence :item do |n|
 	}
 end # item
 
-Factory.define :user do |user|
-	user.email Factory.next( :email )
-	user.phone Factory.next( :phone )
-	user.company Factory.next( :name )
-	user.password Factory.next( :random_string )
-end # user
-
 Factory.sequence :user do |n|
 	{ 
 	:email => Factory.next( :email ) ,
@@ -126,12 +141,16 @@ Factory.sequence :element do |n|
 	}
 end # element
 
+# Here is a workaround to resolve the issue that the Factory.define provided
+# by factorygirl refuses to generate unique entries on entries which should
+# be unique. God, I hope this works lol
+
 Factory.define :location do |location|
 	location.address Factory.next(:address)
 	location.city Factory.next(:city)
 	location.state Factory.next(:state)
 	location.zip Factory.next(:zipcode)
-	location.name Factory.next(:random_string)
+	location.name (Faker::Name.name + rand(13893749237492).to_s)
 	location.country Factory.next(:country)
 	location.shipping Factory.next(:shipping)
 end # location
@@ -142,7 +161,7 @@ Factory.sequence :location do |n|
 	:city => Factory.next(:city),
 	:state => Factory.next(:state) ,
 	:zip => Factory.next(:zipcode),
-	:name => Factory.next(:random_string) ,
+	:name => Faker::Name.name + rand(13893749237492).to_s,
 	:country => Factory.next(:country) ,
 	:shipping => Factory.next(:shipping) ,
 }
@@ -165,6 +184,13 @@ end # category
 		ship.association :origination
 		ship.association :destination
 	end # ship
+	
+	Factory.sequence transport do |n|
+	{ 
+		:company => Faker::Company.name ,
+		:price => rand(99999)
+	}
+	end # sequence transport
 end # each transport
 
 Factory.define :service do |service|
@@ -172,4 +198,13 @@ Factory.define :service do |service|
 	service.price rand(9999)
 	service.title ['CCIC','Sample Request','Packing Monitoring','Prostitution'][rand(4)]
 	service.description Faker::Company.bs
+end # service
+
+Factory.sequence :service do |n|
+{ 
+	:company => Faker::Company.name ,
+	:price => rand(999999),
+	:title => ['CCIC','Sample Request','Packing Monitoring','Prostitution'][rand(4)] ,
+	:description => Faker::Company.bs
+}
 end # service

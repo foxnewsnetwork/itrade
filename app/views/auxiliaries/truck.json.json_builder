@@ -1,0 +1,24 @@
+trucks @ducks do |truck|
+	id truck.id
+	company truck.company
+	price truck.price
+	created_at truck.created_at
+	start truck.origination do |location|
+		id location.id
+		name location.name
+		address location.address
+		city location.city
+		state location.state
+		zip location.zip
+		country location.country
+	end
+	finish truck.destination do |location|
+		id location.id
+		name location.name
+		address location.address
+		city location.city
+		state location.state
+		zip location.zip
+		country location.country
+	end 
+end

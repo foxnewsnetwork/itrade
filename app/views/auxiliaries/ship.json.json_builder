@@ -1,0 +1,24 @@
+ships @ducks do |ship|
+	id ship.id
+	company ship.company
+	price ship.price
+	created_at ship.created_at
+	start ship.origination do |location|
+		id location.id
+		name location.name
+		address location.address
+		city location.city
+		state location.state
+		zip location.zip
+		country location.country
+	end
+	finish ship.destination do |location|
+		id location.id
+		name location.name
+		address location.address
+		city location.city
+		state location.state
+		zip location.zip
+		country location.country
+	end 
+end

@@ -17,7 +17,7 @@
 
 class Bid < ActiveRecord::Base
   # Attributes
-  attr_accessible :item_id, :offer, :units, :location_id, :paytype
+  attr_accessible :item_id, :offer, :units, :location_id, :paytype, :shipping
   
   # Relationships
   belongs_to :item
@@ -51,7 +51,10 @@ class Bid < ActiveRecord::Base
   end # service
   
   def has(duck)
-  	self.auxiliaries.new.establish( duck ).save
+  	aux = self.auxiliaries.new
+  	result = aux.establish( duck ).save
+  	return aux if result
+  	return nil
   end # has
   
   private

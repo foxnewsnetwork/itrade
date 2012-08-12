@@ -1,0 +1,7 @@
+services @ducks do |service|
+	id service.id
+	company service.company
+	title1 service.title
+	description service.description
+	price service.price
+end

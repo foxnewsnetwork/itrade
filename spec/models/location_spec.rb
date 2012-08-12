@@ -49,7 +49,7 @@ describe Location do
   	before(:each) do
   		@location_data = Factory.next(:location)
   		@location_data[:name] = "  catMan-los angles_-8f2\n\r"
-  		@expected = @location_data[:name].strip.downcase.squeeze(" ").gsub( /(\W|\s|\d|_)/, "" )
+  		@expected = @location_data[:name].strip.downcase.squeeze(" ").gsub( /(\W|\s|_)/, "" )
   		@location = Location.create @location_data
   	end # before each
   	it "should strip downcase squeeze, etc." do

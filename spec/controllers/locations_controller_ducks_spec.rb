@@ -56,7 +56,8 @@ describe LocationsController do
 					@create.call key, @ducks[key]
 					duck = @ducks[key].class.find_by_id @ducks[key]
 					@location_data.each do |k,v|
-						duck.location[k].should == v
+						duck.location[k].should == v unless k == :name
+						duck.location[k].strip.downcase.gsub(/(\W|\s)/, "") if k == :name
 					end # @location_data
 				end # it
 				it "should redirect to #{model} show" do

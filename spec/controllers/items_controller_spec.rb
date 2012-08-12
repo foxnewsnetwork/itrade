@@ -153,7 +153,8 @@ describe ItemsController do
 	
 	describe "Put requests" do
 		before(:each) do
-			@item = Factory(:item)
+			@user = Factory(:user)
+			@item = Factory(:item, :user => @user)
 			@item_data = Factory.next( :item )
 		end # before each
 		describe "success" do
@@ -186,7 +187,8 @@ describe ItemsController do
 	describe "delete requests" do
 		describe "success" do
 			before(:each) do
-				@item = Factory(:item)
+				@user = Factory(:user)
+				@item = Factory(:item, :user => @user)
 				@bids = (1..10).map { @item.bid( :offer => rand(50) ) }
 			end # before each
 			it "should kill the item" do

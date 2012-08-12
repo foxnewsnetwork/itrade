@@ -36,6 +36,8 @@ class Location < ActiveRecord::Base
 #	}.each do |field, regex|
 #	  validates field, :format => { :with => regex }
 #	end # presence validation
+	validates :name, :presence => true
+	@@name_filter = /(\s|\W|_)/
 	
 	# Callbacks
 	before_validation :p_process_name
@@ -50,6 +52,10 @@ class Location < ActiveRecord::Base
 		end
 	end # has
 	
+	def self.search_names( name )
+		Location.find_by_name( name.strip.downcase.squeeze(" ").gsub( @@name_filter, "" ) )
+	end # search_names
+	
 	def make_official
 		self.official = true
 		self.save
@@ -57,7 +63,11 @@ class Location < ActiveRecord::Base
 	
 	private
 		def p_process_name
-			self.name = self.name.strip.downcase.squeeze(" ").gsub( /(\W|\s|\d|_)/, "" ) unless self.name.nil?
+			if self.name.nil? || Location.exists?( :name => self.name )
+				self.name = "generic" + ( Location.count + 1 ).to_s
+			else
+				self.name = self.name.strip.downcase.squeeze(" ").gsub( @@name_filter, "" ) unless self.name.nil?
+			end # generic name
 		end # p_process_name
 	
 	module Locateable 

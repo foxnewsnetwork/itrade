@@ -3,7 +3,9 @@ module ControllerMacros
   def login_admin
     before(:each) do
       @request.env["devise.mapping"] = Devise.mappings[:admin]
-      @current_user = Factory(:user, :admin => true)
+      @current_user = User.new Factory.next(:user)
+      @current_user.set_admin
+      raise "GOD FUCKING DAMMIT ERROR in #{__FILE__}" unless @current_user.admin?
       sign_in @current_user
     end # before each
   end

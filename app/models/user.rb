@@ -57,6 +57,15 @@ class User < ActiveRecord::Base
   	return nil
   end # bid
   
+  def set_admin
+  	self.admin = true
+  	self.save!
+  end # set_admin
+  
+  def admin?
+  	self.admin
+  end # admin?
+  
   # here for ducking purposes
   def user
   	self
