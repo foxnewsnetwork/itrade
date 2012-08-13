@@ -210,10 +210,21 @@ en: {
 					offer: "Price Per Unit" ,
 					cancel: "Cancel" ,
 					edit: "Edit" ,
+					bid: "New Offer" ,
+					price : "Price Per Unit" ,
+					transportation : "Shipping & Trucking" ,
+					insurance : "Additional Services" ,
+					trucking : "Trucking" ,
+					shipping : "Shipping" ,
+					start : "Start" ,
+					finish : "Destination" ,
+					containers : "Containers" ,
+					cost : "Cost" ,
 				} , # labels
 				new: { 
 					bid : "Make an Offer" ,
 					initial_price : "Set Initial Price" ,
+					insurance : "Additional Services" ,
 				} , # new
 				show: { 
 					bid_data : "Listing Statistics" ,
@@ -221,6 +232,19 @@ en: {
 				} , # show
 			} ,# forms
 		} , # bids
+		services : { 
+			forms : { 
+				new : { 
+					transportation : "Shipping & Trucking" ,
+				} , # new
+				labels : { 
+					start : "Start" ,
+					finish : "Destination" ,
+					containers : "Containers" ,
+					cost : "Cost" ,
+				} , # labels
+			} , # forms
+		} , # service
 		elements : { 
 			forms : { 
 				new : { 
@@ -230,6 +254,7 @@ en: {
 				} , # new
 				labels : { 
 					submit : "Upload" ,
+					elements : "Pictures" ,
 				}, # labels
 			} , # forms
 			show : { 

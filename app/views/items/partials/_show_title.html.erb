@@ -18,6 +18,7 @@
 		<% else # if correct user %>
 			<%= link_to( new_item_bid_path(@item), 
 				:class => "btn btn-primary btn-large", 
+				:id => "new_item_bid_link" ,
 				:rel => "popover" ,
 				"data-original-title" => t(:help) ,
 				"data-content" => t(:bid, :scope => [:views, :bids, :help]) ,

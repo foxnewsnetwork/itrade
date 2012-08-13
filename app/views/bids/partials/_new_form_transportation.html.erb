@@ -1,8 +1,14 @@
 <!-- transportation form -->
 <fieldset>
 	<legend><%= t(:transportation, :scope => [:views, :services, :forms, :new]) %></legend>
-	<%= label_tag "service[shipping]", t(:shipping, :scope => [:views, :bids, :forms, :labels]), :class => "control-label" %>
-	<%= select_tag( "service[shipping]", options_for_select(['a','b','c','d','e']), :include_blank => true ) %>
+	<div id="truck-container">
+		<%= label_tag "truck[id]", t(:trucking, :scope  => [:views, :bids, :forms, :labels]), :class => "control-label" %>
+		<%= check_box_tag("truck[id]", @truck.id, false ) %>
+	</div>
+	<div id="ship-container">
+		<%= label_tag "ship[id]", t(:shipping, :scope => [:views, :bids, :forms, :labels]), :class => "control-label" %>
+		<%= select_tag( "ship[id]", options_for_select([[@ship.company, @ship.id]]), :include_blank => true ) %>
+	</div>
 	<table>
 		<thead>
 			<tr>

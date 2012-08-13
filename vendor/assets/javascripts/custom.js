@@ -21,3 +21,12 @@ $(document).ready( function() {
 	$("[rel=popover]").popover( ); // popover
 	$("[rel=tooltip]").tooltip( ); // popover
 } ); // document ready
+
+var options_for_select = function(keys, values) { 
+	var output = "";
+	for( var k = 0; k < keys.length; k++ ) { 
+		output += "<option value='" + values[k] + "'>";
+		output += keys[k] + "</option>";
+	} // for k
+	return output;
+} // options_for_select

@@ -15,10 +15,17 @@ class BidsController < ApplicationController
 	def new
 		@title = "New Bid"
 		@item = Item.find_by_id params[:item_id]
+		if @item.nil?
+			render "public/404" 
+			return
+		end # if nil
 		@bids = @item.bids
 		@bid = current_user.bids.new
 		@tabs = [:price, :transportation, :insurance]
-		render "public/404" if @item.nil?
+		@ship = Ship.first
+		@truck = Truck.first
+		@service = Service.first
+		
 	end # new
 	
 	def edit
@@ -52,6 +59,13 @@ class BidsController < ApplicationController
 						((@auxiliaries ||= []) << @bid.has( @duck ) ) unless @duck.nil?
 					end # each aux
 				end # unless no aux
+				{ :service => Service, :truck => Truck, :ship => Ship }.each do |key, model|
+					next if params[key].nil?
+					@duck = model.find_by_id params[key][:id]
+					flash[:error] = t(:failed, :scope => [:controllers, :bids, :create, :auxiliary]) if @duck.nil?
+					raise "#{key} duck error" if @duck.nil?
+					( (@auxiliaries ||= []) << @bid.has( @duck ) )unless @duck.nil?
+				end # each key model
 				flash[:success] = t(:success, :scope => [:controllers, :bids, :create])
 			else
 				flash[:error] = t(:failed, :scope => [:controllers, :bids, :create, :location])

@@ -8,27 +8,59 @@
 require 'rubygems'
 require 'faker'
 
-@categories = ['plastics','metals','precious metals','semiconductors','nonmetals']
-@types = { 
-	"plastics" => ['HPDE','LPDE','PP','PET'],
-	"metals" => ['iron','copper'],
-	"precious metals" => ['gold','silver','bronze'] ,
-	"semiconductors" => [:silicon, :germanium],
-	"nonmetals" => [:coal, :graphite]
-} # types
-@countries = [ 'USA','China','Japan','Korea','Mexico','Canada','Cuba']
-@titles = ['twine','ropes','binds','purge','regrind','dogshit']
+def location
+{ 
+	:address => Faker::Address.street_address ,
+	:city => Faker::Address.city ,
+	:state => Faker::Address.state ,
+	:zip => Faker::Address.zip_code	
+}
+end # location
 
-def get( something )
-	something[rand(something.count)]
-end # get
+def get1( duck )
+	duck[rand(duck.length)]
+end # get1
 
-@categories.each do |category|
-	c = Category.create( :name => category )
-	@types[category].each do |type|
-		c.spawn( :name => type )
-	end # each type 
-end # each category
+10.times do 
+	@user = User.create( 
+		:company => Faker::Name.name ,
+		:phone => Faker::PhoneNumber.phone_number ,
+		:email => Faker::Internet.email ,
+		:password => Faker::Lorem.sentence
+	) # user
+	@item = @user.items.create( 
+		:title => Faker::Name.name ,
+		:description => Faker::Company.bs ,
+		:quantity => rand(2354235) ,
+		:material => Faker::Company.catch_phrase ,
+		:material_type => Faker::Company.name ,
+		:maw => rand(234345)
+	) # item
+	( @item_locations  ||= []) << (Location.create location)
+	@item.at @item_locations.last
+end # 10 users
+10.times do
+	(@domestic ||= []) << (Location.create( :name => "port" + Faker::Address.city) )
+	(@foreign ||= []) << (Location.create( :name => "port" + Faker::Address.city) )
+	Ship.new(
+		:company => Faker::Company.name ,
+		:price => rand(234324) ,
+	).from(@domestic.last).to(@foreign.last).save # ship
+	Truck.new(
+		:company => Faker::Company.name ,
+		:price => rand(234324) ,
+	).from(get1 @item_locations).to(get1 @domestic).save # ship
+	Service.create( 
+		:company => Faker::Company.name ,
+		:title => Faker::Company.catch_phrase ,
+		:price => rand(28458) ,
+		:description => Faker::Company.bs
+	) # service
+end # auxiliaries
 
-
-
+rand(7).times do
+	@category = Category.create( :name => Faker::Name.last_name )
+	rand(7).times do
+		@category.spawn( :name => Faker::Name.first_name )
+	end # 5? times
+end # 15? times

@@ -25,4 +25,12 @@ module UsersHelper
   		redirect_to root_path
   	end # unless 
   end # filter_regular_users
+  
+  def buyer_shipping
+  	['FAS','FOB','CIF','CNF']
+  end # buyer_shipping
+  
+  def seller_shipping
+  	['EXWORKS']
+  end # seller_shipping
 end # UserHelpers

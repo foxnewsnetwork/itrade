@@ -83,4 +83,26 @@ module PagesHelper
 			 content_tag(:i, "", :class => "icon-remove icon-white")
 		 end # reset btn 
 	end # form_reset_tag
+	
+	# setups = { :uri => String, :key => String, :value => String, :default => [String] }
+	def remote_select_tag(name, setups = {}, options = {} )
+		defaults = { 
+			:uri => "/" + name[ /^\w+/ ].pluralize + ".json" ,
+			:name => name[ /\[\w+\]/ ].gsub( /(\[|\])/, "") ,
+			:key => "name" ,
+			:value => "id" ,
+			:default => []
+		}.merge setups # defaults
+		select_tag( name, options_for_select(defaults[:default]), options.merge( :id => "remote_select_#{name}" ) ) +
+		content_tag(:script, :type => "text/javascript") do
+			%Q(
+				$(function() { 
+					$.get('#{defaults[:uri]}', function(data) { 
+						var temp = data['#{default[:default]}'];
+						$('#remote_select_#{name}').html(options_for_select(temp['#{defaults[:key]}'], temp['#{defaults[:value]}']));
+					} ); // get
+				} ); // document.ready
+			) # Jq String
+		end # content_tag
+	end # remote_select_tag
 end # PagesHelper

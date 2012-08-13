@@ -1,2 +1,3 @@
 module AuxiliariesHelper
-end
+
+end # AuxiliaryHelper
