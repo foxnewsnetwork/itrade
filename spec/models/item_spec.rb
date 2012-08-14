@@ -11,6 +11,7 @@
 #  material_type :string(255)
 #  maw           :integer
 #  quantity      :integer          default(0)
+#  target_id     :integer
 #  title         :string(255)      default("No title")
 #  units         :string(255)      default("kg")
 #  updated_at    :datetime         not null

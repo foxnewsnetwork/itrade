@@ -9,5 +9,9 @@ class PagesController < ApplicationController
 		@title = "Administration"
 		@users = User.all
 		@roots = Category.roots
+		@ships = Ship.all
+		@trucks = Truck.all
+		@services = Service.all
+		@locations = Location.all
 	end # admin
 end # PagesController

@@ -3,22 +3,20 @@ ships @ducks do |ship|
 	company ship.company
 	price ship.price
 	created_at ship.created_at
-	start ship.origination do |location|
+	start ship.origination.at do |location|
 		id location.id
-		name location.name
-		address location.address
-		city location.city
-		state location.state
-		zip location.zip
-		country location.country
+		type location.class.to_s.downcase
+		address location.address if location.is_a? Yard
+		city location.city 
+		state location.state if location.is_a? Yard
+		zip location.zip if location.is_a? Yard
 	end
-	finish ship.destination do |location|
+	finish ship.destination.at do |location|
 		id location.id
-		name location.name
-		address location.address
+		type location.class.to_s.downcase
+		address location.address if location.is_a? Yard
 		city location.city
-		state location.state
-		zip location.zip
-		country location.country
+		state location.state if location.is_a? Yard
+		zip location.zip if location.is_a? Yard
 	end 
 end

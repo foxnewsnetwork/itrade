@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120812004936) do
+ActiveRecord::Schema.define(:version => 20120814104423) do
 
   create_table "auxiliaries", :force => true do |t|
     t.integer  "bid_id",     :null => false
@@ -33,10 +33,10 @@ ActiveRecord::Schema.define(:version => 20120812004936) do
     t.datetime "updated_at",                                                    :null => false
     t.integer  "user_id"
     t.string   "paytype"
-    t.datetime "paydate"
     t.integer  "location_id"
     t.decimal  "maw",         :precision => 10, :scale => 0
     t.string   "shipping"
+    t.integer  "target_id"
   end
 
   add_index "bids", ["user_id"], :name => "index_bids_on_user_id"
@@ -74,8 +74,10 @@ ActiveRecord::Schema.define(:version => 20120812004936) do
     t.integer  "location_id"
     t.string   "material_type"
     t.decimal  "maw",           :precision => 10, :scale => 0
+    t.integer  "target_id"
   end
 
+  add_index "items", ["target_id"], :name => "index_items_on_target_id"
   add_index "items", ["user_id", "id"], :name => "index_items_on_user_id_and_id", :unique => true
   add_index "items", ["user_id"], :name => "index_items_on_user_id"
 
@@ -94,6 +96,16 @@ ActiveRecord::Schema.define(:version => 20120812004936) do
 
   add_index "locations", ["name"], :name => "index_locations_on_name", :unique => true
 
+  create_table "ports", :force => true do |t|
+    t.string   "city"
+    t.string   "code"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "ports", ["city"], :name => "index_ports_on_city"
+  add_index "ports", ["code"], :name => "index_ports_on_code", :unique => true
+
   create_table "services", :force => true do |t|
     t.string   "company",                                    :default => "Tracago", :null => false
     t.string   "title",                                                             :null => false
@@ -108,8 +120,8 @@ ActiveRecord::Schema.define(:version => 20120812004936) do
 
   create_table "ships", :force => true do |t|
     t.string   "company",                                                  :null => false
-    t.integer  "start",                                                    :null => false
-    t.integer  "finish",                                                   :null => false
+    t.integer  "start"
+    t.integer  "finish"
     t.decimal  "price",      :precision => 10, :scale => 0, :default => 0, :null => false
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
@@ -130,10 +142,19 @@ ActiveRecord::Schema.define(:version => 20120812004936) do
   add_index "statuses", ["item_id"], :name => "index_statuses_on_item_id"
   add_index "statuses", ["name"], :name => "index_statuses_on_name"
 
+  create_table "targets", :force => true do |t|
+    t.integer  "t_id"
+    t.string   "t_type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "targets", ["t_id", "t_type"], :name => "index_targets_on_t_id_and_t_type"
+
   create_table "trucks", :force => true do |t|
     t.string   "company",                                                  :null => false
-    t.integer  "start",                                                    :null => false
-    t.integer  "finish",                                                   :null => false
+    t.integer  "start"
+    t.integer  "finish"
     t.decimal  "price",      :precision => 10, :scale => 0, :default => 0, :null => false
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
@@ -165,5 +186,14 @@ ActiveRecord::Schema.define(:version => 20120812004936) do
   add_index "users", ["company"], :name => "index_users_on_company"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "yards", :force => true do |t|
+    t.string   "street_address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
 end

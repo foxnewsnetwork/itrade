@@ -7,15 +7,15 @@ describe BidsController do
 		before(:each) do
 			@user = User.create Factory.next(:user)
 			@item = Factory(:item, :user => @user)
-			@item.at Location.create Factory.next(:location)
-			@destination = Location.create Factory.next(:location)
+			@item.at Factory(:yard)
+			@destination = Factory(:port)
 			luck = [:ship, :truck, :service][rand(3)]
 			@duck = Factory(luck) if luck == :service
-			@duck ||= Factory(luck, :origination => @item.location, :destination => @destination )
+			@duck ||= Factory(luck).from(Factory(:port)).to(Factory(:port))
 			@data =  { 
 				:bid => Factory.next(:bid) ,
 				:auxiliaries => [{ :id => @duck.id, :type => @duck.class.to_s.downcase }] ,
-				:location => { :name => @destination.name }
+				:port => { :city => @destination.city, :code => @destination.code, :id => @destination.id }
 			} # data
 			@method = lambda { post :create, @data.merge( :item_id => @item.id ) }
 		end # before each
@@ -24,7 +24,7 @@ describe BidsController do
 				@method.should change(model, :count).by(1)
 			end # it
 		end # each model
-		[Location, Truck, Ship, Service].each do |model|
+		[Port, Location, Truck, Ship, Service].each do |model|
 			it "should not change the #{model.to_s}" do
 				@method.should_not change(model, :count)
 			end # it

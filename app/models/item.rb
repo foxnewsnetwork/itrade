@@ -11,6 +11,7 @@
 #  material_type :string(255)
 #  maw           :integer
 #  quantity      :integer          default(0)
+#  target_id     :integer
 #  title         :string(255)      default("No title")
 #  units         :string(255)      default("kg")
 #  updated_at    :datetime         not null
@@ -27,6 +28,7 @@ class Item < ActiveRecord::Base
   has_many :elements, :dependent => :destroy
   belongs_to :user
   belongs_to :location
+  belongs_to :target
   
   # Hooks
   after_save :prepare_auxiliaries

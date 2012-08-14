@@ -14,9 +14,8 @@
 			<%= label_tag :shipping, t(:shipping, :scope => [:views, :locations, :forms, :labels]), :class => "control-label" %>
 			<div class="input-prepend">
 				<%= select_tag( "bid[shipping]", options_for_select(buyer_shipping), :class => "span1 add-on") %>
-				<%= location_field_tag( "location[name]", 
-					:class => "input-medium search-query", 
-					:placeholder => t(:name, :scope => [:views, :locations, :forms, :labels]) ) %>
+				<%= select_tag( "port[id]", options_for_select(@ports.map { |x| [x.city + "-" + x.code, x.id] }), :include_blank => true ) %>
+
 			</div>
 		</div>
 </fieldset>

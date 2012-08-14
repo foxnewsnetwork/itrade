@@ -16,7 +16,7 @@ describe AuxiliariesController do
 				before(:each) do
 					10.times do
 						unless duck == :service
-							(@ducks ||= []) << Factory(duck, :origination => Factory(:location), :destination => Factory(:location))
+							(@ducks ||= []) << Factory(duck).from(Factory(:port)).to(Factory(:port))
 						else
 							(@ducks ||= []) << Factory(duck)
 						end # service duck
@@ -56,9 +56,9 @@ describe AuxiliariesController do
 			@seller = User.create Factory.next(:user)
 			@item = Factory(:item, :user => @seller)
 			@bid = Factory(:bid, :user => @current_user, :item => @item)
-			[:start, :finish].each do |a|
-				(@locations ||= {} )[a] = [ { :id => Factory(:location).id },Factory.next(:location) ]
-			end # each a
+			@port = Factory(:port)
+			@yard = Factory(:yard)
+			@port_data = Factory.next(:port)
 		end # before each
 		it "should be an admin" do
 			@current_user.admin.should be_true
@@ -66,83 +66,60 @@ describe AuxiliariesController do
 			User.find_by_id(@current_user.id).should_not be_nil
 			User.find_by_id(@current_user.id).admin.should be_true
 		end # it
+		it "should create the yard" do
+			expect do
+				post :create, :truck => Factory.next(:truck).merge( 
+					:start => { :id => @yard.id, :type => @yard.class.to_s.downcase } 
+				).merge( :finish => Factory.next(:yard) )
+			end.to change(Yard, :count).by(1)
+		end # it
 		{ :ship => Ship, :truck => Truck, :service => Service }.each do |key, model|
-		# { :ship => Ship }.each do |key, model|
-			2.times do |k|
-			# 1.times do |k|
-				describe "create #{key.to_s} in #{k}" do
-					before(:each) do
-						@data = Factory.next(key)
-						@data = @data.merge( :start => @locations[:start][k], :finish => @locations[:finish][k] ) unless key == :service
-						@methods = { 
-							:vanilla => lambda { post :create, key => @data } ,
-							:ajax => lambda { xhr :post, :create, key => @data }
-						} # methods
-					end # before each
-				[:vanilla, :ajax].each do |style|
-				#	[:vanilla].each do |style|
-						describe "style #{style.to_s}" do
-							it "should change the #{key} db" do
-								@methods[style].should change(model, :count).by(1)
-							end # it
-							it "should spawn locations" do
-								if k == 0 || key == :service
-									@methods[style].should_not change(Location, :count)
-								else
-									@methods[style].should change(Location, :count).by(2)
-								end # if k
-							end # it
-							if key != :service
-								[ :start, :finish ].each do |faggot|
-								# [ :start ].each do |faggot|
-									it "when #{faggot.to_s}" do
-										@methods[style].call
-										ducks = assigns(:ducks)
-										ducks.should_not be_nil
-										
-										duck = ducks[key]
-										duck.should_not be_nil
-										
-										duck.finish.class.should == Fixnum
-										duck.start.class.should == Fixnum
-										
-										quack = (faggot==:start ? duck.origination : duck.destination)
-										quack.should_not be_nil
-										if k == 0
-											quack[:id].should == @locations[faggot][k][:id]
-										else
-											[:address, :city, :state, :country].each do |field|
-												quack[field].should == @locations[faggot][k][field]
-											end # each field
-										end # if k 0
-									end # it
-								end # each faggot
-							end # if key != service
-							if k==1 && key != :service
-								it "should have the correct locations" do
+			describe "create #{key.to_s}" do
+				before(:each) do
+					@data = Factory.next(key)
+					@data = @data.merge( 
+						:start_id => @port.id, :start_type => @port.class.to_s.downcase ,
+						:finish_id => @yard.id , :finish_type => @yard.class.to_s.downcase
+					) unless key == :service
+					@methods = { 
+						:vanilla => lambda { post :create, key => @data } ,
+						:ajax => lambda { xhr :post, :create, key => @data }
+					} # methods
+				end # before each
+			[:vanilla, :ajax].each do |style|
+			#	[:vanilla].each do |style|
+					describe "style #{style.to_s}" do
+						it "should change the #{key} db" do
+							@methods[style].should change(model, :count).by(1)
+						end # it
+						if key != :service
+							[ :start, :finish ].each do |faggot|
+							# [ :start ].each do |faggot|
+								it "when #{faggot.to_s}" do
 									@methods[style].call
-									assigns(:locations).should_not be_nil
-									[:start, :finish].each do |p|
-										place = assigns(:locations)[p]
-										place.should_not be_nil
-										expected_place = @locations[p]
-										expected_place.should_not be_nil
-										place.should_not be_nil
-										expected_place[k].should_not be_nil
-										[:country, :address, :city, :state].each do |f|
-											field = place[f]
-											expected_field = expected_place[k][f]
-											field.should_not be_nil
-											expected_field.should_not be_nil
-											field.should eq expected_field
-										end # each field
-									end # each place
+									ducks = assigns(:ducks)
+									ducks.should_not be_nil
+									
+									duck = ducks[key]
+									duck.should_not be_nil
+									
+									duck.finish.class.should == Fixnum
+									duck.start.class.should == Fixnum
+									
+									quack = (faggot==:start ? duck.origination.at : duck.destination.at)
+									quack.should_not be_nil
+									
+									{ Port => @port, Yard => @yard }.each do |m,i|
+										[:id, :city].each do |entry|
+											quack[entry].should == i[entry] if quack.is_a? m
+										end # each entry
+									end # each m,i
 								end # it
-							end # if k 1
-						end # when style
-					end # each style
-				end # create
-			end # 2 times k
+							end # each faggot
+						end # if key != service
+					end # when style
+				end # each style
+			end # create
 		end # each key model
 	end # as admin
 end # AuxiliariesController

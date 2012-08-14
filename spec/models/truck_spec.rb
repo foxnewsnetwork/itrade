@@ -4,10 +4,10 @@
 #
 #  company    :string(255)      not null
 #  created_at :datetime         not null
-#  finish     :integer          not null
+#  finish     :integer
 #  id         :integer          not null, primary key
 #  price      :integer          default(0), not null
-#  start      :integer          not null
+#  start      :integer
 #  updated_at :datetime         not null
 #
 
@@ -16,9 +16,13 @@ require 'factories'
 describe Truck do
   describe "factories" do
   	before(:each) do
-  		@start = Factory(:location)
-  		@finish = Factory(:location)
-  		@truck = Factory(:truck, :origination => @start, :destination => @finish )
+  		@start = Factory(:yard)
+  		if rand(100) > 49
+	  		@finish = Factory(:yard)
+	  	else
+	  		@finish = Factory(:port)
+	  	end # if 50% change
+  		@truck = Factory(:truck).from(@start).to(@finish)
   	end # before each
   	[:origination, :destination].each do |thing|
 			it "should respond to #{thing}" do
@@ -26,8 +30,8 @@ describe Truck do
 			end # it
 		end # each thing
   	it "should be valid" do
-  		@truck.origination.should eq @start
-  		@truck.destination.should eq @finish
+  		Truck.find(@truck).origination.at.should eq @start
+  		Truck.find(@truck).destination.at.should eq @finish
   	end # it
   end # factories
 end # Truck

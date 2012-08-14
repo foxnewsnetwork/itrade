@@ -8,8 +8,9 @@
 #  location_id :integer
 #  maw         :integer
 #  offer       :integer          default(0)
-#  paydate     :datetime
 #  paytype     :string(255)
+#  shipping    :string(255)
+#  target_id   :integer
 #  units       :string(255)      default("USD")
 #  updated_at  :datetime         not null
 #  user_id     :integer
@@ -23,6 +24,7 @@ class Bid < ActiveRecord::Base
   belongs_to :item
   belongs_to :user
   belongs_to :location
+  belongs_to :target
   has_many :auxiliaries 
   
   # Custom modules

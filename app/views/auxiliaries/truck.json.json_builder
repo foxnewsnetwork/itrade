@@ -3,22 +3,20 @@ trucks @ducks do |truck|
 	company truck.company
 	price truck.price
 	created_at truck.created_at
-	start truck.origination do |location|
+	start truck.origination.at do |location|
 		id location.id
-		name location.name
-		address location.address
+		type location.class.to_s.downcase
+		address location.address if location.is_a? Yard
 		city location.city
-		state location.state
-		zip location.zip
-		country location.country
+		state location.state if location.is_a? Yard
+		zip location.zip if location.is_a? Yard
 	end
-	finish truck.destination do |location|
+	finish truck.destination.at do |location|
 		id location.id
-		name location.name
-		address location.address
+		type location.class.to_s.downcase
+		address location.address if location.is_a? Yard
 		city location.city
-		state location.state
-		zip location.zip
-		country location.country
+		state location.state if location.is_a? Yard
+		zip location.zip if location.is_a? Yard
 	end 
 end

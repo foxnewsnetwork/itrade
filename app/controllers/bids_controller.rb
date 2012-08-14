@@ -22,6 +22,8 @@ class BidsController < ApplicationController
 		@bids = @item.bids
 		@bid = current_user.bids.new
 		@tabs = [:price, :transportation, :insurance]
+		@ports = Port.all
+		@yards = Yard.all
 		@ship = Ship.first
 		@truck = Truck.first
 		@service = Service.first
@@ -34,11 +36,18 @@ class BidsController < ApplicationController
 
 	def create
 		@bid = current_user.bid params[:bid], params[:item_id]
-		if params[:location].nil? || params[:location][:name].nil?
+		if (params[:location].nil? || params[:location][:name].nil?) && params[:yard].nil? && params[:port].nil?
 			raise "Wow, Fuck You Error"
 			flash[:error] = t(:failed, :scope => [:controllers, :bids, :create, :location])
 		else
-			@location = Location.search_names params[:location][:name]
+			unless params[:port].nil? || params[:port][:id].nil?
+				@location = Port.find_by_id params[:port][:id]
+				@location ||= Port.find_by_code params[:port][:code]
+			end # unless
+			unless params[:yard].nil?
+				@location ||= Yard.create_on_duplicate params[:yard]
+			end # unless
+			@location ||= Location.search_names params[:location][:name]
 			@location ||= Location.create params[:location]
 			raise "Null Location Error" if @location.nil?
 			unless @location.nil?

@@ -1,0 +1,19 @@
+<!-- admin ships page -->
+<table class="table-striped">
+	<thead><tr>
+		<% [:company, :start, :finish, :price].each do |field| %>
+			<th><%= field.to_s %></th>
+		<% end %> <!-- each field -->
+	</tr></thead>
+	<tbody>
+		<% @ships.each do |ship| %>
+			<tr>	
+				<td><%= ship[:company] %></td>
+				<td><%= ship.origination.city.nil? ? ship.origination.name : ship.origination.city %></td>
+				<td><%= ship.destination.city.nil? ? ship.destination.name : ship.destination.city %></td>
+				<td><%= number_to_currency ship.price %></td>
+			</tr>	
+		<% end %>	 <!-- end each ship -->
+	</tbody>
+</table>
+		

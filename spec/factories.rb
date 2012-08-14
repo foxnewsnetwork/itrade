@@ -12,6 +12,8 @@ def Factory( label, options = {} )
 			end
 			u.save!
 			return u
+		when :port
+			return Port.create Factory.next(:port)
 		else
 			return Faggotory(label, options)
 	end # case label
@@ -183,8 +185,6 @@ end # category
 	Factory.define transport do |ship|
 		ship.company Faker::Company.name
 		ship.price rand(99999)
-		ship.association :origination
-		ship.association :destination
 	end # ship
 	
 	Factory.sequence transport do |n|
@@ -210,3 +210,26 @@ Factory.sequence :service do |n|
 	:description => Faker::Company.bs
 }
 end # service
+
+Factory.sequence :port do |n|
+{ 
+	:city => Faker::Address.city ,
+	:code => Faker::Name.last_name + n.to_s
+}
+end # sequence
+
+Factory.define :yard do |yard|
+	yard.street_address Faker::Address.street_address
+	yard.city Faker::Address.city
+	yard.state Faker::Address.state_abbr
+	yard.zip Faker::Address.zip_code
+end # yard
+
+Factory.sequence :yard do 
+{ 
+	:street_address => Faker::Address.street_address ,
+	:city => Faker::Address.city ,
+	:state => Faker::Address.state_abbr ,
+	:zip => Faker::Address.zip_code
+}
+end # yard

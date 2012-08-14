@@ -72,8 +72,17 @@ class Location < ActiveRecord::Base
 	
 	module Locateable 
 		def at( place = nil )
-			self.location_id = place.id unless place.nil?
-			self.location if self.save
+			if self.respond_to?(:target_id) && place.nil? && !self.target_id.nil?
+				return self.target.retrieve
+			end # if place.nil and !target.nil
+			if place.class == Port || place.class == Yard
+				self.target_id = Target.new.establish( place ).id
+				self.save!
+				place
+			else
+				self.location_id = place.id unless place.nil?
+				self.location if self.save
+			end # if port | yard
 		end # at
 		def at!( place = nil )
 			self.location_id = place.id unless place.nil?

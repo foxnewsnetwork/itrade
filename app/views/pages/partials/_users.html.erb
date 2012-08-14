@@ -14,7 +14,7 @@
 				<td>
 					<%= link_to( user_path( user ), :method => :delete, :remote => true, :class => "btn btn-danger btn-mini" ) do %>
 						<%= content_tag( :i, "", :class => "icon-remove icon-white") %>
-					<% end # kill %>
+					<% end unless user.admin? # kill %>
 				</td>
 			</tr>
 			

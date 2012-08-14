@@ -13,14 +13,16 @@
 			</div>
 		</div>
 	</div>
-	<div class="row-fluid">
-		<% [:users, :categories].each do |segment| %>
-			<div class="span6 well">
-				<div class="page-header">
-					<%= t(segment, :scope => [:views, :pages, :admin]) %>
+	<% [[:users, :categories],[:ships, :trucks], [:services, :locations]].each do |chunk| %>
+		<div class="row-fluid">
+			<% chunk.each do |segment| %>
+				<div class="span6 well">
+					<div class="page-header">
+						<%= t(segment, :scope => [:views, :pages, :admin]) %>
+					</div>
+					<%= render "pages/partials/#{segment.to_s}", :categories => @roots %>
 				</div>
-				<%= render "pages/partials/#{segment.to_s}", :categories => @roots %>
-			</div>
-		<% end # each segment %>
-	</div>
+			<% end # each segment %>
+		</div>
+	<% end %>
 </div>

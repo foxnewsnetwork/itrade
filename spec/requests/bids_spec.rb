@@ -3,13 +3,13 @@ require 'factories'
 
 describe "Bids" do
 	before(:each) do
-		@destination = Factory(:location)
-		@origination = Factory(:location)
+		@destination = Factory(:port)
+		@origination = Factory(:yard)
 		@seller = Factory(:user)
 		@item = Factory(:item, :user => @seller)
 		@item.at @origination
 		[:ship, :truck].each do |a|
-			(@transport ||= { })[a] = Factory(a, :origination => @origination, :destination => @destination)
+			(@transport ||= { })[a] = Factory(a).from(@origination).to(@destination)
 		end # each a
 		@service = Factory(:service)
 		@user_data = Factory.next(:user)
@@ -31,7 +31,7 @@ describe "Bids" do
 				fill_in "bid[offer]", :with => rand(23433)
 				select "pounds", :from => "bid_units"
 				select "CNF", :from => "bid_shipping"
-				fill_in "location[name]", :with => @destination.name
+				select @destination.city + "-" + @destination.code, :from => "port_id"
 				check "truck[id]"
 				select @service.title, :from => "service_id"
 				select @transport[:ship].company, :from => "ship_id"

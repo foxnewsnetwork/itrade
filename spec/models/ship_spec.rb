@@ -4,10 +4,10 @@
 #
 #  company    :string(255)      not null
 #  created_at :datetime         not null
-#  finish     :integer          not null
+#  finish     :integer
 #  id         :integer          not null, primary key
 #  price      :integer          default(0), not null
-#  start      :integer          not null
+#  start      :integer
 #  updated_at :datetime         not null
 #
 
@@ -16,24 +16,18 @@ require 'factories'
 describe Ship do
   describe "factories" do
   	before(:each) do
-  		@start = Factory(:location)
-  		@finish = Factory(:location)
-  		@ship = Factory(:ship, :origination => @start, :destination => @finish )
+  		@start = Factory(:port)
+  		@finish = Factory(:port)
+  		@ship = Factory(:ship).from(@start).to(@finish)
   	end # before each
-  	it "should have the correct ids" do
-  		@ship.start.should eq @start.id
-  	end # it
-  	it "should have the correct ids" do
-  		@ship.finish.should eq @finish.id
-  	end # it
   	[:origination, :destination].each do |thing|
 			it "should respond to #{thing}" do
 				@ship.should respond_to thing
 			end # it
 		end # each thing
   	it "should be valid" do
-  		@ship.origination.should eq @start
-  		@ship.destination.should eq @finish
+  		Ship.find(@ship).origination.at.should eq @start
+  		Ship.find(@ship).destination.at.should eq @finish
   	end # it
   end # factories
 end # Ship

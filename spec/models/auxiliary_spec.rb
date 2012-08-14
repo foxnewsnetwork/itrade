@@ -15,9 +15,9 @@ require 'factories'
 describe Auxiliary do
   describe "relationships" do
   	before(:each) do
-  		[:ship, :truck].each do |transport|
-  			(@transport ||= {})[transport] = Factory(transport, :origination => Factory(:location), :destination => Factory(:location) )
-  		end # each
+  		@transport = {}
+  		@transport[:ship] = Factory(:ship).from(Factory(:port)).to(Factory(:port))
+  		@transport[:truck] = Factory(:truck).from(Factory(:port)).to( rand(1) > 0 ? Factory(:port) : Factory(:yard) )
   		@transport[:service] = Factory(:service)
   		@seller = User.create Factory.next(:user)
   		@buyer = User.create Factory.next(:user)
