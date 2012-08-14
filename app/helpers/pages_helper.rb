@@ -1,5 +1,6 @@
 module PagesHelper
 
+
 	# money input tag, be sure to specify the money options
 	def money_field_tag(f, label, options = { :money => "$" })
 		content_tag(:div, :class => "input-prepend") do

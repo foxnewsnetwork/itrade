@@ -1,0 +1,29 @@
+<!-- admin service partial -->
+<table class="table-striped">
+	<theader>
+		<tr>
+			<% Service.attr_accessible[:default].each do |attribute| %>
+				<% next if attribute.blank? %>
+				<th><%= t(attribute.to_sym, :scope => [:views, :pages, :admin, :services]) %></th>
+			<% end # each attribute %>
+		</tr>
+	</theader>
+	<tbody>
+		<% @services.each do |service| %>
+			<tr>
+				<% Service.attr_accessible[:default].each do |attribute| %>
+					<% next if attribute.blank? %>
+					<% if attribute == "price" %>
+						<td><%= number_to_currency service[attribute.to_sym] %></td>
+					<% else %>
+						<td><%= service[attribute.to_sym] %></td>
+					<% end %>
+				<% end # each attribute %>
+			</tr>
+		<% end # each service %>
+	</tbody>
+</table>
+<%= will_paginate @services, :param_name => :service_page %>
+
+	
+

@@ -1,0 +1,19 @@
+<!-- trucks partial -->
+<table class="table-striped">
+	<thead><tr>
+		<% [:company, :start, :finish, :price].each do |field| %>
+			<th><%= field.to_s %></th>
+		<% end %> <!-- each field -->
+	</tr></thead>
+	<tbody>
+		<% @trucks.each do |ship| %>
+			<tr>	
+				<td><%= ship[:company] %></td>
+				<td><%= ship.origination.at.city %></td>
+				<td><%= ship.destination.at.city %></td>
+				<td><%= number_to_currency ship.price %></td>
+			</tr>	
+		<% end %>	 <!-- end each ship -->
+	</tbody>
+</table>
+<%= will_paginate @trucks, :param_name => :truck_page %>

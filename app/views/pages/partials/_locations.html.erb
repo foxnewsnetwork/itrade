@@ -1,0 +1,37 @@
+<!-- admin location partials -->
+<% { :port => Port, :yard => Yard }.each do |key, model| %>
+	<%= content_tag :h4, t(key, :scope => [:views, :pages, :admin, :locations]) %>
+	<%= content_tag :table, :class => "table-striped" do %>
+		<%= content_tag :theader do %>
+			<%= content_tag :tr do %>
+				<% (model.attr_accessible[:default]).each do |field| %>
+					<% next if field.blank? %>
+					<%= content_tag :th do %>
+						<%= t(field.to_sym, :scope => [:views, :pages, :admin, :locations]) %>
+					<% end # "th tag" %>
+				<% end # "each field" %>
+				<%= content_tag :th do %> 
+					<%= t(:kill, :scope => [:views, :pages, :admin, :locations]) %>
+				<% end # th tag %>
+			<% end # each tr %>
+		<% end # "theader tag" %>
+		<%= content_tag :tbody do %>
+			<% @locations[key].each do |location| %>
+				<%= content_tag :tr do %>
+					<% (model.attr_accessible[:default]).each do |field| %>
+						<% next if field.blank? %>
+						<%= content_tag :td do %>
+							<%= location[field.to_sym] %>
+						<% end # "td tag" %>
+					<% end # "each field" %>
+					<%= content_tag :td do %>		
+						<%= link_to "#delete", :class => "btn btn-mini btn-danger" do %>
+							<%= content_tag :i, "", :class => "icon-remove icon-white" %>
+						<% end # "delete link" %>
+					<% end # "td tag" %>
+				<% end # "tr tag" %>
+			<% end # "each location" %>
+		<% end # "tbody tag" %>
+	<% end # "table tag" %>
+	<%= will_paginate @locations[key], :param_name => (key.to_s + "_page").to_sym %>
+<% end # "each key model" %> 

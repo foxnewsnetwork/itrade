@@ -7,6 +7,7 @@ gem "paperclip", "~> 3.0.0"
 gem "aws-sdk"
 gem "json_builder"
 gem 'multi_json'
+gem "will_paginate", "~> 3.0.3"
 
 group :development do
   gem 'rspec-rails' , '2.11.0'

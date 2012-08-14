@@ -8,14 +8,21 @@
 require 'rubygems'
 require 'faker'
 
-def location
+def yard
 { 
-	:address => Faker::Address.street_address ,
+	:street_address => Faker::Address.street_address ,
 	:city => Faker::Address.city ,
 	:state => Faker::Address.state ,
 	:zip => Faker::Address.zip_code	
 }
 end # location
+
+def port
+{ 
+	:city => Faker::Address.city ,
+	:code => Faker::Name.last_name + rand(999999999).to_s
+}
+end # port
 
 def get1( duck )
 	duck[rand(duck.length)]
@@ -36,12 +43,12 @@ end # get1
 		:material_type => Faker::Company.name ,
 		:maw => rand(234345)
 	) # item
-	( @item_locations  ||= []) << (Location.create location)
+	( @item_locations  ||= []) << ( Yard.create yard )
 	@item.at @item_locations.last
 end # 10 users
 10.times do
-	(@domestic ||= []) << (Location.create( :name => "port" + Faker::Address.city) )
-	(@foreign ||= []) << (Location.create( :name => "port" + Faker::Address.city) )
+	(@domestic ||= []) << ( Port.create port )
+	(@foreign ||= []) << ( Port.create port )
 	Ship.new(
 		:company => Faker::Company.name ,
 		:price => rand(234324) ,

@@ -9,11 +9,11 @@
 		<% @ships.each do |ship| %>
 			<tr>	
 				<td><%= ship[:company] %></td>
-				<td><%= ship.origination.city.nil? ? ship.origination.name : ship.origination.city %></td>
-				<td><%= ship.destination.city.nil? ? ship.destination.name : ship.destination.city %></td>
+				<td><%= ship.origination.at.city %></td>
+				<td><%= ship.destination.at.city %></td>
 				<td><%= number_to_currency ship.price %></td>
 			</tr>	
 		<% end %>	 <!-- end each ship -->
 	</tbody>
 </table>
-		
+<%= will_paginate @ships, :param_name => :ship_page %>
