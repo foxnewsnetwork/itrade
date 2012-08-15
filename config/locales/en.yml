@@ -225,6 +225,7 @@ en: {
 					bid : "Make an Offer" ,
 					initial_price : "Set Initial Price" ,
 					insurance : "Additional Services" ,
+					asking_price : "Asking Price" ,
 				} , # new
 				show: { 
 					bid_data : "Listing Statistics" ,

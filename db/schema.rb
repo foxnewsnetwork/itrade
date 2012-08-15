@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120814104423) do
+ActiveRecord::Schema.define(:version => 20120814233833) do
 
   create_table "auxiliaries", :force => true do |t|
     t.integer  "bid_id",     :null => false
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20120814104423) do
     t.decimal  "price",       :precision => 10, :scale => 0, :default => 0,         :null => false
     t.datetime "created_at",                                                        :null => false
     t.datetime "updated_at",                                                        :null => false
+    t.datetime "expiration"
   end
 
   add_index "services", ["company"], :name => "index_services_on_company"
@@ -125,6 +126,7 @@ ActiveRecord::Schema.define(:version => 20120814104423) do
     t.decimal  "price",      :precision => 10, :scale => 0, :default => 0, :null => false
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
+    t.datetime "expiration"
   end
 
   add_index "ships", ["company"], :name => "index_ships_on_company"
@@ -158,6 +160,7 @@ ActiveRecord::Schema.define(:version => 20120814104423) do
     t.decimal  "price",      :precision => 10, :scale => 0, :default => 0, :null => false
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
+    t.datetime "expiration"
   end
 
   add_index "trucks", ["company"], :name => "index_trucks_on_company"

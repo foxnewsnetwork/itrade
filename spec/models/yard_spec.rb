@@ -19,6 +19,9 @@ describe Yard do
   		@bad_data = Factory.next(:yard)
   		@good_data = Factory.next(:yard)
   		@bad_yard = Yard.create @bad_data
+  		5.times do
+	  		(@other_yards ||= []) << Factory(:yard)
+  		end # t times
   	end # before each
   	it "should create the yard" do
   		expect do

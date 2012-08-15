@@ -4,6 +4,7 @@
 #
 #  company    :string(255)      not null
 #  created_at :datetime         not null
+#  expiration :datetime
 #  finish     :integer
 #  id         :integer          not null, primary key
 #  price      :integer          default(0), not null
@@ -14,6 +15,30 @@
 require 'spec_helper'
 require 'factories'
 describe Truck do
+	describe "helpers-just-find-it" do
+		before(:each) do
+			@yard_data = Factory.next(:yard)
+			@yard = Yard.create @yard_data
+			
+			@clean_data = Factory.next(:yard)
+		end # before each
+		it "should create" do
+			expect do
+				Target.just_find_it @clean_data
+			end.not_to change(Yard, :count)
+		end # it
+		it "should not create" do
+			expect do
+				Target.just_find_it( @yard_data )
+			end.not_to change(Yard, :count)
+		end # it
+		it "should find it" do
+			Target.just_find_it( @yard_data ).should eq @yard
+		end # it
+		it "should not find it" do
+			Target.just_find_it( @clean_data ).should be_nil
+		end # it
+	end # helpers
   describe "factories" do
   	before(:each) do
   		@start = Factory(:yard)

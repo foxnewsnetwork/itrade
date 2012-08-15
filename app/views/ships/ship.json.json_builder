@@ -1,0 +1,23 @@
+ships @ships do |ship|
+	id ship.id
+	expiration ship.expiration
+	company ship.company
+	price ship.price
+	created_at ship.created_at
+	start ship.origination.at do |location|
+		id location.id
+		type location.class.to_s.downcase
+		address location.address if location.is_a? Yard
+		city location.city 
+		state location.state if location.is_a? Yard
+		zip location.zip if location.is_a? Yard
+	end
+	finish ship.destination.at do |location|
+		id location.id
+		type location.class.to_s.downcase
+		address location.address if location.is_a? Yard
+		city location.city
+		state location.state if location.is_a? Yard
+		zip location.zip if location.is_a? Yard
+	end 
+end

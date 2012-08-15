@@ -14,15 +14,16 @@
 class Yard < ActiveRecord::Base
   attr_accessible :city, :state, :street_address, :zip
   
-  def self.create_on_duplicate( data = {} )
+  def self.create_on_duplicate( data )
   	search_params = {}
+  	raise "NO DATA ERROR" if data.nil? || data.empty?
   	Yard.attr_accessible[:default].each do |attribute|
-  		next if attribute.blank?
+  		next if attribute.blank? || data[attribute.to_sym].nil?
   		search_params[attribute.to_sym] = data[attribute.to_sym]
   	end # attribute
-  	result = Yard.where(search_params).limit(1)
+  	result = Yard.where(search_params).limit(5)
   	raise "Yard getting filled by pointless duplicate entries ERROR" if result.count > 1
-  	Yard.create data if result.empty?
-  	result.first unless result.empty?
+  	return Yard.create search_params if result.empty?
+  	return result.first
   end # create_on_duplicate
 end # Yard

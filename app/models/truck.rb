@@ -4,6 +4,7 @@
 #
 #  company    :string(255)      not null
 #  created_at :datetime         not null
+#  expiration :datetime
 #  finish     :integer
 #  id         :integer          not null, primary key
 #  price      :integer          default(0), not null

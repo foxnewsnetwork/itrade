@@ -1,0 +1,31 @@
+trucks @trucks do |truck|
+	id truck.id
+	company truck.company
+	price truck.price
+	expiration truck.expiration
+	destination truck.destination.at do |d|
+		id d.id
+		type d.class.to_s
+		city d.city
+		if d.is_a? Port
+			code d.code
+		else
+			street_address d.street_address
+			state d.state
+			zip d.zip
+		end
+	end
+	origination truck.origination.at do |d|
+		id d.id
+		type d.class.to_s
+		city d.city
+		if d.is_a? Port
+			code d.code
+		else
+			street_address d.street_address
+			state d.state
+			zip d.zip
+		end
+	end
+end 
+

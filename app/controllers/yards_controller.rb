@@ -1,0 +1,2 @@
+class YardsController < ApplicationController
+end

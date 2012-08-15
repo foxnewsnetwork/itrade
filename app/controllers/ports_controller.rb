@@ -1,0 +1,2 @@
+class PortsController < ApplicationController
+end

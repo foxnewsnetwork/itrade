@@ -11,7 +11,7 @@
 		</div>
 	</div>
 	<div class="row-fluid">
-		<div class="span8 well">
+		<div class="span5 well">
 			<%= form_for [@item, @bid] do |f| %>
 				<div class="row-fluid">
 					<div class="span12-fluid">
@@ -53,8 +53,21 @@
 				</div>
 			<% end # form %>
 		</div>
-		<div class="span4 well">
-		
+		<div class="span7 well">
+			<div class="row-fluid">
+				<div class="span12-fluid" id="item-information-box">
+					<dl class="dl-horizontal">
+						<dt><%= t(:asking_price, :scope => [:views, :bids, :new]) %></dt>
+						<% unless @asking_price.nil? %>
+							<dd>
+								<%= number_to_currency(@asking_price.price) + " / " + @asking_price.units + @asking_price.shipping + " => " + @asking_price.at.city %>
+							</dd>
+						<% else %>
+							<dd><%= t(:unknown) %></dd>
+						<% end %>
+					</dl>
+				</div>
+			</div>
 		</div>
 	</div>	
 </div>

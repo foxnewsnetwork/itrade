@@ -1,0 +1,2 @@
+module YardsHelper
+end

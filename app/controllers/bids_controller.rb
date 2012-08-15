@@ -19,6 +19,7 @@ class BidsController < ApplicationController
 			render "public/404" 
 			return
 		end # if nil
+		@asking_price = @item.bids.find_by_user_id( @item.user_id )
 		@bids = @item.bids
 		@bid = current_user.bids.new
 		@tabs = [:price, :transportation, :insurance]

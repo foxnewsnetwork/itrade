@@ -233,3 +233,19 @@ Factory.sequence :yard do
 	:zip => Faker::Address.zip_code
 }
 end # yard
+
+[ :origination, :destination ].each do |key|
+	Factory.sequence key do |n|
+		if n%2 == 0
+			{ 
+				[key.to_s[0], "type"].join("_").to_sym => "yard" ,
+				key => Factory.next(:yard)
+			}
+		else
+			{ 
+				[key.to_s[0], "type"].join("_").to_sym => "port" ,
+				key => { }
+			}
+		end # if even
+	end # key
+end # each key key2

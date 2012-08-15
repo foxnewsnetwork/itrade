@@ -5,6 +5,7 @@
 #  company     :string(255)      default("Tracago"), not null
 #  created_at  :datetime         not null
 #  description :string(255)      not null
+#  expiration  :datetime
 #  id          :integer          not null, primary key
 #  price       :integer          default(0), not null
 #  title       :string(255)      not null

@@ -1,5 +1,5 @@
 Itrade::Application.routes.draw do
-
+	
   resources :auxiliaries, :only => [:create, :destroy, :index, :show]
 
 	resources :categories, :only => [:create, :destroy, :show, :index]
@@ -22,7 +22,9 @@ Itrade::Application.routes.draw do
   	end # resources bids
   	resources :elements, :only => [:create, :destroy]
   end # resources items  
-	
+	[:ships, :trucks].each do |transports|
+		resources transports, :only => [:create, :destroy, :index]
+	end # each transport	
 	match "/admin", :to => "pages#admin"
   # The priority is based upon order of creation:
   # first created -> highest priority.
