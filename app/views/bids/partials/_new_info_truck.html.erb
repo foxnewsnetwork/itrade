@@ -1,0 +1,30 @@
+<table class="table-striped">
+	<theader>
+		<tr>
+			<% [:company, :start, :finish, :price].each do |field| %>
+				<th><%= t field, :scope => [:views, :trucks, :labels] %></th>
+			<% end # each field %>
+		</tr>
+	</theader>
+	<tbody>
+		<% @trucks.each do |ship| %>
+			<tr>
+				<% [:company, :start, :finish, :price].each do |field| %>
+					<td>
+						<% case field %>
+							<% when :start %>
+								<%= ship.origination.at.city + " - " + ship.origination.at.class.to_s %>
+							<% when :finish %>
+								<%= ship.destination.at.city + " - " + ship.destination.at.class.to_s%>
+							<% when :price %>
+								<%= number_to_currency ship[field] %>
+							<% else %>
+								<%= ship[field] %>
+						<% end # case %>
+					</td>
+				<% end # each field %>
+			</tr>
+		<% end # each port %>
+		
+	</tbody>
+</table>

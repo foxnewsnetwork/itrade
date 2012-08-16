@@ -87,7 +87,7 @@
 <% if @correct %>
 	<% ['user','location'].each do |type| %>
 		<%= dialog_tag("dialog-#{type}-user-show", :open => "open-#{type}-button", :close => "close-#{type}-button") do %>
-			<%= render "users/partials/#{type}_form", :remote => false, :parent => @user, :method => @location.valid? ? "put" : "post" %>
+			<%= render "users/partials/#{type}_form", :remote => false, :parent => @user, :method => @user.location_id.nil? ? "post" : "put" %>
 		<% end # end dialog box %>
 	<% end # each type %>	
 <% end # if correct user %>

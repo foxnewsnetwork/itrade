@@ -11,11 +11,44 @@
 		</div>
 		<hr />
 		<div class="control-group">
+			<%= label_tag :target, t(:target, :scope => [:views, :targets, :labels]) %>
+			<% {:port => "ship", :yard => "warehouse-2"}.each do |tag, pic| %>
+				<%= stateful_button_tag( "specify-#{tag.to_s}-button", :class => "btn btn-square" ) do %>
+					<%= image_tag("http://i299.photobucket.com/albums/mm281/foxnewsnetwork/#{pic}.png") %>
+				<% end # square button %>
+			<% end # each tag pic %>
+		</div>
+		<hr />
+		<div class="control-group">
+			<%= hidden_field_tag "location_type", "port", :id => "location_type_id" %>
 			<%= label_tag :shipping, t(:shipping, :scope => [:views, :locations, :forms, :labels]), :class => "control-label" %>
 			<div class="input-prepend">
 				<%= select_tag( "bid[shipping]", options_for_select(buyer_shipping), :class => "span1 add-on") %>
-				<%= select_tag( "port[id]", options_for_select(@ports.map { |x| [x.city + "-" + x.code, x.id] }), :include_blank => true ) %>
-
+				<%= select_tag( "unused[label]", options_for_select(['??????']), :diabled => true ) %>
+				<%= select_tag( "port[id]", options_for_select(@ports.map { |x| [x.city + "-" + x.code, x.id] }), 
+					:include_blank => true, :style => "display : none;", :id => "port_id_select_tag" ) %>
+				<%= select_tag( "unused[name]", options_for_select(['My Yard']), :disabled => true, :style => "display : none;" ) %>
+			</div>
+			<div class="hidden-junk">
+				<% @ports.each do |port| %>
+					<%= content_tag(:invisible, "", :id => "port-metadata-#{port.id}", :data_country => "#{port[:country]}" ) %>
+				<% end # port %>
+			</div>
+			<div id="new_yard_form" style="display : none;">
+				<dl>
+					<% ['street_address','city'].each do |field| %>
+						<dt><%= label_tag t( field.to_sym, :scope => [:views, :yards, :forms, :labels] ) %></dt>
+						<dd><%= text_field_tag "yard[#{field}]", current_user.location.nil? ? "" : current_user.location[field.to_sym] %></dd>
+					<% end # each field %>
+					<dt>
+						<%= label_tag t( :state_zip, :scope => [:views, :yards, :forms, :labels] ) %>
+					</dt>
+					<dd>
+						<% [:state, :zip].each do |key| %>
+							<%= text_field_tag "yard[#{key.to_s}]", current_user.location.nil? ? "" : current_user.location[key], :class => "input-mini" %>
+						<% end # each key %>
+					</dd>
+				</dl>
 			</div>
 		</div>
 </fieldset>

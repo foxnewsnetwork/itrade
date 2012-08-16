@@ -42,9 +42,10 @@ class ShipsController < ApplicationController
 		@ships = Ship.to_and_from(@ports[:finish], @ports[:start]) unless @ports[:finish].nil? || @ports[:start].nil?
 		@ships ||= Ship.to( @ports[:finish] ) unless @ports[:finish].nil?
 		@ships ||= Ship.from( @ports[:start] ) unless @ports[:start].nil?
-		raise "Fucking Hell #{@ports.to_s} ERROR" if @ships.nil? || @ships.empty?
+		# raise "Fucking Hell #{@ports.to_s} ERROR" if @ships.nil? || @ships.empty?
 		respond_to do |f|
 			f.json { render "ship", :handler => ["json_builder"] }
+			f.js
 		end # respond_to f
 	end # index
 end # ShipsController 

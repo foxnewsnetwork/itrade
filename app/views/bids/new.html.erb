@@ -53,21 +53,20 @@
 				</div>
 			<% end # form %>
 		</div>
-		<div class="span7 well">
-			<div class="row-fluid">
-				<div class="span12-fluid" id="item-information-box">
-					<dl class="dl-horizontal">
-						<dt><%= t(:asking_price, :scope => [:views, :bids, :new]) %></dt>
-						<% unless @asking_price.nil? %>
-							<dd>
-								<%= number_to_currency(@asking_price.price) + " / " + @asking_price.units + @asking_price.shipping + " => " + @asking_price.at.city %>
-							</dd>
-						<% else %>
-							<dd><%= t(:unknown) %></dd>
-						<% end %>
-					</dl>
+		<div class="span7">
+			<% 3.times do |k| %>
+				<% field = [:item, :ship, :truck][k] %>
+				<div class="row-fluid">
+					<div class="span12-fluid well">
+						<div class="page-header">
+							<h3><%= t(field, :scope => [:views, :bids, :info]) %></h3>
+						</div>
+						<div id="information-box-<%= field %>">
+							<%= render "bids/partials/new_info_#{field}" %>
+						</div>
+					</div>
 				</div>
-			</div>
+			<% end # each field %>
 		</div>
 	</div>	
 </div>

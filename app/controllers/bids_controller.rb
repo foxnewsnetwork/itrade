@@ -28,7 +28,8 @@ class BidsController < ApplicationController
 		@ship = Ship.first
 		@truck = Truck.first
 		@service = Service.first
-		
+		@ships = Ship.order( "created_at DESC" ).limit(5)
+		@trucks = Truck.from( @item.at )
 	end # new
 	
 	def edit
@@ -42,11 +43,15 @@ class BidsController < ApplicationController
 			flash[:error] = t(:failed, :scope => [:controllers, :bids, :create, :location])
 		else
 			unless params[:port].nil? || params[:port][:id].nil?
-				@location = Port.find_by_id params[:port][:id]
-				@location ||= Port.find_by_code params[:port][:code]
+				if params[:location_type].nil? || params[:location_type] == "port"
+					@location = Port.find_by_id params[:port][:id]
+					@location ||= Port.find_by_code params[:port][:code]
+				end # if location_type
 			end # unless
 			unless params[:yard].nil?
-				@location ||= Yard.create_on_duplicate params[:yard]
+				if params[:location_type].nil? || params[:location_type] == "yard"
+					@location ||= Yard.create_on_duplicate params[:yard]
+				end # if location_type
 			end # unless
 			@location ||= Location.search_names params[:location][:name]
 			@location ||= Location.create params[:location]

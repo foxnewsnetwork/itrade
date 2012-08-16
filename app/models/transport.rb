@@ -31,6 +31,24 @@ module Transport
 				@targets = Target.where( :t_id => place.id, :t_type => place.class.to_s.downcase )
 				self.where( :finish => @targets.map { |x| x.id } )
 			end # to
+			
+			def by_price
+				self.order( "price ASC" )
+			end # price
+			
+			def by_origin(duck)
+				ducks = Target.where( :t_id => duck.id, :t_type => duck.class.to_s.downcase ).map { |x| x.id }
+				return [] if ducks.nil? || ducks.empty?
+				self.where( :start => ducks )
+			end # origin
+			
+			def by_destination(duck)
+				ducks = Target.where( :t_id => duck.id, :t_type => duck.class.to_s.downcase ).map { |x| x.id }
+				return [] if ducks.nil? || ducks.empty?
+				self.where( :finish => ducks )
+			end # destination
+			
+			
 		end # << duck
 	end # transportable
 	

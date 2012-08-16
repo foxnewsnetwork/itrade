@@ -42,6 +42,9 @@ class Location < ActiveRecord::Base
 	# Callbacks
 	before_validation :p_process_name
 		
+	def street_address
+		self.address
+	end # street_address
 	# Duck-typing yay!
 	def has( item = nil )
 		if item.nil?

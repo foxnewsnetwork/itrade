@@ -196,6 +196,15 @@ en: {
 			help : { 
 				bid : "Make an offer on this listing"
 			} , # help
+			info : { 
+			 item : "Listing" ,
+			 ship : "Ship" ,
+			 truck : "Truck" ,
+			} , # info
+			new : { 
+				asking_price : "Asking Price" ,
+				
+			} , # new
 			forms: {
 				placeholders: {
 					name: "Destination"		,
@@ -246,6 +255,40 @@ en: {
 				} , # labels
 			} , # forms
 		} , # service
+		yards : { 
+			forms : { 
+				labels : { 
+					street_address : "Street Address" ,
+					city : "City" ,
+					state : "State" ,
+					zip : "Zip" ,
+					state_zip : "State & Zip"
+				} , # labels
+			} , # forms
+		} , # yards
+		targets : { 
+			labels : { 
+				target : "Destination Type" ,
+			} , # labels
+		} , # targets
+		ships : { 
+			labels : { 
+				company : "Company" ,
+				start : "Origin Port" ,
+				finish : "Destination Port" ,
+				price : "Price Per Container" , 
+				
+			} , # labels
+		} , # ships
+		trucks : { 
+			labels : { 
+				company : "Company" ,
+				start : "Origin" ,
+				finish : "Destination" ,
+				price : "Price Per Truck" , 
+				
+			} , # labels
+		} , # ships
 		elements : { 
 			forms : { 
 				new : { 

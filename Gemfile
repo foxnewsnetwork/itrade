@@ -10,13 +10,13 @@ gem 'multi_json'
 gem "will_paginate", "~> 3.0.3"
 
 group :development do
-  gem 'rspec-rails' , '2.11.0'
+  gem 'rspec-rails' , '~>2.11.0'
   gem 'faker', '~>1.0.1'
   gem 'annotate', ">=2.5.0.pre1"
 end # development
 
 group :test do
-  gem 'rspec', '2.11.0'
+  gem 'rspec', '~>2.11.0'
   gem 'capybara', '1.1.2'
 #  gem 'webrat', '~> 0.7.1'
   gem 'factory_girl', '~>2.1.0'

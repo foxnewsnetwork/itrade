@@ -70,6 +70,25 @@ module PagesHelper
 		end # content_Tag
 	end # ajax_content_tag
 	
+	def stateful_button_tag(id, options = {}, &block )
+		content_tag(:button, options.merge(:id => id) ) { yield } +
+		content_tag(:script, :type => "text/javascript") do
+			%Q(
+				$( function() { 
+					$('##{id}').tooltip( { title : '...', trigger : 'manual' } ).click( function(e) { 
+						$(this).tooltip( 'show' );
+						$(this).attr('disabled', true);
+						setTimeout( function() { 
+							$('##{id}').attr('disabled', false);
+							$('##{id}').tooltip( 'hide' );
+						}, 1500 ); // setTimeout
+						return false;
+					} ); // click callback
+				} ); //  document.ready
+			) # javascript
+		end # content_Tag
+	end # stateful_button_tag
+	
 	def form_action_tag( target )
 		 form_submit_tag(target) + form_reset_tag(target)
 	end # form_action_tag

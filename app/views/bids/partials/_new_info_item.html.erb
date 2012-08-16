@@ -1,0 +1,11 @@
+<dl>
+	<dt><%= t(:asking_price, :scope => [:views, :bids, :new]) %></dt>
+	<dd>
+		<% unless @asking_price.nil? %>
+			<%= number_to_currency(@asking_price.price) + " / " + @asking_price.units %>
+		<% else %>
+			<%= t(:unknown) %>
+		<% end %>
+		<%= " @ " + @item.at.city %>
+	</dd>
+</dl>
