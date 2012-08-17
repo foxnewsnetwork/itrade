@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120814233833) do
+ActiveRecord::Schema.define(:version => 20120816232709) do
 
   create_table "auxiliaries", :force => true do |t|
     t.integer  "bid_id",     :null => false
@@ -99,8 +99,9 @@ ActiveRecord::Schema.define(:version => 20120814233833) do
   create_table "ports", :force => true do |t|
     t.string   "city"
     t.string   "code"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.boolean  "domestic",   :default => true, :null => false
   end
 
   add_index "ports", ["city"], :name => "index_ports_on_city"

@@ -2,7 +2,11 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+
 $ ->
+	start_id = $("#item-metadata").attr "data_id"
+	start_type = $("#item-metadata").attr "data_type"
+	
 	swap_warning = (me,him) ->
 		myjunk = $(me).attr "class"
 		hisjunk = $("#specify-#{him}-button").attr("class").replace /\s*btn-warning/, ""
@@ -49,9 +53,27 @@ $ ->
 		if is_spamming_flag
 			return false
 		else
-			$.get( "/ships.js?finish=#{$(this).val()}" )
+			port_id = $(this).val()
+			port_domestic = $("#port-metadata-#{port_id}").attr "data_domestic"
+			if port_domestic == true || port_domestic == "true"
+				target_uri = "/trucks.js?"
+				fgen = (nig) ->
+					(p) ->
+						target_uri += encodeURIComponent( "#{nig}[#{p[0]}]" ) + "=#{p[1]}&"	
+					# p
+				# fgen
+				fgen("f")(clusterfuck) for clusterfuck in [ ['id', port_id], ['type', 'port'] ]
+				fgen("s")(clusterfuck) for clusterfuck in [ ['id', start_id], ['type', start_type] ]
+				
+				$.get( target_uri )
+				$("#information-box-truck").hide( "explode", 500 )
+			else
+				$.get( "/ships.js?finish=#{port_id}" )	
+				$("#information-box-ship").hide( "explode", 500 )
+			# if-else
+			
 			$(this).attr "disabled" , true
-			$("#information-box-ship").hide( "explode", 500 )
+			
 			is_spamming_flag = true
 			setTimeout =>
 				$(this).attr "disabled" , false
@@ -59,6 +81,32 @@ $ ->
 				return false
 			, 1500 # setTimeout
 		# if-else		
+		return false
+	# change
+	
+	yard_change_request = =>
+		yard_data = {}
+		data_ready_flag = true
+		((f) ->
+			yard_data[f] = $("#yard_#{f}").val()
+			if !yard_data[f]? || yard_data[f] == ""
+				data_ready_flag = false
+		)(fucker) for fucker in ['street_address','city','state','zip']
+		
+		if data_ready_flag
+			qstring = "/trucks.js?"
+			((key,val) ->
+				qstring += encodeURIComponent( key ) + "=#{val}&"
+				return false
+			)(key, val) for key, val of { "f[type]" : "yard" , "f[city]" : yard_data['city'], "s[type]" : start_type, "s[id]" : start_id }
+			$.get( qstring )
+			return true
+		return false
+		# if data_ready_flag			
+	# yard_change_request
+	
+	$("#yard_city").change ->
+		yard_change_request()
 		return false
 	# change
 	return false

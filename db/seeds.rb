@@ -17,10 +17,11 @@ def yard
 }
 end # location
 
-def port
+def port(where = :domestic)
 { 
 	:city => Faker::Address.city ,
-	:code => Faker::Name.last_name + rand(999999999).to_s
+	:code => Faker::Name.last_name + rand(999999999).to_s ,
+	:domestic => where == :domestic ? true : false
 }
 end # port
 
@@ -48,7 +49,7 @@ end # get1
 end # 10 users
 10.times do
 	(@domestic ||= []) << ( Port.create port )
-	(@foreign ||= []) << ( Port.create port )
+	(@foreign ||= []) << ( Port.create port(:foreign) )
 	Ship.new(
 		:company => Faker::Company.name ,
 		:price => rand(234324) ,

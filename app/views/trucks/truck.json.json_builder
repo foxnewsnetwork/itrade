@@ -9,6 +9,7 @@ trucks @trucks do |truck|
 		city d.city
 		if d.is_a? Port
 			code d.code
+			domestic d.domestic
 		else
 			street_address d.street_address
 			state d.state
@@ -21,6 +22,7 @@ trucks @trucks do |truck|
 		city d.city
 		if d.is_a? Port
 			code d.code
+			domestic d.domestic
 		else
 			street_address d.street_address
 			state d.state

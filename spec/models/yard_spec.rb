@@ -14,6 +14,22 @@
 require 'spec_helper'
 require 'factories'
 describe Yard do
+	describe "find_by_all_fields" do
+		before(:each) do
+			15.times do
+				(@yard_data ||= []) << Factory.next(:yard)
+				(@yard ||= []) << Yard.create( @yard_data.last )
+			end # 15 times
+			@k = rand(15)
+			@result = Yard.find_by_all_fields( @yard_data[@k] )
+		end # before each
+		it "should not find crap" do
+			Yard.find_by_all_fields( Factory.next(:yard) ).should be_nil
+		end # it
+		it "should find what I want" do
+			@result.should eq @yard[@k]
+		end # it
+	end # find by all fields
   describe "create on duplicate" do
   	before(:each) do
   		@bad_data = Factory.next(:yard)

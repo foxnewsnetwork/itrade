@@ -5,6 +5,7 @@
 #  city       :string(255)
 #  code       :string(255)
 #  created_at :datetime         not null
+#  domestic   :boolean          default(TRUE), not null
 #  id         :integer          not null, primary key
 #  updated_at :datetime         not null
 #

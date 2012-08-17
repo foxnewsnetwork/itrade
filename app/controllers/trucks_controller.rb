@@ -58,14 +58,15 @@ class TrucksController < ApplicationController
 		[:s, :f].each do |k|
 			unless params[k].nil?
 				n = params[k]
-				(@p ||= {})[k] = Target.get_from_id_type( n[:id], n[:type] )
+				(@p ||= {})[k] = Target.get_from_id_type( n[:id], n[:type] ) unless n[:id].nil? || n[:type].nil?
+				@p[k] ||= Yard.where( :city => n[:city] ) if n[:type] == "yard"
 			end # unless no k
 		end # each k
 		unless @p.nil?
 			@trucks = Truck.to_and_from( @p[:f], @p[:s] ) unless @p[:f].nil? || @p[:s].nil?
 			@trucks ||= Truck.from(@p[:s]) unless @p[:s].nil?
 			@trucks ||= Truck.to(@p[:f]) unless @p[:f].nil?
-			raise "NO TRUCK ERROR" if @trucks.empty?
+			# raise "NO TRUCK ERROR" if @trucks.empty?
 			@trucks.each do |truck|
 				raise "why nil? #{truck.to_json}" if truck.destination.at.nil?	
 			end # each nil check
@@ -74,6 +75,7 @@ class TrucksController < ApplicationController
 		end # unless p nil
 		respond_to do |f|
 			f.json { render "truck", :handler => ["json_builder"] }
+			f.js
 		end # respond_to f
 	end # index
 end # TruckController

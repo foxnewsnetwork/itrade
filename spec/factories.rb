@@ -214,7 +214,8 @@ end # service
 Factory.sequence :port do |n|
 { 
 	:city => Faker::Address.city ,
-	:code => Faker::Name.last_name + n.to_s
+	:code => Faker::Name.last_name + n.to_s ,
+	:domestic => true
 }
 end # sequence
 
@@ -222,7 +223,7 @@ Factory.define :yard do |yard|
 	yard.street_address Faker::Address.street_address
 	yard.city Faker::Address.city
 	yard.state Faker::Address.state_abbr
-	yard.zip Faker::Address.zip_code
+	yard.zip Faker::Address.zip_code[0..4]
 end # yard
 
 Factory.sequence :yard do 
@@ -230,7 +231,7 @@ Factory.sequence :yard do
 	:street_address => Faker::Address.street_address ,
 	:city => Faker::Address.city ,
 	:state => Faker::Address.state_abbr ,
-	:zip => Faker::Address.zip_code
+	:zip => Faker::Address.zip_code[0..4]
 }
 end # yard
 

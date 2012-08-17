@@ -30,8 +30,11 @@
 				<%= select_tag( "unused[name]", options_for_select(['My Yard']), :disabled => true, :style => "display : none;" ) %>
 			</div>
 			<div class="hidden-junk">
+				<%= content_tag(:invisible, "", :id => "item-metadata", :data_id => @item.at.id, :data_type => @item.at.class.to_s.downcase) %>
 				<% @ports.each do |port| %>
-					<%= content_tag(:invisible, "", :id => "port-metadata-#{port.id}", :data_country => "#{port[:country]}" ) %>
+					<%= content_tag(:invisible, "", 
+						:id => "port-metadata-#{port.id}", 
+						:data_domestic => "#{ (port[:country].nil? || !port[:country]) ? false : true}" ) %>
 				<% end # port %>
 			</div>
 			<div id="new_yard_form" style="display : none;">

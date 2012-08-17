@@ -24,6 +24,11 @@ class Target < ActiveRecord::Base
 		@@typesets[type.to_s.downcase].find_by_id(id)
 	end # get_from_id_type
 	
+	def self.where_from_id_type( data )
+		return nil if @@typesets[data[:type].to_s.downcase].nil?
+		@@typesets[data[:type].to_s.downcase].where( :id => data[:id] )
+	end # where_from_id_type
+	
 	def self.just_find_it( stuff )
 		return nil if stuff.nil?
 		case stuff[:type]

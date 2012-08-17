@@ -7,29 +7,32 @@ module Transport
 		duck.belongs_to :destination, :class_name => "Target", :foreign_key => :finish, :dependent => :destroy
 		
 		class << duck
+			@@ragequit = lambda do |p|
+				case p.class.to_s.downcase.to_sym
+					when :yard, :port
+						return { p.class.to_s.downcase.to_sym => [p.id] }
+					when :array, :"activerecord::relation"
+						r = { :yard => [], :port => [] }
+						p.each do |q|
+							@@ragequit.call(q).each do |key, val|
+								r[key] += val
+							end # each key val
+						end # each q
+						return r	
+					else
+						raise "#{p.class.to_s} IS A GOOSE, NOT DUCK ERROR" 
+				end # case p class
+			end # ragequit
+			
 			def to_and_from( destiny, origin )
-				unless origin.is_a?( Yard ) || origin.is_a?( Port ) || destiny.is_a?( Yard ) || destiny.is_a?( Port )
-					raise "to and from #{place.class.to_s} IS A GOOSE, NOT A DUCK ERROR #{__FILE__}!!" 
-				end # unless hopeless origin or bleak destiny
-				froms = Target.where( :t_id => origin.id, :t_type => origin.class.to_s.downcase )
-				raise "HELL #{froms.to_a}" if froms.empty?
-				tos = Target.where( :t_id => destiny.id, :t_type => destiny.class.to_s.downcase )
-				raise "HECK #{tos.to_a}" if tos.empty?
-				result = self.where( :start => (froms.map { |x| x.id }), :finish => (tos.map { |x| x.id }) )
-				result.each do |r|
-					raise "#{r.to_json} ERROR" if r.destination.at.nil?
-				end # each r
-				return result
+				self.where( :start => pre_search_stuff(origin).map { |x| x.id }, :finish => pre_search_stuff(destiny).map { |x| x.id } )
 			end # to_and_from
+			
 			def from(place)
-				raise "from #{place.class.to_s} IS A GOOSE, NOT A DUCK ERROR #{__FILE__}!!" unless place.is_a?( Yard ) || place.is_a?( Port )
-				@targets = Target.where( :t_id => place.id, :t_type => place.class.to_s.downcase )
-				self.where( :start => @targets.map { |x| x.id } )
+				self.where( :start => pre_search_stuff(place).map { |x| x.id } )
 			end # from
 			def to(place)
-				raise "to #{place.class.to_s} IS A GOOSE, NOT A DUCK ERROR #{__FILE__}!!" unless place.is_a?( Yard ) || place.is_a?( Port )
-				@targets = Target.where( :t_id => place.id, :t_type => place.class.to_s.downcase )
-				self.where( :finish => @targets.map { |x| x.id } )
+				self.where( :finish => pre_search_stuff(place).map { |x| x.id } )
 			end # to
 			
 			def by_price
@@ -48,7 +51,14 @@ module Transport
 				self.where( :finish => ducks )
 			end # destination
 			
-			
+			private
+				def pre_search_stuff(place)
+					results = []
+					@@ragequit.call(place).each do |where, ids|
+						results += Target.where( :t_id => ids, :t_type => where.to_s )
+					end # each where ids
+					return results
+				end # pre_search_stuff
 		end # << duck
 	end # transportable
 	
