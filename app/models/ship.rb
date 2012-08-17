@@ -15,4 +15,5 @@
 class Ship < ActiveRecord::Base
 	include Transport
 	Transport.transportable Ship
+	
 end # Ship
