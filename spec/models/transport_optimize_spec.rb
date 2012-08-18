@@ -33,24 +33,41 @@ describe Ship do
 				WHERE shipstarts.t_id = truckfinishes.t_id AND shipstarts.t_type = truckfinishes.t_type
 				ORDER BY (s.price + t.price) ASC
 			)
+			@sql_statement3 = %Q(
+				SELECT s.id AS ship_id, s.price AS ship_price, s.finish AS finish,
+				t.id AS truck_id, t.price AS truck_price, t.start AS start, t.finish AS exchange
+				FROM ports AS p1
+				INNER JOIN targets AS t1 ON t1.t_id = p1.id AND t1.t_type = 'port'
+				INNER JOIN ships AS s ON s.finish = t1.id
+				INNER JOIN targets AS t2 ON t2.id = s.start AND t2.t_type = 'port'
+				INNER JOIN ports AS p2 ON p2.id = t2.t_id 
+				INNER JOIN targets AS t3 ON t3.t_id = p2.id AND t3.t_type = 'port'
+				INNER JOIN trucks AS t ON t.finish = t3.id
+				INNER JOIN targets AS t4 ON t4.id = t.start AND t4.t_type = 'yard'
+				INNER JOIN yards AS y ON y.id = t4.t_id
+				WHERE p1.id = '#{@foreign_port.id}' AND y.id = '#{@yard.id}'
+				ORDER BY (s.price + t.price) ASC
+			) # 3rd statement
 			# @results = Ship.connection.select_all(@sql_statement)
-			@flags = {}
-			Ship.connection.select_all(@sql_statement2).each do |result|
-				if @flags[ "#{result['s_id']}-#{result['t_id']}" ].nil?
-					(@results ||= []) << result
-				end # if flags
-				@flags[ "#{result['s_id']}-#{result['t_id']}" ] ||= true
-			end # each result
+			#@flags = {}
+			#Ship.connection.select_all(@sql_statement2).each do |result|
+				#if @flags[ "#{result['s_id']}-#{result['t_id']}" ].nil?
+					#(@results ||= []) << result
+#				end # if flags
+	#			@flags[ "#{result['s_id']}-#{result['t_id']}" ] ||= true
+#			end # each result
+			@results = Ship.connection.select_all(@sql_statement3)
 		end # before each
 		it "should be a foreign port" do
 			@foreign_port.domestic.should be_false
+			puts @results
 		end # it
 		it "should still work" do
 			@results.count.should eq 10
 			price = -1
 			@results.each do |result|
-				price.should <= result['s_price'] + result['t_price']
-				price = result['s_price'] + result['t_price']
+				price.should <= result['ship_price'] + result['truck_price']
+				price = result['ship_price'] + result['truck_price']
 				# puts result
 			end # each result
 		end # it
@@ -59,8 +76,5 @@ describe Ship do
 				trans.find_by_best_routes( :origin => @yard, :destiny => @foreign_port ).should eq @results
 			end # it
 		end # each trans
-		it "should not pull 2384290384 records that are duplicates from the database" do
-			pending "Please Pass this Test"
-		end # it
 	end # best ship
 end # ship

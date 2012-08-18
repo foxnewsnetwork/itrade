@@ -27,8 +27,8 @@ class BidsController < ApplicationController
 		@yards = Yard.all
 		@ship = Ship.first
 		@truck = Truck.first
-		@service = Service.first
-		@ships = Ship.order( "created_at DESC" ).limit(5)
+		@services = Service.limit(10)
+		@ships = Ship.order( "price ASC" ).limit(5)
 		@trucks = Truck.from( @item.at )
 	end # new
 	
@@ -76,10 +76,18 @@ class BidsController < ApplicationController
 				end # unless no aux
 				{ :service => Service, :truck => Truck, :ship => Ship }.each do |key, model|
 					next if params[key].nil?
-					@duck = model.find_by_id params[key][:id]
-					flash[:error] = t(:failed, :scope => [:controllers, :bids, :create, :auxiliary]) if @duck.nil?
-					raise "#{key} duck error" if @duck.nil?
-					( (@auxiliaries ||= []) << @bid.has( @duck ) )unless @duck.nil?
+					if key == :service
+						params[:service].each do |asdf, sdfdfdffdfd|
+							@duck = model.find_by_id asdf
+							raise "#{key} duck error key=#{asdf} val=#{sdfdfdffdfd}" if @duck.nil?
+							( (@auxiliaries ||= []) << @bid.has( @duck ) )unless @duck.nil?
+						end # each service
+					else
+						@duck = model.find_by_id params[key][:id]
+						flash[:error] = t(:failed, :scope => [:controllers, :bids, :create, :auxiliary]) if @duck.nil?
+						raise "#{key} duck error" if @duck.nil?
+						( (@auxiliaries ||= []) << @bid.has( @duck ) )unless @duck.nil?
+					end # if services
 				end # each key model
 				flash[:success] = t(:success, :scope => [:controllers, :bids, :create])
 			else

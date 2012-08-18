@@ -224,6 +224,7 @@ en: {
 					transportation : "Shipping & Trucking" ,
 					insurance : "Additional Services" ,
 					trucking : "Trucking" ,
+					truckping : "Trucking" ,
 					shipping : "Shipping" ,
 					start : "Start" ,
 					finish : "Destination" ,
@@ -252,6 +253,11 @@ en: {
 					finish : "Destination" ,
 					containers : "Containers" ,
 					cost : "Cost" ,
+					title : "Service Name" ,
+					description : "Service Description" ,
+					company : "Organization" ,
+					price : "Price" ,
+					include : "Include?" ,
 				} , # labels
 			} , # forms
 		} , # service

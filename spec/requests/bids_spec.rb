@@ -34,9 +34,10 @@ describe "Bids" do
 				select "pounds", :from => "bid_units"
 				select "CNF", :from => "bid_shipping"
 				select @destination.city + "-" + @destination.code, :from => "port_id_select_tag"
-				check "truck[id]"
-				select @service.title, :from => "service_id"
-				select @transport[:ship].company, :from => "ship_id"
+				[:truck, :ship].each do |a|
+					select @transport[a].company, :from => "transportation_select_#{a}_id"
+				end # each a
+				check "service[#{@service.id}]"
 			end # before each
 			{ Bid => 1, Location => 0, Auxiliary => 3, Ship => 0, Truck => 0, Service => 0 }.each do |thing, amount|
 				it "should create #{amount} #{thing.to_s}" do

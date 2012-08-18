@@ -1,0 +1,39 @@
+<table class="table-striped">
+	<thead>
+		<tr>
+			<% [:ship_id, :ship_price, :exchange, :truck_id, :truck_price, :total_price].each do |head| %>
+				<th><%= t(head, :scope => [:views, :transportation, :forms, :labels]) %></th>
+			<% end # each head %>
+		</tr>
+	</thead>
+	<tbody>
+		<% first_flag = true %>
+		<% @combos.each do |combo| %>
+			<% if first_flag %>
+			<tr class="tracago-recommended" id='tracago-recommended'>
+			<% else %>
+			<tr>
+			<% end %>
+				<% [:ship_id, :ship_price, :exchange, :truck_id, :truck_price, :total_price].map { |x| x.to_s }.each do |head| %>
+					<td>
+					<% case head %>
+						<% when 'ship_price','truck_price' %>
+							<%= number_to_currency combo[head] %>
+						<% when 'total_price' %>
+							<%= number_to_currency( combo['ship_price'] + combo['truck_price'] ) %> 
+						<% when 'exchange' %>
+							<%= @exchange[combo[head]] %>
+						<% else %>
+							<%= combo[head] %> 
+					<% end # case %>
+					</td>
+				<% end # each head %>
+			</tr>
+		<% end # each combo %>
+		<% if @combos.empty? %>
+			<tr>
+				<td><%= t(:unknown) %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

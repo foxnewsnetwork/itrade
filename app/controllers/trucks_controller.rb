@@ -71,7 +71,7 @@ class TrucksController < ApplicationController
 				raise "why nil? #{truck.to_json}" if truck.destination.at.nil?	
 			end # each nil check
 		else
-			@trucks ||= Truck.limit(50)
+			@trucks ||= Truck.order("price ASC").limit(10)
 		end # unless p nil
 		respond_to do |f|
 			f.json { render "truck", :handler => ["json_builder"] }

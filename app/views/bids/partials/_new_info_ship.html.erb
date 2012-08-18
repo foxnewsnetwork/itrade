@@ -31,6 +31,10 @@
 				<% end # each field %>
 			</tr>
 		<% end # each port %>
-		
+		<% if @ships.empty? %>
+			<tr>
+				<td><%= t(:unknown) %></td>
+			</tr>
+		<% end %>
 	</tbody>
 </table>

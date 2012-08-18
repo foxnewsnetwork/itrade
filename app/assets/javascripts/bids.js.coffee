@@ -32,6 +32,7 @@ $ ->
 			$("#port_id_select_tag").hide()
 			$("#new_yard_form").show()
 			$("#unused_name").show()
+			$("#request_best_routes_button").hide()
 		# if-else
 		$("#location_type_id").attr "value", who
 		return false
@@ -67,9 +68,11 @@ $ ->
 				
 				$.get( target_uri )
 				$("#information-box-truck").hide( "explode", 500 )
+				$("#request_best_routes_button").hide()
 			else
 				$.get( "/ships.js?finish=#{port_id}" )	
 				$("#information-box-ship").hide( "explode", 500 )
+				$("#request_best_routes_button").show()
 			# if-else
 			
 			$(this).attr "disabled" , true
@@ -109,5 +112,34 @@ $ ->
 		yard_change_request()
 		return false
 	# change
+	
+	$("#request_best_routes_button").click ->
+		location_type = $("#location_type_id").attr "value"
+		if location_type == 'port'
+			port_id = $("#port_id_select_tag").val()
+			port_domestic = $("#port-metadata-#{port_id}").attr "data_domestic"
+			if port_domestic == true || port_domestic == "true"
+				alert "this service isn't availble"
+			else
+				qstring = "/targets.js?"
+				((key,val) ->
+					qstring += encodeURIComponent( key ) + "=#{val}&"
+					return false
+				)(key, val) for key, val of { "yard_id" : start_id , "port_id" : port_id }
+				$.get qstring 
+			# if domestic
+		else if location_type == 'yard'
+			yard_data = {}
+			data_ready_flag = true
+			((f) ->
+				yard_data[f] = $("#yard_#{f}").val()
+				if !yard_data[f]? || yard_data[f] == ""
+					data_ready_flag = false
+			)(fucker) for fucker in ['street_address','city','state','zip']
+			alert "this service isn't availble"
+		else
+			# Catch Error Here
+		# if-elseif-else
+		return false
 	return false
 # document ready

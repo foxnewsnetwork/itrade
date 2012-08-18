@@ -25,6 +25,10 @@
 				<% end # each field %>
 			</tr>
 		<% end # each port %>
-		
+		<% if @trucks.empty? %>
+			<tr>
+				<td><%= t(:unknown) %></td>
+			</tr>
+		<% end %>
 	</tbody>
 </table>

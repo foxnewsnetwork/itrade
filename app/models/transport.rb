@@ -25,14 +25,14 @@ module Transport
 			end # ragequit
 			
 			def to_and_from( destiny, origin )
-				self.where( :start => pre_search_stuff(origin).map { |x| x.id }, :finish => pre_search_stuff(destiny).map { |x| x.id } )
+				self.where( :start => pre_search_stuff(origin).map { |x| x.id }, :finish => pre_search_stuff(destiny).map { |x| x.id } ).order( "price ASC" )
 			end # to_and_from
 			
 			def from(place)
-				self.where( :start => pre_search_stuff(place).map { |x| x.id } )
+				self.where( :start => pre_search_stuff(place).map { |x| x.id } ).order( "price ASC" )
 			end # from
 			def to(place)
-				self.where( :finish => pre_search_stuff(place).map { |x| x.id } )
+				self.where( :finish => pre_search_stuff(place).map { |x| x.id } ).order( "price ASC" )
 			end # to
 			
 			def by_price
@@ -54,30 +54,27 @@ module Transport
 			def find_by_best_routes( data, limit=10 )
 				origin = data[:origin]
 				destiny = data[:destiny]
+				raise "FUCK YOU SQL INJECT! #{limit}" unless limit.is_a?( Fixnum )
 				raise "INCORRECT USAGE ERROR! #{origin.class.to_s}" unless origin.is_a?(Yard)
 				raise "INCORRECT USAGE ERROR! #{destiny.class.to_s}" unless destiny.is_a?(Port)
 				if destiny.domestic == false
 					sql_statement = %Q(
-						SELECT s.id AS s_id, s.price AS s_price, s.finish AS s_finish,  
-						t.id AS t_id, t.price AS t_price, t.start AS t_start, t.finish AS exchange
-						FROM trucks AS t
-						INNER JOIN targets AS truckstarts ON truckstarts.t_id = '#{origin.id}' AND truckstarts.t_type = 'yard'
-						INNER JOIN targets AS shipfinishes ON shipfinishes.t_id = '#{destiny.id}' AND shipfinishes.t_type = 'port'
-						INNER JOIN ships AS s ON s.finish = shipfinishes.id
-						INNER JOIN targets AS truckfinishes ON truckfinishes.id = t.finish AND truckfinishes.t_type = 'port'
-						INNER JOIN targets AS shipstarts ON shipstarts.id = s.start AND shipstarts.t_type = 'port' 
-						WHERE shipstarts.t_id = truckfinishes.t_id AND shipstarts.t_type = truckfinishes.t_type
+						SELECT s.id AS ship_id, s.price AS ship_price, s.finish AS finish,
+						t.id AS truck_id, t.price AS truck_price, t.start AS start, t.finish AS exchange
+						FROM ports AS p1
+						INNER JOIN targets AS t1 ON t1.t_id = p1.id AND t1.t_type = 'port'
+						INNER JOIN ships AS s ON s.finish = t1.id
+						INNER JOIN targets AS t2 ON t2.id = s.start AND t2.t_type = 'port'
+						INNER JOIN ports AS p2 ON p2.id = t2.t_id 
+						INNER JOIN targets AS t3 ON t3.t_id = p2.id AND t3.t_type = 'port'
+						INNER JOIN trucks AS t ON t.finish = t3.id
+						INNER JOIN targets AS t4 ON t4.id = t.start AND t4.t_type = 'yard'
+						INNER JOIN yards AS y ON y.id = t4.t_id
+						WHERE p1.id = '#{destiny.id}' AND y.id = '#{origin.id}'
 						ORDER BY (s.price + t.price) ASC
+						LIMIT #{limit}
 					)
-					results = self.connection.select_all( sql_statement )
-					flags = {}
-					results.each do |result|
-						if flags[ "#{result['s_id']}-#{result['t_id']}" ].nil?
-							(@results ||= []) << result
-						end # if flags
-						flags[ "#{result['s_id']}-#{result['t_id']}" ] ||= true
-						break if @results.count >= limit
-					end # each result
+					@results = self.connection.select_all( sql_statement )
 				else
 					raise "USE THIS ONLY FOR FOREIGN PORTS ERROR. #{destiny.domestic}"
 				end # unless domestic port

@@ -1,3 +1,6 @@
 $("#information-box-ship").html( "" );
 $("#information-box-ship").html( '<%= escape_javascript( render "bids/partials/new_info_ship" )%>' );
 $("#information-box-ship").show( "explode", 500 );
+
+$("#transportation_select_ship_id").html( "" );
+$("#transportation_select_ship_id").html( '<%= escape_javascript( options_for_select(@ships.map { |x| [x.company, x.id] } ) ) %>' );
