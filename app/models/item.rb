@@ -3,6 +3,8 @@
 # Table name: items
 #
 #  category      :string(255)      default("plastic"), not null
+#  color         :string(255)
+#  contamination :string(255)
 #  created_at    :datetime         not null
 #  description   :text
 #  id            :integer          not null, primary key
@@ -20,7 +22,7 @@
 
 class Item < ActiveRecord::Base
   # attributes
-  attr_accessible :description, :quantity, :title, :units, :location_id, :material, :category, :material_type, :maw
+  attr_accessible :description, :quantity, :title, :units, :location_id, :material, :category, :material_type, :maw, :color, :contamination
   
   # Relationships
   has_many :statuses, :dependent => :destroy

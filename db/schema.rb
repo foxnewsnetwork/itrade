@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120816232709) do
+ActiveRecord::Schema.define(:version => 20120820002324) do
 
   create_table "auxiliaries", :force => true do |t|
     t.integer  "bid_id",     :null => false
@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(:version => 20120816232709) do
     t.string   "material_type"
     t.decimal  "maw",           :precision => 10, :scale => 0
     t.integer  "target_id"
+    t.string   "color"
+    t.string   "contamination"
   end
 
   add_index "items", ["target_id"], :name => "index_items_on_target_id"

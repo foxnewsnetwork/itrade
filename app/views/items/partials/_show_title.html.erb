@@ -42,6 +42,9 @@
 	<% end # else not signed in %>
 </div>
 <div class="span4">
-	<h4>
-	</h4>
+	<% if current_user == @item.user %>
+		<%= link_to( new_item_path, :class => "btn btn-info" ) do %>
+			<%= t( :sell ) %>
+		<% end # new link %>
+	<% end # if correct_user %>
 </div>

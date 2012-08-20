@@ -33,7 +33,22 @@ class BidsController < ApplicationController
 	end # new
 	
 	def edit
-	
+		@item = Item.find_by_id params[:item_id]
+		@bid = @item.bids.find_by_id params[:id]
+		if @item.nil? || @bid.nil?
+			render "public/404"
+			return
+		end # if nil
+		@asking_price = @item.bids.find_by_user_id( @item.user_id )
+		@bids = @item.bids
+		@tabs = [:price, :transportation, :insurance]
+		@ports = Port.all
+		@yards = Yard.all
+		@ship = Ship.first
+		@truck = Truck.first
+		@services = Service.limit(10)
+		@ships = Ship.order( "price ASC" ).limit(5)
+		@trucks = Truck.from( @item.at )
 	end # edit
 
 	def create
@@ -85,7 +100,7 @@ class BidsController < ApplicationController
 					else
 						@duck = model.find_by_id params[key][:id]
 						flash[:error] = t(:failed, :scope => [:controllers, :bids, :create, :auxiliary]) if @duck.nil?
-						raise "#{key} duck error" if @duck.nil?
+						# raise "#{key} duck error" if @duck.nil?
 						( (@auxiliaries ||= []) << @bid.has( @duck ) )unless @duck.nil?
 					end # if services
 				end # each key model
@@ -134,6 +149,6 @@ class BidsController < ApplicationController
 		else
 			flash[:error] = t(:fail_bid_update)
 		end # if correct user
-		redirect_to [@item, @bid]
+		redirect_to @item
 	end # update
 end # BidsController

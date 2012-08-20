@@ -3,6 +3,8 @@
 # Table name: items
 #
 #  category      :string(255)      default("plastic"), not null
+#  color         :string(255)
+#  contamination :string(255)
 #  created_at    :datetime         not null
 #  description   :text
 #  id            :integer          not null, primary key

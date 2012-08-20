@@ -4,7 +4,7 @@
 	<fieldset>
 		<legend><%= t(:item, :scope => [:views, :items, :forms, :new]) %></legend>
 		<div class="control-group">
-			<% [:title, :description, :material].each do |tag| %>
+			<% [:title, :description, :material, :color, :contamination].each do |tag| %>
 				<%= f.label t(tag, :scope => [:views, :items, :forms, :labels]), :class => "control-label" %>
 				<%= f.text_field tag, :placeholder => t(tag, :scope => [:views, :items, :forms, :placeholders]) %>
 			<% end %>

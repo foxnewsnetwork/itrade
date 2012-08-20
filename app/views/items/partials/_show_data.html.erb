@@ -12,10 +12,15 @@
 			<% end %>
 		<% end # if correct_user %>
 		<dl class="dl-horizontal">
-			<% [:description , :quantity , :units , :material, :category, :material_type].each do |key, title| %>
+			<% Item.attr_accessible[:default].map{ |x| x.to_sym }.each do |key| %>
+				<% next if key == :"" || key == :location_id %>
 				<dt><%= t(key, :scope => [:views, :items, :show]) %></dt>
 				<dd><%= @item[key].nil? ? t(:unknown) : @item[key] %></dd>
 			<% end # each key %>
+			<% @item.statuses.each do |status| %>
+				<dt><%= t(status[:name], :scope => [:views, :items, :show]) %></dt>
+				<dd><%= status[:effect].nil? ? t(:unknown) : status[key] %></dd>
+			<% end # status %>
 		</dl>
 	<% end # collapse tag %>
 </div>

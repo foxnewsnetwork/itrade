@@ -106,6 +106,8 @@ Factory.define :item do |item|
 	item.category "plastic"
 	item.material_type [:hdpe, :ldpe, :pp, :pet][rand(4)].to_s
 	item.maw rand(23434)
+	item.color "white"
+	item.contamination "none"
 end # item
 
 Factory.sequence :item do |n|
@@ -117,7 +119,9 @@ Factory.sequence :item do |n|
 	:material => Factory.next(:random_string) ,
 	:category => "plastic" ,
 	:material_type => [:hdpe, :ldpe, :pp, :pet][rand(4)].to_s ,
-	:maw => rand(234324)
+	:maw => rand(234324) ,
+	:color => "white",
+	:contamination => "none"
 	}
 end # item
 

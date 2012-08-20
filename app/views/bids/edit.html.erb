@@ -1,0 +1,72 @@
+<!-- edit bid page -->
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12 well">
+			<div class="page-header">
+				<h4>
+					<i class="icon-user"></i> <%= link_to @item.title.capitalize, item_path( @item ) %> &raquo;
+					<i class="icon-tag" ></i> <%= t(:bid, :scope => [:views, :bids, :forms, :labels]) %>
+				</h4>
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span5 well">
+			<%= form_for [@item, @bid], :method => "put" do |f| %>
+				<div class="row-fluid">
+					<div class="span12-fluid">
+						<ul class="nav nav-tabs">
+							<% @tabs.each do |tab| %>
+								<li>
+									<%= link_to "#tab-#{tab.to_s}", "data-toggle" => "tab" do %>
+										<%= t(tab, :scope => [:views, :bids, :forms, :labels] ) %>
+									<% end # each link %>
+								</li>
+							<% end # each tab %>
+						</ul>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span12-fluid">
+						<div class="tab-content">
+							<% @tabs.count.times do |k| %>
+							<% tab = @tabs[k] %>
+								<%= content_tag(:div, :class => "tab-pane " + (tab == @tabs.first ? "active" : ""), :id => "tab-#{tab.to_s}") do %>
+									<%= render "bids/partials/new_form_#{tab.to_s}", :f => f %>
+									<div class="form-actions">
+										<%= link_to "#tab-#{@tabs[k-1].to_s}", "data-toggle" => "tab", :class => "btn" do %>
+											<%= content_tag(:i, "", :class => "icon-arrow-left") %>
+										<% end unless k < 1 %>
+										<%= link_to "#tab-#{@tabs[k+1].to_s}", "data-toggle" => "tab", :class => "btn" do %>
+											<%= content_tag(:i, "", :class => "icon-arrow-right") %>
+										<% end unless @tabs[k+1].nil? %>
+										<div class="pull-right">
+											<%= form_reset_tag( "new_bid" ) unless tab == @tabs.last %>
+											<%= form_action_tag( "new_bid" ) if tab == @tabs.last %>	
+										</div>
+									</div>
+								<% end # div tag %>
+								
+							<% end # each tabs %>
+						</div>
+					</div>
+				</div>
+			<% end # form %>
+		</div>
+		<div class="span7">
+			<% 3.times do |k| %>
+				<% field = [:item, :ship, :truck][k] %>
+				<div class="row-fluid">
+					<div class="span12-fluid well">
+						<div class="page-header">
+							<h3><%= t(field, :scope => [:views, :bids, :info]) %></h3>
+						</div>
+						<div id="information-box-<%= field %>">
+							<%= render "bids/partials/new_info_#{field}" %>
+						</div>
+					</div>
+				</div>
+			<% end # each field %>
+		</div>
+	</div>	
+</div>

@@ -123,12 +123,20 @@ en: {
 				units: "Units" ,
 				material_type: "Type" ,
 				item_info : "Listing Details" ,
+				color : "Color" ,
+				contamination : "Contamination" ,
+				ready : "Listing Ready" ,
+				recurring : "Days before ready again" ,
+				maw : "Maximum average packing weight per 40 foot container" ,
+				incomplete : "Listing Incomplete"
 			} , # show
 			forms: {
 				placeholders: {
 					title: "ex. HDPE pipes" ,
 					description: "ex. Used in irrigation. Hot-washed" ,
 					material: "ex. In 12 gaylord boxes" ,
+					color : "ex. Pure White" ,
+					contamination : "ex. Fully hot-washed" ,
 				} , # placeholders
 				labels: {
 					title: "I Want To Sell..." ,
@@ -136,6 +144,8 @@ en: {
 					material: "How is it packed?" ,
 					category: "Category" ,
 				  quantity: "Quantity" ,
+				  color : "Color" ,
+					contamination : "Contamination" ,
 				  submit: "Go Next" ,
 				  edit: "Edit Listing", 
 				  material_type : "Type" ,
