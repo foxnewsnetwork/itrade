@@ -1,7 +1,9 @@
 <!-- User login form -->
 <%= form_tag user_session_path, :method => "post", :remote => remote, :id => "login_user_form" do %>
   <fieldset>
-  	<legend><%= t(:login_user, :scope => [:views,:users,:forms,:labels]) %></legend>
+  	<legend>
+  		<%= t(:login_user, :scope => [:views,:users,:forms,:labels]) %>
+		</legend>
   	<div class="control-group">
 			<%= label_tag "user_email", t(:email, :scope => [:views,:users,:forms,:labels]), :class => "control-label" %>
 			<%= email_field_tag "user[email]", "", :id => "login_user_email" %>
@@ -12,5 +14,8 @@
 		</div>
 		<%= form_action_tag(:login) %>
   </fieldset>
+  
 <% end %>  
+<%= link_to( t(:signup, :scope => [:views, :headers, :forms, :labels]), new_user_registration_path) %>
+
 

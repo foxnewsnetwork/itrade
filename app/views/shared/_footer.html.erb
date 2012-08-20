@@ -7,9 +7,9 @@
 		<div class="row-fluid">
 			<div class="span12-fluid">
 				<ul class="breadcrumb">
-					<% ['home','privacy policy','terms','blog'].each do |tag| %>
+					<% ['about','policy','terms','blog'].each do |tag| %>
 						<li>
-							<%= link_to tag, "#" %> <span class="divider">/</span>
+							<%= link_to tag, "/#{tag}" %> <span class="divider">/</span>
 						</li>
 					<% end %>
 					<% if user_signed_in? && current_user.admin %>

@@ -24,7 +24,7 @@ describe UsersController do
 		end # it
 		it "should be success" do
 			get "index"
-			response.should be_success
+			response.should_not be_success
 		end # it
 		it "should be succes" do
 			get "new"

@@ -4,6 +4,7 @@
   	<legend><%= t(:new_user, :scope => [:views,:users,:forms,:labels]) %></legend>
   	<% [:email, :password, :phone, :company].each do |field| %>
 			<div class="control-group">
+				<%= hidden_field_tag( "back_path", @back_path) %>
 				<%= label_tag "user_#{field.to_s}", t(field, :scope => [:views,:users,:forms,:labels] ), :class => "control-label" %>
 				<% case field %>
 					<% when :email, :password, :phone %>

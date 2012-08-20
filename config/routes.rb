@@ -4,7 +4,7 @@ Itrade::Application.routes.draw do
   resources :auxiliaries, :only => [:create, :destroy, :index, :show]
 	resources :targets, :only => [:index]
 	resources :categories, :only => [:create, :destroy, :show, :index]
-	devise_for :users, :controllers => { :sessions => "sessions" }
+	devise_for :users, :controllers => { :sessions => "sessions", :registrations => "registrations" }
 	resources :users do
 		resources :locations, :only => [:create, :destroy, :update]
 	end # resources
@@ -26,7 +26,9 @@ Itrade::Application.routes.draw do
 	[:ships, :trucks].each do |transports|
 		resources transports, :only => [:create, :destroy, :index]
 	end # each transport	
-	match "/admin", :to => "pages#admin"
+	['admin','about'].each do |tag|
+		match "/#{tag}", :to => "pages##{tag}"
+	end # each tag
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -76,7 +78,7 @@ Itrade::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'pages#home'
+  root :to => 'items#index'
 
   # See how all your routes lay out with "rake routes"
 

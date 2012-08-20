@@ -1,8 +1,7 @@
 class PagesController < ApplicationController
   before_filter :filter_regular_users, :only => :admin
-  def home
-  	@title = "Home"
-  	@items = Item.limit(25)
+  def about
+  	@title = "About"
   end # home
 
 	def admin

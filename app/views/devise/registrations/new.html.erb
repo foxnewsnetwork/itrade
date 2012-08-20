@@ -7,6 +7,7 @@
 				<fieldset>
 					<legend><%= t(:new_user, :scope => [:views,:users,:forms,:labels]) %></legend>
 					<div class="control-group">
+						<%= hidden_field_tag "back_path", @back_path %>
 					<% [:email, :password, :phone, :company].each do |field| %>
 							<%= f.label t(field, :scope => [:views, :users, :forms, :labels]), :class => "control-label" %>
 							<% case field %>
@@ -28,3 +29,4 @@
     </div>
   </div>
 </div>
+

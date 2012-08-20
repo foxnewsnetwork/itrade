@@ -21,14 +21,15 @@ class ItemsController < ApplicationController
 		[:category, :type].each do |term|
 			(@terms ||= {})[term == :type ? :material_type : term] = params[term] unless params[term].nil?
 		end # each term
-		@raw_items ||= Item.where( @terms ) unless @terms.nil? || @terms.empty?
-		@raw_items ||= Item.order("created_at DESC").limit(20)
-		@raw_items.each do |item|
-			(@item_ids ||= []) << item
-		end # each item
-		@items = Status.where( :item_id => @item_ids, :name => "ready" ).map do |status|
-			@raw_items[@raw_items.index{ |r| r.id == status.item_id }]
-		end # status
+		@raw_items ||= Item.where( @terms ).paginate(:page => params[:page], :per_page => 10 ) unless @terms.nil? || @terms.empty?
+		@raw_items ||= Item.order("created_at DESC").paginate(:page => params[:page], :per_page => 10 )
+#		@raw_items.each do |item|
+#			(@item_ids ||= []) << item
+#		end # each item
+#		@items = Status.where( :item_id => @item_ids, :name => "ready" ).map do |status|
+#			@raw_items[@raw_items.index{ |r| r.id == status.item_id }]
+#		end # status
+		@items = @raw_items
 		@categories = Category.roots
 		@types = @categories.first.children.map { |x| x.name } unless @categories.empty?
 		@title = "Listing Index"

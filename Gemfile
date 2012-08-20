@@ -8,10 +8,10 @@ gem "aws-sdk"
 gem "json_builder"
 gem 'multi_json'
 gem "will_paginate", "~> 3.0.3"
+gem 'faker', '~>1.0.1'
 
 group :development do
   gem 'rspec-rails' , '~>2.11.0'
-  gem 'faker', '~>1.0.1'
   gem 'annotate', ">=2.5.0.pre1"
 end # development
 

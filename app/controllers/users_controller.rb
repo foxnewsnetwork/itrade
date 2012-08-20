@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :filter_anonymous_users, :only => [:destroy, :update, :edit, :show]
+  before_filter :filter_anonymous_users, :only => [:show, :update, :edit, :destroy]
+  before_filter :filter_regular_users, :only => [:index]
   
   def show
   	@user = User.find_by_id( params[:id] )
@@ -22,7 +23,10 @@ class UsersController < ApplicationController
   	@title = "User Index"
   	@users = User.all
   end # index
-
+	
+	##########################################################
+	# BEGIN DEFUNCT / UNUSED / KEPT AROUND FOR TESTS SECTION #
+	##########################################################
   def new
   	if user_signed_in?
   		flash[:notice] = t( :failed_user_new )
@@ -41,7 +45,8 @@ class UsersController < ApplicationController
 			redirect_to user_path @user
 		end # unless correct user
   end # edit
-  
+
+
   def create
   	@user = User.new params[:user]
   	if @user.save
@@ -52,7 +57,8 @@ class UsersController < ApplicationController
   		redirect_to new_user_path
   	end # if save
   end # create
-  
+
+
   def destroy
 		@user = User.find_by_id params[:id]
 		if @user == current_user
@@ -78,4 +84,5 @@ class UsersController < ApplicationController
   	end # else wrong user
   	redirect_to @user
   end # update
+
 end # UsersController

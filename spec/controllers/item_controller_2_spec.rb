@@ -18,6 +18,7 @@ describe ItemsController do
 			end # it
 		end # each status
 		it "should only show the good item" do
+			pending "THIS TEST HAS BEEN DEFUNCT"
 			get :index
 			assigns(:items).should_not include @bad
 			assigns(:items).should include @good

@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require 'rubygems'
-require 'faker'
+
 @domestic_ports = [
 {:city=>"LA", :code=>"Port of South Louisiana"} ,
 {:city=>"OR", :code=>"Portland-OR"} ,
