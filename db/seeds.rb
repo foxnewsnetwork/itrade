@@ -241,7 +241,9 @@ end # each domestic
 		:quantity => rand(2354235) ,
 		:material => Faker::Company.catch_phrase ,
 		:material_type => Faker::Company.name ,
-		:maw => rand(234345)
+		:maw => rand(234345) ,
+		:color => "white" ,
+		:contamination => "none"
 	) # item
 	( @item_locations  ||= []) << ( Yard.create yard )
 	@item.at @item_locations.last
@@ -256,6 +258,7 @@ end # 100.times
 	).from(get1 @item_locations).to(get1 @domestic).save # ship
 end # auxiliaries
 
+Service.create( :company => "Tracago!", :title => "CCIC", :description => "Necessary inspection for goods traveling to China", :price => 150 )
 @stuffes = { 
 	'scrap plastic' => [ 'LDPE','HDPE','PP','PET','PVC','Nylon','Rubber','ABS','PS','MISC'] ,
 	'common metals' => ['Iron','Copper','Mercury'] ,
