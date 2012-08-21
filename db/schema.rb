@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120820002324) do
+ActiveRecord::Schema.define(:version => 20120821182825) do
 
   create_table "auxiliaries", :force => true do |t|
     t.integer  "bid_id",     :null => false
@@ -27,14 +27,14 @@ ActiveRecord::Schema.define(:version => 20120820002324) do
 
   create_table "bids", :force => true do |t|
     t.integer  "item_id",                                                       :null => false
-    t.decimal  "offer",       :precision => 10, :scale => 0, :default => 0
+    t.decimal  "offer",       :precision => 10, :scale => 4, :default => 0.0
     t.string   "units",                                      :default => "USD"
     t.datetime "created_at",                                                    :null => false
     t.datetime "updated_at",                                                    :null => false
     t.integer  "user_id"
     t.string   "paytype"
     t.integer  "location_id"
-    t.decimal  "maw",         :precision => 10, :scale => 0
+    t.decimal  "maw",         :precision => 10, :scale => 4
     t.string   "shipping"
     t.integer  "target_id"
   end
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(:version => 20120820002324) do
     t.string   "category",                                     :default => "plastic",  :null => false
     t.integer  "location_id"
     t.string   "material_type"
-    t.decimal  "maw",           :precision => 10, :scale => 0
+    t.decimal  "maw",           :precision => 10, :scale => 4
     t.integer  "target_id"
     t.string   "color"
     t.string   "contamination"
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(:version => 20120820002324) do
     t.string   "company",                                    :default => "Tracago", :null => false
     t.string   "title",                                                             :null => false
     t.string   "description",                                                       :null => false
-    t.decimal  "price",       :precision => 10, :scale => 0, :default => 0,         :null => false
+    t.decimal  "price",       :precision => 10, :scale => 2, :default => 0.0,       :null => false
     t.datetime "created_at",                                                        :null => false
     t.datetime "updated_at",                                                        :null => false
     t.datetime "expiration"
@@ -123,12 +123,12 @@ ActiveRecord::Schema.define(:version => 20120820002324) do
   add_index "services", ["title"], :name => "index_services_on_title"
 
   create_table "ships", :force => true do |t|
-    t.string   "company",                                                  :null => false
+    t.string   "company",                                                    :null => false
     t.integer  "start"
     t.integer  "finish"
-    t.decimal  "price",      :precision => 10, :scale => 0, :default => 0, :null => false
-    t.datetime "created_at",                                               :null => false
-    t.datetime "updated_at",                                               :null => false
+    t.decimal  "price",      :precision => 10, :scale => 2, :default => 0.0, :null => false
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
     t.datetime "expiration"
   end
 
@@ -157,12 +157,12 @@ ActiveRecord::Schema.define(:version => 20120820002324) do
   add_index "targets", ["t_id", "t_type"], :name => "index_targets_on_t_id_and_t_type"
 
   create_table "trucks", :force => true do |t|
-    t.string   "company",                                                  :null => false
+    t.string   "company",                                                    :null => false
     t.integer  "start"
     t.integer  "finish"
-    t.decimal  "price",      :precision => 10, :scale => 0, :default => 0, :null => false
-    t.datetime "created_at",                                               :null => false
-    t.datetime "updated_at",                                               :null => false
+    t.decimal  "price",      :precision => 10, :scale => 2, :default => 0.0, :null => false
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
     t.datetime "expiration"
   end
 
