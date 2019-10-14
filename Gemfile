@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.6'
 gem "thin", '~> 1.4.1'
 gem "devise", "~> 2.1.2"
-gem "paperclip", "~> 3.0.0"
+gem "paperclip", "~> 4.3.7"
 gem "aws-sdk"
 gem "json_builder"
 gem 'multi_json'
