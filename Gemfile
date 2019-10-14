@@ -7,7 +7,7 @@ gem "paperclip", "~> 3.0.0"
 gem "aws-sdk"
 gem "json_builder"
 gem 'multi_json'
-gem "will_paginate", "~> 3.0.3"
+gem "will_paginate", "~> 3.0.5"
 gem 'faker', '~>1.0.1'
 
 group :development do
