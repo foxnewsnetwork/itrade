@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.6'
+gem 'rails', '3.2.17'
 gem "thin", '~> 1.4.1'
 gem "devise", "~> 2.1.2"
 gem "paperclip", "~> 3.0.0"
